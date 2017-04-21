@@ -1,19 +1,32 @@
 <div class="login">
     <div class="loginBox">
-        <div class="loginContainer">
-            <h1 class="loginContainer__title">It's Lunch time</h1>
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control loginContainer__input" placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control loginContainer__input" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-link btn-block loginContainer__button loginContainer__button--link">Forgot my / your password?</button>
-                    <button type="button" class="btn btn-yellow btn-block loginContainer__button loginContainer__button--login">Enter / Login</button>
-                </div>
-            </form>
-        </div>
+        <h1 class="loginBox__title">It's Lunch time</h1>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control input" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control input" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn--yellow btn--fs20">Enter</button>
+                <button type="button" class="btn btn-link btn--link" data-toggle="modal" data-target="#modalPassword">Forgot password?</button>
+            </div>
+        </form>
     </div>
+</div>
+<div class="modal fade" id="modalPassword">
+  <div class="modal-dialog">
+    <div class="modal-content  text-center" >
+      <div class="modal-body">
+        <p class="text-center">Please enter your email address to search for your account.</p>
+        <div class="form-group">
+          <input type="text" name="email" placeholder="Email" class="form-control input">
+        </div>
+        <div class="form-group">
+          <button type="button" name="button" class="btn btn-yellow btn--fs20 btn--medium">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
