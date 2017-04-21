@@ -15,6 +15,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.box{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border: 1px solid $boxBg;
+}
+
 .login,
 .loginBox {
     min-height: 100%;
@@ -25,7 +30,6 @@ body {
 }
 
 .loginBox {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     flex-direction: column;
     justify-content: center;
     @media (min-width: 992px) {
@@ -51,6 +55,15 @@ body {
     }
 }
 
+.input--block{
+  width: 100%
+}
+
+.btn{
+  outline: none !important;
+  text-decoration: none !important;
+}
+
 .btn--fs20 {
     font-size: 20px;
 }
@@ -61,7 +74,7 @@ body {
 
 .btn--link {
     font-size: 15px;
-    color: $gray-light;
+    color: $gray-light !important;
     font-weight: 300;
 }
 
@@ -70,10 +83,12 @@ body {
     font-weight: 700;
     color: $white;
     &:hover {
-      background-color: darken($yellow, 15%);
+      background-color: darken($yellow, 5%);
+      color: darken($white,5%);
     }
     &:active {
-      background-color: darken($yellow, 25%);
+      background-color: darken($yellow, 10%);
+      color: darken($white,10%);
     }
 }
 
@@ -83,4 +98,43 @@ body {
 }
 .navContainer__logo {
   padding-top: 0;
+}
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 992px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+
+  }
+}
+
+.modal-dialog--pass{
+    width: 560px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-content--pass{
+  border-radius: 0px;
+  border-color: $boxBg;
+  padding: 35px 80px;
+}
+
+
+.m-b-30{
+  margin-bottom: 30px;
+}
+
+.m-b-40{
+  margin-bottom: 40px;
 }
