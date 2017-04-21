@@ -83,11 +83,7 @@ body {
 
 .btn--link {
     font-size: 15px;
-<<<<<<< Updated upstream
-    color: $gray-light !important;
-=======
     color: $secondary-text;
->>>>>>> Stashed changes
     font-weight: 300;
 }
 
@@ -96,19 +92,16 @@ body {
     font-weight: 700;
     color: $white;
     &:hover {
-<<<<<<< Updated upstream
       background-color: darken($yellow, 5%);
       color: darken($white,5%);
     }
     &:active {
-      background-color: darken($yellow, 10%);
-      color: darken($white,10%);
-=======
       background-color: darken($accent, 15%);
+      color: darken($white,15%);
     }
     &:active {
       background-color: darken($accent, 25%);
->>>>>>> Stashed changes
+      color: darken($white,15%);
     }
 }
 
