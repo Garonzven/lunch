@@ -14,9 +14,9 @@ class CreateCyclesTable extends Migration
     public function up()
     {
         Schema::create('cycles', function (Blueprint $table) {
-            
+
             $table->increments('id');
-            $table->integer('days');
+            $table->timestamp('closing_date');
             $table->timestamp('initial_date');
             $table->boolean('remark');
             $table->timestamps();
@@ -33,4 +33,3 @@ class CreateCyclesTable extends Migration
         Schema::dropIfExists('cycles');
     }
 }
-
