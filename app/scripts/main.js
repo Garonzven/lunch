@@ -4,7 +4,7 @@ $(document).ready(function() {
         type: "get",
         dataType: "text",
         success: function(response) {
-            $(".container").html(response);
+            $('.container').html(response);
         }
     });
 });

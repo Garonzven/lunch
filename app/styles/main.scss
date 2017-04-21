@@ -16,7 +16,7 @@ body {
 }
 
 .login,
-.loginContainer {
+.loginBox {
     min-height: 100%;
     min-height: 100vh;
     display: flex;
@@ -26,27 +26,22 @@ body {
 
 .loginBox {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    flex-direction: column;
+    justify-content: center;
     @media (min-width: 992px) {
+      min-height: 436px;
         width: 560px;
         height: 436px;
     }
 }
 
-.loginContainer {
-    flex-direction: column;
-    justify-content: center;
-    @media (min-width: 992px) {
-        min-height: 436px;
-    }
-}
-
-.loginContainer__title {
+.loginBox__title {
     font-size: 36px;
     color: $red;
     font-weight: 700;
 }
 
-.loginContainer__input {
+.input {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: $gray;
@@ -56,18 +51,30 @@ body {
     }
 }
 
-.loginContainer__button {
+.btn--fs20 {
     font-size: 20px;
 }
-.loginContainer__button--link {
+
+.btn--medium {
+  width: 195px;
+}
+
+.btn--link {
     font-size: 15px;
     color: $gray-light;
     font-weight: 300;
 }
-.loginContainer__button--login {
+
+.btn--yellow {
     background-color: $yellow;
     font-weight: 700;
     color: $white;
+    &:hover {
+      background-color: darken($yellow, 15%);
+    }
+    &:active {
+      background-color: darken($yellow, 25%);
+    }
 }
 
 .navContainer {
