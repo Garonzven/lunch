@@ -9,7 +9,16 @@ $red: #d32f2f !default;
 $gray: #bdbdbd !default;
 $gray-light: #212121;
 $yellow: #fdc113 !default;
+
+// Color palette
 $white: #ffffff !default;
+$primary: #f44336 !default;
+$dark-primary: #d32f2f !default;
+$light-primary: #ffcdd2 !default;
+$accent: #ffc107 !default;
+$primary-text: #212121 !default;
+$secondary-text: #757575 !default;
+$divider: #bdbdbd !default;
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -34,21 +43,21 @@ body {
     justify-content: center;
     @media (min-width: 992px) {
       min-height: 436px;
-        width: 560px;
-        height: 436px;
+      width: 560px;
+      height: 436px;
     }
 }
 
 .loginBox__title {
     font-size: 36px;
-    color: $red;
+    color: $dark-primary;
     font-weight: 700;
 }
 
 .input {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    color: $gray;
+    color: $primary-text;
     font-weight: 300;
     @media (min-width: 992px) {
         width: 273px;
@@ -74,26 +83,37 @@ body {
 
 .btn--link {
     font-size: 15px;
+<<<<<<< Updated upstream
     color: $gray-light !important;
+=======
+    color: $secondary-text;
+>>>>>>> Stashed changes
     font-weight: 300;
 }
 
 .btn--yellow {
-    background-color: $yellow;
+    background-color: $accent;
     font-weight: 700;
     color: $white;
     &:hover {
+<<<<<<< Updated upstream
       background-color: darken($yellow, 5%);
       color: darken($white,5%);
     }
     &:active {
       background-color: darken($yellow, 10%);
       color: darken($white,10%);
+=======
+      background-color: darken($accent, 15%);
+    }
+    &:active {
+      background-color: darken($accent, 25%);
+>>>>>>> Stashed changes
     }
 }
 
 .navContainer {
-  background-color: $red;
+  background-color: $dark-primary;
   height: 70px;
 }
 .navContainer__logo {
