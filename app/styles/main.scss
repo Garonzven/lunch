@@ -9,10 +9,24 @@ $red: #d32f2f !default;
 $gray: #bdbdbd !default;
 $gray-light: #212121;
 $yellow: #fdc113 !default;
+
+// Color palette
 $white: #ffffff !default;
+$primary: #f44336 !default;
+$dark-primary: #d32f2f !default;
+$light-primary: #ffcdd2 !default;
+$accent: #ffc107 !default;
+$primary-text: #212121 !default;
+$secondary-text: #757575 !default;
+$divider: #bdbdbd !default;
 
 body {
     font-family: 'Roboto', sans-serif;
+}
+
+.box{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border: 1px solid $boxBg;
 }
 
 .login,
@@ -25,30 +39,38 @@ body {
 }
 
 .loginBox {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     flex-direction: column;
     justify-content: center;
     @media (min-width: 992px) {
       min-height: 436px;
-        width: 560px;
-        height: 436px;
+      width: 560px;
+      height: 436px;
     }
 }
 
 .loginBox__title {
     font-size: 36px;
-    color: $red;
+    color: $dark-primary;
     font-weight: 700;
 }
 
 .input {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    color: $gray;
+    color: $primary-text;
     font-weight: 300;
     @media (min-width: 992px) {
         width: 273px;
     }
+}
+
+.input--block{
+  width: 100%
+}
+
+.btn{
+  outline: none !important;
+  text-decoration: none !important;
 }
 
 .btn--fs20 {
@@ -61,26 +83,75 @@ body {
 
 .btn--link {
     font-size: 15px;
-    color: $gray-light;
+    color: $secondary-text;
     font-weight: 300;
 }
 
 .btn--yellow {
-    background-color: $yellow;
+    background-color: $accent;
     font-weight: 700;
     color: $white;
     &:hover {
-      background-color: darken($yellow, 15%);
+      background-color: darken($yellow, 5%);
+      color: darken($white,5%);
     }
     &:active {
-      background-color: darken($yellow, 25%);
+      background-color: darken($accent, 15%);
+      color: darken($white,15%);
+    }
+    &:active {
+      background-color: darken($accent, 25%);
+      color: darken($white,15%);
     }
 }
 
 .navContainer {
-  background-color: $red;
+  background-color: $dark-primary;
   height: 70px;
 }
 .navContainer__logo {
   padding-top: 0;
+}
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 992px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+
+  }
+}
+
+.modal-dialog--pass{
+    width: 560px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-content--pass{
+  border-radius: 0px;
+  border-color: $boxBg;
+  padding: 35px 80px;
+}
+
+
+.m-b-30{
+  margin-bottom: 30px;
+}
+
+.m-b-40{
+  margin-bottom: 40px;
+}
+
+.m-t-70 {
+  margin-top: 70px;
 }
