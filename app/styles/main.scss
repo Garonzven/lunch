@@ -24,6 +24,32 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.titles {
+  font-size: 25px;
+  color: $gray;
+}
+
+.ciclo{
+  background-color: $dark-primary;
+  color: $white;
+  font-size: 20px;
+  text-align: center;
+  list-style: none;
+  position: relative;
+}
+
+.ciclo-day{
+  text-decoration: none;
+  width: 20px;
+  margin-right: 10px;
+  padding: 9px 10px;
+  height: 40px;
+}
+
+
+
+.p-t-30{padding-top: 30px;}
+
 .box{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   border: 1px solid $boxBg;
