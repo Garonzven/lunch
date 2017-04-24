@@ -1,45 +1,21 @@
 $(document).ready(function() {
+  $("#login").on("click", function() {
     $.ajax({
-        url: 'login.html',
-        type: 'get',
-        dataType: 'text',
-        success: function(response) {
-          $('.container').html(response);
-          $('#login').on('click', function() {
-            $.ajax({
-              url:'http://127.0.0.1:8000/login/signin',
-              method:'post',
-              data: {email:$('#email').val(),password:$('#password').val()},
-              dataType:'JSON',
-              success: function(data){
-                  $.ajax({
-                    url:'user_dashboard.html',
-                    type:'get',
-                    dataType: 'text',
-                    success: function(data2) {
-                      $('.container').html(data2);
-                      $('#name').html(data.name);
-                      $.ajax({
-                        url:'avatar.html',
-                        type:'get',
-                        dataType:'text',
-                        success:function(response){
-                            $('.avatar').html(response);
-                        }
-                      });
-                    }
-                  });
-              }
-            });
-          });
+      url: "login.json",
+      method: "get",
+      data: {
+        email: $("#email").val(),
+        password: $("#password").val()
+      },
+      dataType: "JSON",
+      success: function(data) {
+        if (data.token) {
+          $.cookie("token", data.token, { expires: 7 });
+          $(location).attr("href", "user_dashboard.html");
+        } else {
+          alert("Invalid credentials!");
         }
+      }
     });
-      // $.ajax({
-      //     url: 'user_dashboard.html',
-      //     type: 'get',
-      //     dataType: 'text',
-      //     success: function(response) {
-      //         $('.container').html(response);
-      //     }
-      // });
+  });
 });

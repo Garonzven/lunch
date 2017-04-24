@@ -1,74 +1,117 @@
-<div class="row m-t-70">
-  <div class="col-md-9">
-    <div class="row">
-      <div class="col-md-9 pull-left">
-        <p class="titles p-t-30">Welcome <span id="name"></span></p>
-      </div>
-      <div class="col-md-3 pull-right">
-        <p class="titles p-t-30 fecha"></p>
-      </div>
-    </div>
-    <div class="ciclo">
-      <ul>
-        <li class="ciclo-day">Mon, 1 <div class="ciclo-status">
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lunch</title>
 
-        </div></li>
-        <li class="ciclo-day">Tue, 2</li>
-        <li class="ciclo-day">Wed, 3</li>
-        <li class="ciclo-day">Thu, 4</li>
-        <li class="ciclo-day">Fri, 5</li>
-      </ul>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
 
-  </div>
-  <div class="row">
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-      <br>
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail thumbnail-menu">
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
 
-          <div class="caption">
-            <p class="title-menu">Menu 1</p>
-            <p><b>Carne con Papa</b></p>
-            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            <p><a href="#" class="btn btn--link" role="button">Comentario</a> <a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
-          </div>
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="/images/logo.png" alt="Logo">
+          </a>
         </div>
+        <div class="collapse navbar-collapse avatar" id="menu"></div>
       </div>
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail thumbnail-menu">
-          <div class="caption">
-            <p class="title-menu">Menu 2</p>
-            <p><b>Carne con Papa</b></p>
-            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
-            <p><a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail thumbnail-menu">
-          <div class="caption">
-            <p class="title-menu">Menu 3</p>
-            <p><b>Carne con Papa</b></p>
-            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
-            <div class="">
-              <a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a>
+    </nav>
+
+    <div class="container">
+      <div class="row m-t-70">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-9 pull-left">
+              <p class="titles p-t-30">Welcome <span id="name"></span></p>
+            </div>
+            <div class="col-md-3 pull-right">
+              <p class="titles p-t-30 fecha"></p>
             </div>
           </div>
+          <div class="ciclo">
+            <ul>
+              <li class="ciclo-day">Mon, 1 <div class="ciclo-status">
+
+              </div></li>
+              <li class="ciclo-day">Tue, 2</li>
+              <li class="ciclo-day">Wed, 3</li>
+              <li class="ciclo-day">Thu, 4</li>
+              <li class="ciclo-day">Fri, 5</li>
+            </ul>
+
+        </div>
+        <div class="row">
+
+            <br>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail thumbnail-menu">
+
+                <div class="caption">
+                  <p class="title-menu">Menu 1</p>
+                  <p><b>Carne con Papa</b></p>
+                  <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                  <p><a href="#" class="btn btn--link" role="button">Comentario</a> <a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail thumbnail-menu">
+                <div class="caption">
+                  <p class="title-menu">Menu 2</p>
+                  <p><b>Carne con Papa</b></p>
+                  <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
+                  <p><a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail thumbnail-menu">
+                <div class="caption">
+                  <p class="title-menu">Menu 3</p>
+                  <p><b>Carne con Papa</b></p>
+                  <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
+                  <div class="">
+                    <a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+
         </div>
       </div>
 
-  </div>
-  <div class="col-md-3">
-
-  </div>
-</div>
-
-<script type="text/javascript">
-$('document').ready(function(){
-  var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-  var d = new Date();
-  var n = monthNames[d.getMonth()]+", "+d.getDate();
-  $('.fecha').html(n);
-});
-
-</script>
+      <script type="text/javascript">
+      $('document').ready(function(){
+        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        var d = new Date();
+        var n = monthNames[d.getMonth()]+", "+d.getDate();
+        $('.fecha').html(n);
+      });
+      </script>
+    </div>
+  </body>
+</html>
