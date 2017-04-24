@@ -3,11 +3,16 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','last_name', 'dni', 'country', 'city', 'phone', 'email', 'password', 'change_pass', 'id_profile'];
+        'name','last_name', 'dni', 'country', 'city', 'phone', 'email', 'photo', 'password', 'change_pass', 'id_profile'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -25,4 +30,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function scopeName($query, $name)
+    {
+
+    	$query->where('name', 'LIKE', "%$name%");
+    }
 }

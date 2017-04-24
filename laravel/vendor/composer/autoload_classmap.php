@@ -6,12 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateCycleDishesTable' => $baseDir . '/database/migrations/2017_04_20_171933_create_cycle_dishes_table.php',
-    'CreateCyclesTable' => $baseDir . '/database/migrations/2017_04_20_171838_create_cycles_table.php',
-    'CreateDishesTable' => $baseDir . '/database/migrations/2017_04_20_171722_create_dishes_table.php',
-    'CreateLogsTable' => $baseDir . '/database/migrations/2017_04_20_171638_create_logs_table.php',
-    'CreateOrdersTable' => $baseDir . '/database/migrations/2017_04_20_171803_create_orders_table.php',
+    'CreateCycleDishesTable' => $baseDir . '/database/migrations/2017_04_22_214845_create_cycle__dishes_table.php',
+    'CreateCyclesTable' => $baseDir . '/database/migrations/2017_04_22_214642_create_cycles_table.php',
+    'CreateDishesTable' => $baseDir . '/database/migrations/2017_04_22_214105_create_dishes_table.php',
+    'CreateLogsTable' => $baseDir . '/database/migrations/2017_04_22_215045_create_logs_table.php',
+    'CreateOrdersTable' => $baseDir . '/database/migrations/2017_04_22_214404_create_orders_table.php',
     'CreateProfilesTable' => $baseDir . '/database/migrations/2017_04_20_170644_create_profiles_table.php',
+    'CreateProvidersTable' => $baseDir . '/database/migrations/2017_04_22_213822_create_providers_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_04_20_171559_create_roles_table.php',
     'CreateUserTable' => $baseDir . '/database/migrations/2017_04_20_170805_create_user_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

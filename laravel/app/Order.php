@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-  protected $table = "orders";
+    protected $table = "orders";
 
-  protected $fillable = ['id_user', 'id_dishes', 'observation'];
+  	protected $fillable = ['id_user', 'id_dishes', 'observation'];
 }

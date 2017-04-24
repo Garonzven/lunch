@@ -13,7 +13,7 @@ class ProfileSeederTable extends Seeder
     {
         $arrays = ['Admin','User','Invited'];
         foreach ($arrays as $array) {
-        	$profile = new Profile;
+        	$profile = new Profile();
         	$profile->profile_type = $array;
         	$profile->save();
         }
