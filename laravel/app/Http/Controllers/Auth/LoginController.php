@@ -46,7 +46,7 @@ class LoginController extends Controller
            'password'=>'required']);
        // grab credentials from the request
        $credentials = $request->only('email', 'password');
-       #dd($credentials);
+      #dd($credentials);
        try {
            $token = JWTAuth::attempt($credentials);
            #dd($token);
@@ -62,5 +62,16 @@ class LoginController extends Controller
        // all good so return the token
        return response()->json(['token'=>$token],200);
    }
+
+   public function logout (Request $request)
+  {
+      $this->validate($request, [
+          'token' => 'required'
+      ]);
+
+      JWTAuth::invalidate($request->input('token'));
+      return response()->json(['message'=>'user has logout'],200);
+  }
+
 
 }

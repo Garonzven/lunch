@@ -23,7 +23,7 @@ class UserController extends Controller
         'phone' => $request->get('phone'),
         'email' => $request->get('email'),
         'photo' => $request->get('photo'),
-        'password' => str_random(10),
+        'password' => bcrypt($request->get('password')),#str_random(10),
         'change_pass' => $request->get('change_pass'),
         'id_profile' => $request->get('id_profile')
       ]);

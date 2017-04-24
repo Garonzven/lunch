@@ -19,6 +19,11 @@ Route::resource('cycle', 'CycleController');
 #Route::post('register',['uses'=>'UserController@registerUser']);
 Route::group(['prefix'=>'login'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
+	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
+        {
+					Route::post('logout', 'Auth\LoginController@logout');
+          #Route::post('getUserInfo', 'api\v2\UserController@getUserInfo');
+        });
 });
 
 Route::group(['prefix'=>'user'],function(){
