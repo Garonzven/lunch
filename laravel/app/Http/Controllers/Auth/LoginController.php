@@ -72,6 +72,10 @@ class LoginController extends Controller
       JWTAuth::invalidate($request->input('token'));
       return response()->json(['message'=>'user has logout'],200);
   }
-
+  public function sendProfile(Request $request)
+  {
+    $users = JWTAuth::parseToken()->authenticate();
+    return response()->json(['id_profile'=>$users],200);
+  }
 
 }

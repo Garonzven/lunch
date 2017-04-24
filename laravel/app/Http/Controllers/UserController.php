@@ -11,6 +11,11 @@ use JWTAuth;
 use Mail;
 class UserController extends Controller
 {
+    private function validate($data){
+      if (!$data) {
+        return response()->json(['message'=>'not found the user'],404);
+      }
+    }
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
@@ -39,25 +44,26 @@ class UserController extends Controller
         $user = User::all();
         return response()->json(['data' => $user, 'message' => 'User List'],200);
     }
-    public function searchUser($id)
+    public function searchUser(Request $request)
     {
-        $user = User::find($id);
-        if(!count($user)==0)
-        {
-            return response()->json(['data' => $user, 'message' => 'User find'],200);
-        }
-        return response()->json(['message' => 'User not find'],404);
+        $user = \DB::table('users')->where('email', $request->get('email'))->get();
+        $this->validate($user);
+        return response()->json(['data' => $user, 'message' => 'User find'],200);
+
     }
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
-        $user = User::find($id);
-        if(!$user){
-          return response()->json(['message'=>'not found the user'],404);
-        }
+        $user = \DB::table('users')->where('email', $request->get('email'))->get();
+        $this->validate($user);
+        $user->name = $request->input('name');
+        $user->last_name = $request->input('last_name');
+        $user->dni = $request->input('dni');
         $user->country = $request->input('country');
         $user->city = $request->input('city');
         $user->phone = $request->input('phone');
         $user->country = $request->input('photo');
+        $user->name = $request->input('email')
+        $user->id_profile = $request->input('id_profile');
         $user->save();
         return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
 
@@ -74,7 +80,7 @@ class UserController extends Controller
            $vals->email = $user->email;
        }
        $vals->password = str_random(10);
-       if(!count($user)==0)
+       if(count($user)>0)
            {
                $change = \DB::table('users')->where('email', $vals->email)->update(['password' => $vals->password, 'change_pass' => true]);
                Mail::send('welcome', ['data' => $vals], function($message) use($vals){
@@ -84,18 +90,24 @@ class UserController extends Controller
            }
            return response()->json(['message' => 'email not exists'],404);
    }
-    public function deleteUser($id)
+    public function deleteUser(Request $request)
     {
-        $user = User::find($id);
+        $user = \DB::table('users')->where('email', $request->get('email'))->get();
+        $this->validate($user);
         $user->delete();
         return response()->json(['message' => 'User delete'],200);
+
+
     }
-    public function restoreUser($id)
+    /*
+    //restore a user in de db
+    public function restoreUser(Request $request)
     {
-        $user = User::withTrashed()->where('id', $id)->first();
+        $user = User::withTrashed()->where('email', $request->get('email'))->first();
         $user->restore();
         return response()->json(['user' => $user, 'message' => 'User restore'], 200);
     }
+    //search name
     public function searchUserName($name)
     {
             $user = User::name($name)->get();
@@ -104,7 +116,7 @@ class UserController extends Controller
                 return response()->json(['user' => $user, 'message' => 'Search for name'],200);
             }
             return response()->json(['message' => 'Search fail'],400);
-    }
+    }*/
     /*public function searchId($id)
     {
         $user = User::find($id);
