@@ -5,64 +5,54 @@
         <p class="titles p-t-30">Welcome <span id="name"></span></p>
       </div>
       <div class="col-md-3 pull-right">
-        <p class="titles p-t-30">May,10 2017</p>
+        <p class="titles p-t-30 fecha"></p>
       </div>
     </div>
-    <div class="ciclo row">
-      <div class="ciclo-day col-md-2">
-        May <br>
-        9
-      </div>
-      <div class="ciclo-day col-md-2">
-        May <br>
-        10
-      </div>
-      <div class="ciclo-day col-md-2">
-        May <br>
-        11
-      </div>
-      <div class="ciclo-day col-md-2">
-        May <br>
-        12
-      </div>
-      <div class="ciclo-day col-md-2">
-        May <br>
-        13
-      </div>
+    <div class="ciclo">
+      <ul>
+        <li class="ciclo-day">Mon, 1 <div class="ciclo-status">
+
+        </div></li>
+        <li class="ciclo-day">Tue, 2</li>
+        <li class="ciclo-day">Wed, 3</li>
+        <li class="ciclo-day">Thu, 4</li>
+        <li class="ciclo-day">Fri, 5</li>
+      </ul>
+
   </div>
   <div class="row">
 
       <br>
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="..." alt="...">
+        <div class="thumbnail thumbnail-menu">
+
           <div class="caption">
-            <h3>Menu 1</h3>
-            <p>Carne con Papa</p>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p class="title-menu">Menu 1</p>
+            <p><b>Carne con Papa</b></p>
+            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
             <p><a href="#" class="btn btn--link" role="button">Comentario</a> <a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
           </div>
         </div>
       </div>
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="..." alt="...">
+        <div class="thumbnail thumbnail-menu">
           <div class="caption">
-            <h3>Menu 2</h3>
-            <p>Carne con Papa</p>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+            <p class="title-menu">Menu 2</p>
+            <p><b>Carne con Papa</b></p>
+            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
             <p><a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
           </div>
         </div>
       </div>
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="..." alt="...">
+        <div class="thumbnail thumbnail-menu">
           <div class="caption">
-            <h3>Menu 3</h3>
-            <p>Carne con Papa</p>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-            <p><a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a> </p>
+            <p class="title-menu">Menu 3</p>
+            <p><b>Carne con Papa</b></p>
+            <p class="text-justify thumbnail-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
+            <div class="">
+              <a href="#" class="btn btn--link" role="button">Comentario</a><a href="#" class="btn btn--yellow" role="button">Agregar</a>
+            </div>
           </div>
         </div>
       </div>
@@ -72,3 +62,13 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+$('document').ready(function(){
+  var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+  var d = new Date();
+  var n = monthNames[d.getMonth()]+", "+d.getDate();
+  $('.fecha').html(n);
+});
+
+</script>
