@@ -15,6 +15,7 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/menu.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
@@ -44,17 +45,49 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/menu.js"></script>
     <!-- endbuild -->
   </head>
   <body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                  <img src="images/logo-typo.png" alt="Logo" class="img-responsive">
+                </li>
+                <li>
+                    <a href="#">Select your menu</a>
+                </li>
+                <li>
+                    <a href="#">Users management</a>
+                </li>
+                <li>
+                    <a href="#">Menus management</a>
+                </li>
+                <li>
+                    <a href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    </div>
+
+
     <!--[if IE]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <nav class="nav navbar-default navbar-fixed-top navContainer">
       <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+          <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="menu-toggle">
+              <span class="hamb-top"></span>
+              <span class="hamb-middle"></span>
+              <span class="hamb-bottom"></span>
+          </button>
           <a class="navbar-brand navContainer__logo" href="#">
             <img src="/images/logo.png" alt="Logo">
           </a>
