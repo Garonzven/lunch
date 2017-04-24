@@ -11,14 +11,11 @@ use JWTAuth;
 use Mail;
 class UserController extends Controller
 {
-    private function validate($data){
-      if (!$data) {
-        return response()->json(['message'=>'not found the user'],404);
-      }
-    }
+
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
+      $password = str_random(10);
       $user = new User([
         'name' => $request->get('name'),
         'last_name' => $request->get('last_name'),
@@ -28,12 +25,12 @@ class UserController extends Controller
         'phone' => $request->get('phone'),
         'email' => $request->get('email'),
         'photo' => $request->get('photo'),
-        'password' => bcrypt($request->get('password')),#str_random(10),
+        'password' => bcrypt($password),
         'change_pass' => $request->get('change_pass'),
         'id_profile' => $request->get('id_profile')
       ]);
       $user->save();
-      Mail::send('welcome', ['data' => $user], function($message) use($user){
+      Mail::send('welcome', ['data' => $user,'password'=>$password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
       #return response()->json(['message'=>'user has created'],201);
       return response()->json(['message'=>'user has created', 'data'=>$user],201);
@@ -44,17 +41,34 @@ class UserController extends Controller
         $user = User::all();
         return response()->json(['data' => $user, 'message' => 'User List'],200);
     }
-    public function searchUser(Request $request)
+    /*
+    public function searchUser($email)
     {
-        $user = \DB::table('users')->where('email', $request->get('email'))->get();
-        $this->validate($user);
+        $user = \DB::table('users')->where('email', $request->get('email')->get();
+        $this->validation($user);
         return response()->json(['data' => $user, 'message' => 'User find'],200);
 
-    }
+    }*/
     public function updateUser(Request $request)
     {
-        $user = \DB::table('users')->where('email', $request->get('email'))->get();
-        $this->validate($user);
+        $email = \DB::table('users')->where('email', $request->get('email'))->get();
+        #dd($email);
+        if ($this->validation($email)) {
+          return response()->json(['message'=>'not found the user'],404);
+        }
+        #dd($email);
+        $user =\DB::table('users')->where('email', $request->get('email'))
+        ->update(['name' =>$request->input('name'),
+        'last_name' => $request->input('last_name'),
+        'dni' => $request->input('dni'),
+        'country' => $request->input('country'),
+        'city' => $request->input('city'),
+        'phone' => $request->input('phone'),
+        'email' => $request->input('email'),
+        'photo' => $request->input('photo'),
+        'id_profile' => $request->input('id_profile'),
+      ]);
+      /*
         $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
         $user->dni = $request->input('dni');
@@ -62,9 +76,9 @@ class UserController extends Controller
         $user->city = $request->input('city');
         $user->phone = $request->input('phone');
         $user->country = $request->input('photo');
-        $user->name = $request->input('email')
+        $user->name = $request->input('email');
         $user->id_profile = $request->input('id_profile');
-        $user->save();
+        #$user->save();*/
         return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
 
         /*$user = \DB::table('users')->where('id', $id)->update(['name' => $request->get('name'), 'photo' => $request->get('photo')]);//Falta definir que campos pueden ser actualizados
@@ -92,12 +106,23 @@ class UserController extends Controller
    }
     public function deleteUser(Request $request)
     {
-        $user = \DB::table('users')->where('email', $request->get('email'))->get();
-        $this->validate($user);
+
+        $user = User::where('email', $request->get('email'))->get();
+        dd($user);
+        $id = $user->get('id');
+        dd($id);
         $user->delete();
         return response()->json(['message' => 'User delete'],200);
 
 
+    }
+    public function validation($data){
+      /*if (!$data) {
+        return response()->json(['message'=>'not found the user'],404);
+      }*/
+      if (count($data)==0) {
+        return true;
+      }
     }
     /*
     //restore a user in de db

@@ -68,7 +68,6 @@ class LoginController extends Controller
       $this->validate($request, [
           'token' => 'required'
       ]);
-
       JWTAuth::invalidate($request->input('token'));
       return response()->json(['message'=>'user has logout'],200);
   }

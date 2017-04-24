@@ -31,7 +31,7 @@ Route::group(['prefix'=>'login'],function(){
 Route::group(['prefix'=>'user'],function(){
 	Route::post('register',['uses'=>'UserController@registerUser']);
 	Route::get('findlist',['uses'=>'UserController@searchUserlist','middleware'=>'jwt.auth']);
-	Route::get('find',['uses'=>'UserController@searchUser','middleware'=>'jwt.auth']);
+	#Route::get('find/{email}',['uses'=>'UserController@searchUser','middleware'=>'jwt.auth']);
 	#Route::get('findname/{name}',['uses'=>'UserController@searchUserName','middleware'=>'jwt.auth']);
 	Route::put('update',['uses'=>'UserController@updateUser','middleware'=>'jwt.auth']);
 	#Route::put('restore/{id}',['uses'=>'UserController@restoreUser','middleware'=>'jwt.auth']);
