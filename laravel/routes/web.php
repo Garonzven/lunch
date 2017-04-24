@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::resource('dish', 'DishController');
 Route::resource('cycle', 'CycleController');
 #Route::post('register',['uses'=>'UserController@registerUser']);
+
 Route::group(['prefix'=>'login'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
 	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
@@ -36,7 +37,7 @@ Route::group(['prefix'=>'user'],function(){
 	Route::put('recovery',['uses'=>'UserController@recoveryPassword','middleware'=>'jwt.auth']);
 	Route::delete('delete/{id}',['uses'=>'UserController@deleteUser','middleware'=>'jwt.auth']);
 });
-
+/*
 Route::group(['prefix' => 'api/v1'], function(){
 
 	Route::get('user/searchId/{id}', 'UserController@searchId');
@@ -47,4 +48,4 @@ Route::group(['prefix' => 'api/v1'], function(){
 	Route::put('user/restore/{id}', 'UserController@restoreUser');
 	Route::get('user/searchName/{name}', 'UserController@searchName');
 
-});
+});*/

@@ -58,9 +58,9 @@ class LoginController extends Controller
            // something went wrong whilst attempting to encode the token
            return response()->json(['error' => 'could_not_create_token'], 500);
        }
-
+       $user= User::where('email',$request->email)->first();
        // all good so return the token
-       return response()->json(['token'=>$token],200);
+       return response()->json(['token'=>$token,'user'=>$user],200);
    }
 
    public function logout (Request $request)
