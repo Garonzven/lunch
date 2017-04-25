@@ -11,16 +11,16 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.css">
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <!-- <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css"> -->
+
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <script src="bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
+
+
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
@@ -67,12 +67,14 @@
           <div class="modal-content  text-center modal-content--pass">
             <div class="modal-body">
               <p class="text-center m-b-30">Please enter your email address to search for your account.</p>
-              <div class="form-group m-b-30">
-                <input type="text" name="email" placeholder="Email" class="form-control input input--block">
-              </div>
-              <div class="form-group">
-                <button type="button" onclick="alerta();" name="button" class="btn btn--yellow btn--fs20 btn--medium">Send</button>
-              </div>
+              <form id="resetForm" method="post">
+                <div class="form-group form-group--error  m-b-30">
+                  <input type="text" name="resetemail" id="resetemail" placeholder="Email" class="form-control input input--block">
+                </div>
+                <div class="form-group">
+                  <input type="submit" name="button" value="Send"class="btn btn--yellow btn--fs20 btn--medium">
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -105,8 +107,7 @@
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
     <script src="/bower_components/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="/bower_components/moment/moment.js"></script>
-    <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="/bower_components/sweetalert2/dist/sweetalert2.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -129,9 +130,60 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
+    <script src="scripts/login.js"></script>
     <!-- endbuild -->
 
+    <script type="text/javascript">
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid"
+    });
+    $("#resetForm").validate({
+      rules: {
+        resetemail: {
+          required:true,
+          email: true
+        }
+      },
+      submitHandler: function(form) {
+        $.ajax({
+          url:"recoverypassword.json",
+          method: "get",
+          data:{
+            email:$("resetemail").val()
+          },
+          dataType:"JSON",
+          success: function(data){
+            switch (data.code) {
+              case 200:
+                swal({
+                text: data.message,
+                type: 'success',
+                confirmButtonText: 'Ok'
+                });
+              break;
+
+              case 404:
+              swal({
+              text: data.message,
+              type: 'error',
+              confirmButtonText: 'Ok'
+              });
+              break;
+            }
+          }
+
+        });
+        // swal({
+        // text: 'Please check your email for a message with your provisional password',
+        // type: 'success',
+        // confirmButtonText: 'Ok'
+        // });
+      }
+
+    });
+
+    </script>
 
   </body>
 </html>

@@ -71,8 +71,29 @@ body {
   padding: 15px 50px;
 }
 
+.swal2-title {
+  color: $dark-primary !important;
+}
 
-
+.swal2-buttonswrapper > button:first-child{
+  background-color: $accent !important;
+  border-color: $accent !important;
+  font-weight: 300 !important;
+  color: $white !important;
+  border: 0px !important;
+  border-radius: 0px !important;
+  outline: none;
+  &:hover {
+    background-color: darken($yellow, 5%) !important;
+    border-color: darken($yellow,5%) !important;
+    color: darken($white,5%) !important;
+  }
+  &:active {
+    background-color: darken($accent, 15%) !important;
+    border-color: darken($accent, 15%) !important;
+    color: darken($white,15%) !important;
+  }
+}
 
 .p-t-30{padding-top: 30px;}
 
@@ -142,7 +163,7 @@ body {
 .btn--yellow {
     background-color: $accent;
     font-weight: 700;
-    color: $white;
+    color: $white !important;
     &:hover {
       background-color: darken($yellow, 5%);
       color: darken($white,5%);
@@ -199,6 +220,10 @@ body {
   padding: 35px 80px;
 }
 
+.text-body{
+  font-weight: bold;
+  font-size: 14px;
+}
 
 .m-b-30{
   margin-bottom: 30px;
@@ -220,7 +245,7 @@ body {
   position: relative;
 }
 #email-error,
-#password-error,#confirmpassword-error {
+#password-error,#confirmpassword-error,#resetemail-error {
   display: inline-table;
   position: absolute;
   left: 0px;

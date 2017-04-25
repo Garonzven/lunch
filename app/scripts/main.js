@@ -1,5 +1,10 @@
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+  });
+
 $(document).ready(function() {
-    $("#loginForm").validate({
+  $("#loginForm").validate({
       rules: {
         // simple rule, converted to {required:true}
         password: {
@@ -43,4 +48,5 @@ $(document).ready(function() {
         });
       }
     });
+
 });
