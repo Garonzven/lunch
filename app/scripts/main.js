@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#myform").validate({
+    $("#loginForm").validate({
       rules: {
         // simple rule, converted to {required:true}
         password: {

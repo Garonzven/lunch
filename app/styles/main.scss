@@ -164,6 +164,10 @@ body {
 .navContainer__logo {
   padding-top: 0;
 }
+.navContainer__logo--center {
+  position: absolute;
+  left: calc(50% - 70px);
+}
 
 .modal {
   text-align: center;
@@ -206,4 +210,20 @@ body {
 
 .m-t-70 {
   margin-top: 70px;
+}
+
+.m-b-70 {
+  margin-bottom: 70px;
+}
+
+.form-group--error {
+  position: relative;
+}
+#email-error,
+#password-error {
+  display: inline-table;
+  position: absolute;
+  left: 0px;
+  font-weight: 400;
+  color: $dark-primary;
 }

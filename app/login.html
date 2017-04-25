@@ -11,6 +11,7 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -19,9 +20,6 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
-    <!-- build:js scripts/vendor/modernizr.js -->
-    <script src="/bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild -->
   </head>
   <body>
     <!--[if IE]>
@@ -42,16 +40,16 @@
     <div class="container">
       <div class="login">
           <div class="loginBox box" align="center">
-              <h1 class="loginBox__title m-b-30">It's Lunch time</h1>
-              <form  id="myform" name="myform" method="post" novalidate="novalidate">
-                  <div class="form-group">
+              <h1 class="loginBox__title m-b-70">It's Lunch time</h1>
+              <form id="loginForm" method="post">
+                  <div class="form-group form-group--error m-b-30">
                       <input id="email" name="email" type="text" class="form-control input" placeholder="Email">
                   </div>
-                  <div class="form-group m-b-30">
+                  <div class="form-group m-b-40 form-group--error">
                       <input id="password" name="password" type="password" class="form-control input" placeholder="Password">
                   </div>
                   <div class="form-group">
-                      <button id="login" name="login "type="button" class="btn btn--yellow btn--fs20 btn--medium">Enter</button>
+                      <button id="login" name="login" type="submit" class="btn btn--yellow btn--fs20 btn--medium">Enter</button>
                   </div>
                   <div class="form-group">
                       <button type="button" class="btn btn-link btn--link" data-toggle="modal" data-target="#modalPassword">Forgot password?</button>
@@ -92,7 +90,9 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
-    <script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
