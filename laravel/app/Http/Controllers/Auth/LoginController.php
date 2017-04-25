@@ -52,15 +52,15 @@ class LoginController extends Controller
            #dd($token);
            // attempt to verify the credentials and create a token for the user
            if (! $token) {
-               return response()->json(['error' => 'invalid_credentials'], 401);
+               return response()->json(['error' => 'invalid_credentials','code'=>'401'], 401);
            }
        } catch (JWTException $e) {
            // something went wrong whilst attempting to encode the token
-           return response()->json(['error' => 'could_not_create_token'], 500);
+           return response()->json(['error' => 'could_not_create_token','code'=>'500'], 500);
        }
        $user= User::where('email',$request->email)->first();
        // all good so return the token
-       return response()->json(['token'=>$token,'user'=>$user],200);
+       return response()->json(['token'=>$token,'user'=>$user,'code'=>'200'],200);
    }
 
    public function logout (Request $request)
@@ -69,12 +69,12 @@ class LoginController extends Controller
           'token' => 'required'
       ]);
       JWTAuth::invalidate($request->input('token'));
-      return response()->json(['message'=>'user has logout'],200);
+      return response()->json(['message'=>'user has logout','code'=>'200'],200);
   }
   public function sendProfile(Request $request)
   {
     $users = JWTAuth::parseToken()->authenticate();
-    return response()->json(['id_profile'=>$users],200);
+    return response()->json(['id_profile'=>$users,'code'=>'200'],200);
   }
 
 }

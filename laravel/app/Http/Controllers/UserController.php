@@ -32,20 +32,20 @@ class UserController extends Controller
       $user->save();
       Mail::send('welcome', ['data' => $user,'password'=>$password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
-      return response()->json(['message'=>'user has created', 'data'=>$user],201);
+      return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201'],201);
 
     }
     public function searchUserlist()
     {
         $user = User::all();
-        return response()->json(['data' => $user, 'message' => 'User List'],200);
+        return response()->json(['data' => $user, 'message' => 'User List','code'=>'200'],200);
     }
     public function updateUser(Request $request)
     {
         $email = \DB::table('users')->where('email', $request->get('email'))->get();
-        
+
         if ($this->validation($email)) {
-          return response()->json(['message'=>'not found the user'],404);
+          return response()->json(['message'=>'not found the user','code'=>'404'],404);
         }
         #dd($email);
         $user =\DB::table('users')->where('email', $request->get('email'))
@@ -60,7 +60,7 @@ class UserController extends Controller
         'id_profile' => $request->input('id_profile'),
       ]);
 
-        return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
+        return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200'],200);
     }
     public function recoveryPassword(Request $request)
    {
@@ -72,15 +72,18 @@ class UserController extends Controller
            $vals->email = $user->email;
        }
        $vals->password = str_random(10);
-       if(count($user)>0)
+       if(count($users)>0)
            {
-               $change = \DB::table('users')->where('email', $vals->email)->update(['password' => $vals->password, 'change_pass' => true]);
-               Mail::send('welcome', ['data' => $vals], function($message) use($vals){
+               $change = \DB::table('users')->where('email', $vals->email)->update(['password' => bcrypt($vals->password), 'change_pass' => true]);
+               Mail::send('mails.welcome', ['data' => $vals], function($message) use($vals){
                $message->to($vals->email, 'To:'. $vals->name)->subject('Change password');
                });
-               return response()->json(['user' => $vals, 'message' => 'Send new password'],200);
+               return response()->json([
+                 'user' => $vals,
+                 'message' => 'PLease check your emai for a message with your provisional password',
+                 'code'=>'200'],200);
            }
-           return response()->json(['message' => 'email not exists'],404);
+           return response()->json(['message' => 'email not exists','code'=>'404'],404);
    }
     public function deleteUser(Request $request)
     {
@@ -93,9 +96,16 @@ class UserController extends Controller
         $find =User::find($vals);
         #dd($find);
         $find->delete();
-        return response()->json(['message' => 'User delete'],200);
+        return response()->json(['message' => 'User delete','code'=>'200'],200);
 
 
+    }
+    public function changePassword(Request $request)
+    {
+       $password = User::where('email', $request->get('email'))->update([
+         'password' => bcrypt($request->get('password')),
+       ]);
+       return response()->json(['message' => 'Your password has been successfully changed','code'=>'200'],200);
     }
     public function validation($data){
       /*if (!$data) {
