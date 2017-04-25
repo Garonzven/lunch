@@ -14,24 +14,23 @@ class DishController extends Controller
    public function registerDish(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
-
-      $dish = new Dish([
+      $dish = Dish::create([
         'title' => $request->get('title'),
         'description' => $request->get('description'),
         'id_provider' => $request->get('id_provider'),
       ]);
-      $dish->save();
+    
       return response()->json(['message'=>'dish created', 'data'=> $dish],201);
     }
     public function searchDishList()
     {
         $dish = Dish::all();
-        return response()->json(['data' => $dish, 'message' => 'User List'],200);
+        return response()->json(['data' => $dish, 'message' => 'Dish List'],200);
     }
     public function searchDish($id)//Puede estar que no creo
     {
         $dish = Dish::find($id);
-        if(!count($dish)==0)
+        if(count($dish)>0)
         {
             return response()->json(['data' => $dish, 'message' => 'Dish find'],200);
         }
@@ -65,10 +64,10 @@ class DishController extends Controller
     public function searchDishTitle($title)
     {
             $dish = Dish::name($title)->get();
-            if(!count($dish)==0)
+            if(count($dish)>0)
             {
                 return response()->json(['data' => $dish, 'message' => 'Search for title'],200);
             }
-            return response()->json(['message' => 'Search fail'],400);
+            return response()->json(['message' => 'Search fail'],404);
     }
 }

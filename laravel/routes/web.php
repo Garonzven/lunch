@@ -48,3 +48,13 @@ Route::group(['prefix'=>'dish'],function(){
 	Route::put('restore/{id}',['uses'=>'DishController@restoreDish','middleware'=>'jwt.auth']);
 	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish','middleware'=>'jwt.auth']);
 });
+
+Route::group(['prefix'=>'cycle'],function(){
+	Route::post('register',['uses'=>'CycleController@registerCycle']);
+	Route::get('find',['uses'=>'CycleController@searchCycleList','middleware'=>'jwt.auth']);
+	//Route::get('find/{id}',['uses'=>'CycleController@searchCycle','middleware'=>'jwt.auth']);
+	//Route::get('findname/{title}',['uses'=>'CycleController@searchCyclyTitle','middleware'=>'jwt.auth']);
+	Route::put('update',['uses'=>'CycleController@updateCycle','middleware'=>'jwt.auth']);
+	//Route::put('restore/{id}',['uses'=>'CycleController@restoreDish','middleware'=>'jwt.auth']);
+	Route::delete('delete/{id}',['uses'=>'CycleController@deleteCyle','middleware'=>'jwt.auth']);
+});
