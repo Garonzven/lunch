@@ -127,6 +127,7 @@ body {
     font-weight: 700;
 }
 
+
 .input {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -176,6 +177,9 @@ body {
       background-color: darken($accent, 25%);
       color: darken($white,15%);
     }
+}
+.radius{
+  border-radius: 0px;
 }
 
 .navContainer {
@@ -251,4 +255,16 @@ body {
   left: 0px;
   font-weight: 400;
   color: $dark-primary;
+}
+.welcome,
+.welcomeBox{
+  margin-top:110px;
+  }
+
+.img,
+.imgBox{
+    display: block;
+    margin: auto;
+    width: 60%;
+    padding-bottom: 20px;
 }
