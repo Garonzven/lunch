@@ -52,11 +52,11 @@ class LoginController extends Controller
            #dd($token);
            // attempt to verify the credentials and create a token for the user
            if (! $token) {
-               return response()->json(['error' => 'invalid_credentials','code'=>'401'], 401);
+               return response()->json(['message' => 'invalid_credentials','code'=>'401'], 401);
            }
        } catch (JWTException $e) {
            // something went wrong whilst attempting to encode the token
-           return response()->json(['error' => 'could_not_create_token','code'=>'500'], 500);
+           return response()->json(['message' => 'could_not_create_token','code'=>'500'], 500);
        }
        $user= User::where('email',$request->email)->first();
        // all good so return the token
