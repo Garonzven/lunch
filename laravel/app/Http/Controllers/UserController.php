@@ -85,11 +85,14 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
 
-        $user = User::where('email', $request->get('email'))->get();
-        dd($user);
-        $id = $user->get('id');
-        dd($id);
-        $user->delete();
+        $users = User::where('email', $request->get('email'))->get();
+        #dd($user);
+        $vals = new User();
+        foreach($users as $user){$vals->id = $user->id;}
+        #dd($vals);
+        $find =User::find($vals);
+        #dd($find);
+        $find->delete();
         return response()->json(['message' => 'User delete'],200);
 
 
