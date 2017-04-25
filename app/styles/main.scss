@@ -220,7 +220,7 @@ body {
   position: relative;
 }
 #email-error,
-#password-error {
+#password-error,#confirmpassword-error {
   display: inline-table;
   position: absolute;
   left: 0px;
