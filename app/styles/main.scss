@@ -165,8 +165,8 @@ body {
   padding-top: 0;
 }
 .navContainer__logo--center {
-  position: absolute;
-  left: calc(50% - 70px);
+  position: absolute !important;
+  left: calc(50% - 70px) !important;
 }
 
 .modal {
