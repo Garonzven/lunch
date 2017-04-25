@@ -14,7 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('dish', 'DishController');
+
 Route::resource('cycle', 'CycleController');
 #Route::post('register',['uses'=>'UserController@registerUser']);
 
@@ -38,15 +38,13 @@ Route::group(['prefix'=>'user'],function(){
 	Route::put('recovery',['uses'=>'UserController@recoveryPassword','middleware'=>'jwt.auth']);
 	Route::delete('delete',['uses'=>'UserController@deleteUser','middleware'=>'jwt.auth']);
 });
-/*
-Route::group(['prefix' => 'api/v1'], function(){
 
-	Route::get('user/searchId/{id}', 'UserController@searchId');
-	Route::delete('user/delete/{id}', 'UserController@deleteUser');
-	Route::put('user/update/{id}', 'UserController@updateUser');
-	Route::post('user/create', 'UserController@createUser');
-	Route::get('user/searchAll', 'UserController@searchAllUser');
-	Route::put('user/restore/{id}', 'UserController@restoreUser');
-	Route::get('user/searchName/{name}', 'UserController@searchName');
-
-});*/
+Route::group(['prefix'=>'dish'],function(){
+	Route::post('register',['uses'=>'DishController@registerDish']);
+	Route::get('find',['uses'=>'DishController@searchDishList','middleware'=>'jwt.auth']);
+	Route::get('find/{id}',['uses'=>'DishController@searchDish','middleware'=>'jwt.auth']);
+	Route::get('findname/{title}',['uses'=>'DishController@searchDishTitle','middleware'=>'jwt.auth']);
+	Route::put('update/{id}',['uses'=>'DishController@updateDish','middleware'=>'jwt.auth']);
+	Route::put('restore/{id}',['uses'=>'DishController@restoreDish','middleware'=>'jwt.auth']);
+	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish','middleware'=>'jwt.auth']);
+});

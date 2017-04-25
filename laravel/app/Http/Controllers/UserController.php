@@ -32,7 +32,6 @@ class UserController extends Controller
       $user->save();
       Mail::send('welcome', ['data' => $user,'password'=>$password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
-      #return response()->json(['message'=>'user has created'],201);
       return response()->json(['message'=>'user has created', 'data'=>$user],201);
 
     }
@@ -41,18 +40,10 @@ class UserController extends Controller
         $user = User::all();
         return response()->json(['data' => $user, 'message' => 'User List'],200);
     }
-    /*
-    public function searchUser($email)
-    {
-        $user = \DB::table('users')->where('email', $request->get('email')->get();
-        $this->validation($user);
-        return response()->json(['data' => $user, 'message' => 'User find'],200);
-
-    }*/
     public function updateUser(Request $request)
     {
         $email = \DB::table('users')->where('email', $request->get('email'))->get();
-        #dd($email);
+        
         if ($this->validation($email)) {
           return response()->json(['message'=>'not found the user'],404);
         }
@@ -68,21 +59,8 @@ class UserController extends Controller
         'photo' => $request->input('photo'),
         'id_profile' => $request->input('id_profile'),
       ]);
-      /*
-        $user->name = $request->input('name');
-        $user->last_name = $request->input('last_name');
-        $user->dni = $request->input('dni');
-        $user->country = $request->input('country');
-        $user->city = $request->input('city');
-        $user->phone = $request->input('phone');
-        $user->country = $request->input('photo');
-        $user->name = $request->input('email');
-        $user->id_profile = $request->input('id_profile');
-        #$user->save();*/
-        return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
 
-        /*$user = \DB::table('users')->where('id', $id)->update(['name' => $request->get('name'), 'photo' => $request->get('photo')]);//Falta definir que campos pueden ser actualizados
-        return response()->json(['user' => $user, 'message' => 'User update'],200);*/
+        return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
     }
     public function recoveryPassword(Request $request)
    {
@@ -133,81 +111,5 @@ class UserController extends Controller
         return response()->json(['user' => $user, 'message' => 'User restore'], 200);
     }
     //search name
-    public function searchUserName($name)
-    {
-            $user = User::name($name)->get();
-            if(!count($user)==0)
-            {
-                return response()->json(['user' => $user, 'message' => 'Search for name'],200);
-            }
-            return response()->json(['message' => 'Search fail'],400);
-    }*/
-    /*public function searchId($id)
-    {
-        $user = User::find($id);
-        if(!count($user)==0)
-        {
-            return response()->json(['data' => $user, 'message' => 'User find'],200);
-        }
-        return response()->json(['message' => 'User not find'],404);
-    }
-    public function deleteUser($id)
-    {
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'User delete'],200);
-    }
-    public function updateUser(Request $request, $id)
-    {
-
-        $user = \DB::table('users')->where('id', $id)->update(['name' => $request->get('name'), 'photo' => $request->get('photo')]);//Falta definir que campos pueden ser actualizados
-
-          return response()->json(['user' => $user, 'message' => 'User update'],200);
-    }
-    public function createUser(Request $request)
-    {
-        $exists = \DB::table('users')->select('dni', 'email')->where('dni',$request->get('dni'))->orWhere('email', $request->get('email'))->get();
-
-         $field = new User();
-          if(count($exists)==0)
-          {
-            $field->name = $request->get('name');
-            $field->last_name = $request->get('last_name');
-            $field->dni= $request->get('dni');
-            $field->country = $request->get('country');
-            $field->city = $request->get('city');
-            $field->phone = $request->get('phone');
-            $field->email = $request->get('email');
-            $field->photo = $request->get('photo');
-            $field->password = bcrypt($request->get('password'));
-            $field->change_pass = $request->get('change_pass');
-            $field->id_profile = $request->get('id_profile');
-            $field->save();
-
-            return response()->json(['message' => 'User created'],201);
-          }
-          return response()->json(['message' => 'user repeated', 'user' => $exists],400);
-    }
-    public function searchAllUser()
-    {
-        $user = User::all();
-
-        return response()->json(['data' => $user, 'message' => 'User List'],200);
-    }
-    public function restoreUser($id)
-    {
-        $user = User::withTrashed()->where('id', $id)->first();
-        $user->restore();
-        return response()->json(['user' => $user, 'message' => 'User restore'], 200);
-    }
-
-    public function searchName($name)
-    {
-            $user = User::name($name)->get();
-            if(!count($user)==0)
-            {
-                return response()->json(['user' => $user, 'message' => 'Search for name'],200);
-            }
-            return response()->json(['message' => 'Search fail'],400);
-    }*/
+    */
 }
