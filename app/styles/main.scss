@@ -126,6 +126,13 @@ body {
     color: $dark-primary;
     font-weight: 700;
 }
+.loginBox__title--welcome{
+  font-size: 36px;
+  color: $dark-primary;
+  font-weight: 700;
+  margin-top: -3px;
+  padding-bottom: 30px;
+}
 
 
 .input {
@@ -146,13 +153,22 @@ body {
   outline: none !important;
   text-decoration: none !important;
 }
+.btn--size{
+  padding: 10px 12px;
+}
 
 .btn--fs20 {
     font-size: 20px;
 }
+.btn--fs15 {
+    font-size: 15px;
+}
 
 .btn--medium {
   width: 195px;
+}
+.btn--large{
+  width: 250px;
 }
 
 .btn--link {
@@ -260,6 +276,11 @@ body {
 .welcomeBox{
   margin-top:110px;
   }
+.text-body--welcome{
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 30px;
+}
 
 .img,
 .imgBox{
@@ -267,4 +288,13 @@ body {
     margin: auto;
     width: 60%;
     padding-bottom: 20px;
+    padding-top: 30px;
+}
+.container .jumbotron, .container-fluid .jumbotron {
+    border-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 35px;
+    background-color: #f2f2f2;
+    box-shadow: 4px 3px 5px 0 rgba(0, 0, 0, 0.1), 4px 1px 5px 0 rgba(0, 0, 0, 0.3);
 }
