@@ -1,17 +1,17 @@
 $(document).ready(function() {
   $.ajax({
-    url: 'profile.json',
+    url: 'login.json',
     method: 'get',
     data: {
         token: $.cookie("token")
     },
     dataType: 'json',
     success: function(data) {
-    	switch (data.id_profile) {
+    	switch (data.user.id_profile) {
     		case 1:
     		case 3:
                 $(".navContainer__logo").addClass("navContainer__logo--center");
-                if (data.id_profile == 1) {
+                if (data.user.id_profile == 1) {
                     url = "menu_admin.html";
                     dashboard = "welcome.html";
                 } else {
@@ -29,18 +29,30 @@ $(document).ready(function() {
                             type: "text",
                             success: function(response) {
                                 $(".container").html(response);
+                            },
+                            complete: function(data) {
+                                
+                                // ==========================
+                                // 
+                                // ALL LOGIC STARTS HERE
+                                // 
+                                // ==========================
+
+                                $("#welcome-go").on("click", function() {
+                                    console.log("Welcome");
+                                });
                             }
                         });
-                    }
+                    },
                 });
-    			break;
+                break;
 
-    		case 2:
-    			$(".hamburger").remove();
-    			break;
-    	}
-        $("#fullname").text(data.name);
-    	$("#name").text(data.name.split(" ")[0]);
+            case 2:
+                $(".hamburger").remove();
+                break;
+        }
+        $("#fullname").text(data.user.name);
+        $("#name").text(data.user.name.split(" ")[0]);
     }
   });
 });
