@@ -23,7 +23,7 @@ Route::group(['prefix'=>'login'],function(){
   	Route::get('profile', 'Auth\LoginController@sendProfile');
 	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
         {
-					Route::post('logout', 'Auth\LoginController@logout');
+					Route::post('signout', 'Auth\LoginController@logout');
           #Route::post('getUserInfo', 'api\v2\UserController@getUserInfo');
         });
 });

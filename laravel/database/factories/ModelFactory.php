@@ -18,13 +18,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'last_name' => $faker->name,
-        'dni' => str_random(rand(5,15)),
+        'jobtitle' => str_random(10),
         'country' => str_random(10),
         'city' => str_random(10),
         'phone' => str_random(7),
         'photo' => str_random(25),
-        'email' => "jeremyfys25@gmail.com",
+        'email' => "carlos@gmail.com",
         'password' => bcrypt("1234"),
         'change_pass' => $bool,
         'id_profile' => $val,
@@ -34,8 +33,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 
 $factory->define(App\Provider::class, function (Faker\Generator $faker) {
-    
-    
+
+
     return [
         'name' => 'Subway',
         'address' => '5 Julio con Delicias',

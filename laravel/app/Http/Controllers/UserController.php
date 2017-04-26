@@ -17,15 +17,13 @@ class UserController extends Controller
       $userToken = JWTAuth::parseToken()->ToUser();
 
       $password = str_random(10);
-
       $user = new User([
         'name' => $request->get('name'),
-        'last_name' => $request->get('last_name'),
-        'dni' => $request->get('dni'),
         'country' => $request->get('country'),
         'city' => $request->get('city'),
         'phone' => $request->get('phone'),
         'email' => $request->get('email'),
+        'jobtitle' =>$request->get('jobtitle'),
         'photo' => $request->get('photo'),
         'password' => bcrypt($password),
         'change_pass' => $request->get('change_pass'),
@@ -46,21 +44,19 @@ class UserController extends Controller
     }
     public function updateUser(Request $request)
     {
-        $find = User::where('email', $request->get('email'))->get();
 
+        $find = User::where('email', $request->input('email'))->get();
         if(!$find)
         {
             return response()->json(['message'=>'user not found','code'=>'404'], 404);
         }
-
         $user = User::where('email', $request->get('email'))
         ->update(['name' =>$request->input('name'),
-        'last_name' => $request->input('last_name'),
-        'dni' => $request->input('dni'),
         'country' => $request->input('country'),
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),
         'email' => $request->input('email'),
+        'jobtitle' =>$request->input('jobtitle'),
         'photo' => $request->input('photo'),
         'id_profile' => $request->input('id_profile'),
       ]);
@@ -86,10 +82,10 @@ class UserController extends Controller
        $vals->password = str_random(10);
 
        $dish = User::where('email', $vals->email)->update([
-                'password' => bcrypt($vals->password), 
+                'password' => bcrypt($vals->password),
                 'change_pass' => true
                 ]);
-            
+
       Mail::send('mails.welcome', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
                $message->to($vals->email, 'To:'. $vals->name)->subject('Change password');
                });
@@ -97,12 +93,12 @@ class UserController extends Controller
       return response()->json([
                  'user' => $vals,
                  'message' => 'Please check your email for a message with your provisional password',
-                 'code'=>'200'],200);       
+                 'code'=>'200'],200);
    }
     public function deleteUser(Request $request)
     {
         $find = User::where('email', $request->get('email'));
-       
+
         $find->delete();
 
         return response()->json(['message' => 'User delete','code'=>'200'],200);
@@ -115,12 +111,12 @@ class UserController extends Controller
        ]);
        return response()->json(['message' => 'Your password has been successfully changed','code'=>'200'],200);
     }
-    
+
   /*  public function restoreUser(Request $request)
     {
         $user = User::withTrashed()->where('email', $request->get('email'))->first();
         $user->restore();
         return response()->json(['user' => $user, 'message' => 'User restore'], 200);
     }*/
-  
+
 }
