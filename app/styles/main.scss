@@ -253,6 +253,10 @@ body {
   border-color: $boxBg;
   padding: 35px 80px;
 }
+.modal-dialog--admin {
+    width: 725px;
+    margin: 30px auto;
+}
 .modal-content--radius{
   border-radius: 0px;
   border-color: $boxBg;
@@ -277,9 +281,17 @@ body {
   right: 17px;
   font-size: 35px;
 }
+.close-modal--admin{
+  position: relative;
+  right: 17px;
+  font-size: 35px;
+}
 .modal-header--user{
   margin-top: 10px;
   padding-top: 20px;
+}
+.modal-header--admin{
+  background: #f2f2f2;
 }
 .btn--modal{
   font-size: 15px;
