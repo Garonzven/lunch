@@ -340,6 +340,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
     );
 
     public static $classMap = array (
+        'AdminSeederTable' => __DIR__ . '/../..' . '/database/seeds/AdminSeederTable.php',
         'CreateCycleDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214845_create_cycle__dishes_table.php',
         'CreateCyclesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214642_create_cycles_table.php',
         'CreateDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214105_create_dishes_table.php',
@@ -348,6 +349,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170644_create_profiles_table.php',
         'CreateProvidersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_213822_create_providers_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_171559_create_roles_table.php',
+        'CreateSettingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_26_153512_create_settings_table.php',
         'CreateUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170805_create_user_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -801,6 +803,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'ProfileSeederTable' => __DIR__ . '/../..' . '/database/seeds/ProfileSeederTable.php',
+        'RolesSeederTable' => __DIR__ . '/../..' . '/database/seeds/RolesSeederTable.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -880,6 +883,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SettingSeederTable' => __DIR__ . '/../..' . '/database/seeds/SettingSeederTable.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
     );
 

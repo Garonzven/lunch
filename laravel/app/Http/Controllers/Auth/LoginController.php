@@ -63,7 +63,7 @@ class LoginController extends Controller
        return response()->json(['token'=>$token,'user'=>$user,'code'=>'200'],200);
    }
 
-   public function logout (Request $request)
+   public function logout(Request $request)
   {
       $this->validate($request, [
           'token' => 'required'

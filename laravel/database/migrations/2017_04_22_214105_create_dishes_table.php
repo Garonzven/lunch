@@ -18,6 +18,7 @@ class CreateDishesTable extends Migration
             $table->string('title', 30);
             $table->string('description', 255);
             $table->unsignedInteger('id_provider');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_provider')->references('id')->on('providers');

@@ -17,11 +17,11 @@ class CreateCycleDishesTable extends Migration
 
             $table->increments('id');
             $table->unsignedInteger('id_cycle');
-            $table->unsignedInteger('id_dishes');
-            $table->DateTime('date_day');
+            $table->unsignedInteger('id_dish');
+            $table->dateTime('date_cycle');
             $table->timestamps();
             $table->foreign('id_cycle')->references('id')->on('cycles');
-            $table->foreign('id_dishes')->references('id')->on('dishes');
+            $table->foreign('id_dish')->references('id')->on('dishes');
         });
     }
 

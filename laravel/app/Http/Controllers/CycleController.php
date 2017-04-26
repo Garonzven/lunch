@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Dish;
+use App\Cycle;
+use App\Cycle_dish;
+use JWTAuth;
+use Mail;
 
 class CycleController extends Controller
 {
@@ -10,11 +16,24 @@ class CycleController extends Controller
     {
       $userToken = JWTAuth::parseToken()->ToUser();
       $cycle = Cycle::create([
-        'closing_date' => $request->get('closing_date'),
-        'initial_date' => $request->get('initial_date'),
-        'remark' => $request->get('remark'),
+        'closing_date' => $request->get('close'),
+        'initial_date' => $request->get('init'),
       ]);
 
+      $data = $request->get('data');
+
+
+      foreach($data as $val)
+      {
+        foreach($val['id_dishes'] as $key)
+        {
+          $dish =  Cycle_Dish::create([
+            'id_cycle' => $cycle->id,
+            'id_dish' => $key,
+            'date_cycle' => $val['date_cycle'],
+          ]);
+        }
+      }
       return response()->json(['data'=> $cycle, 'message'=>'cycle created', 'code' => '201'],201);
     }
     public function searchCycleList()
@@ -30,6 +49,9 @@ class CycleController extends Controller
             return response()->json(['data' => $dish, 'message' => 'Dish find', 'code' => '200'],200);
         }
         return response()->json(['message' => 'Dish not find', 'code' => '404'],404);
+
+        dd($cycle);
+        return response()->json(['data' => $cycle, 'message' => 'Dish List'],200);
     }
     public function updateCycle(Request $request, $id)
     {
@@ -44,6 +66,7 @@ class CycleController extends Controller
       ]);
         return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code' => '200'],200);
     }
+
     public function deleteDish($id)
     {
         $dish = Dish::find($id);

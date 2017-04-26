@@ -22,6 +22,7 @@ class CreateProvidersTable extends Migration
             $table->string('country', 50);
             $table->string('city', 50);
             $table->string('email', 50)->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

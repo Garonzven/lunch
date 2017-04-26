@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AdminSeederTable' => $baseDir . '/database/seeds/AdminSeederTable.php',
     'CreateCycleDishesTable' => $baseDir . '/database/migrations/2017_04_22_214845_create_cycle__dishes_table.php',
     'CreateCyclesTable' => $baseDir . '/database/migrations/2017_04_22_214642_create_cycles_table.php',
     'CreateDishesTable' => $baseDir . '/database/migrations/2017_04_22_214105_create_dishes_table.php',
@@ -14,6 +15,7 @@ return array(
     'CreateProfilesTable' => $baseDir . '/database/migrations/2017_04_20_170644_create_profiles_table.php',
     'CreateProvidersTable' => $baseDir . '/database/migrations/2017_04_22_213822_create_providers_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_04_20_171559_create_roles_table.php',
+    'CreateSettingsTable' => $baseDir . '/database/migrations/2017_04_26_153512_create_settings_table.php',
     'CreateUserTable' => $baseDir . '/database/migrations/2017_04_20_170805_create_user_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -467,6 +469,7 @@ return array(
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'ProfileSeederTable' => $baseDir . '/database/seeds/ProfileSeederTable.php',
+    'RolesSeederTable' => $baseDir . '/database/seeds/RolesSeederTable.php',
     'SebastianBergmann\\CodeCoverage\\CodeCoverage' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage.php',
     'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => $vendorDir . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
     'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => $vendorDir . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -546,5 +549,6 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'SettingSeederTable' => $baseDir . '/database/seeds/SettingSeederTable.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
 );
