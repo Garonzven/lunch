@@ -209,10 +209,12 @@ body {
 }
 .navContainer__logo {
   padding-top: 0;
+  display: none;
 }
 .navContainer__logo--center {
   position: absolute !important;
   left: calc(50% - 70px) !important;
+  display: block;
 }
 
 .modal {
@@ -302,4 +304,37 @@ body {
     padding-bottom: 35px;
     background-color: #f2f2f2;
     box-shadow: 4px 3px 5px 0 rgba(0, 0, 0, 0.1), 4px 1px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.img-circle--avatar {
+  height: 40px;
+}
+
+#fullname {
+  margin-right: 10px;
+}
+
+.navbar-default {
+  .navbar-nav {
+    > li {
+      > a {
+        color: $white;
+        font-size: 16px;
+        transition: all .35s ease;
+        &:hover,
+        &:focus {
+          background-color: darken($dark-primary, 10%);
+          color: darken($white, 5%) !important;
+        }
+      }
+    }
+    > .open {
+      > a,
+      > a:hover,
+      > a:focus {
+        background-color: darken($dark-primary, 10%);
+        color: darken($white, 5%) !important;
+      }
+    }
+  }
 }

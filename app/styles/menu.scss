@@ -152,11 +152,18 @@
   margin-left: 15px;
   background: transparent;
   border: none;
+  transition: all .35s ease-in-out;
 }
 .hamburger:hover,
 .hamburger:focus,
 .hamburger:active {
   outline: none;
+}
+.hamburger.is-open {
+  left: 170px !important;
+}
+.hamburger.is-closed {
+  left: 0px !important;
 }
 .hamburger.is-closed:before {
   content: '';

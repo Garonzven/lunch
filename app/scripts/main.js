@@ -40,7 +40,7 @@ $(document).ready(function() {
           success: function(data) {
             if (data.token) {
               $.cookie("token", data.token, { expires: 7 });
-              $(location).attr("href", "user_dashboard.html");
+              $(location).attr("href", "dashboard.html");
             } else {
               alert("Invalid credentials!");
             }
