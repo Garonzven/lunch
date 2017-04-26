@@ -321,10 +321,15 @@ body {
         color: $white;
         font-size: 16px;
         transition: all .35s ease;
-        &:hover,
-        &:focus {
+        &:hover {
           background-color: darken($dark-primary, 10%);
-          color: darken($white, 5%) !important;
+          color: darken($white, 10%);
+        }
+        &:focus {
+          color: $white;
+        }
+        &:hover:focus {
+          color: darken($white, 10%);
         }
       }
     }
@@ -333,7 +338,7 @@ body {
       > a:hover,
       > a:focus {
         background-color: darken($dark-primary, 10%);
-        color: darken($white, 5%) !important;
+        color: darken($white, 10%);
       }
     }
   }
