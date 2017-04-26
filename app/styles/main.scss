@@ -26,12 +26,14 @@ body {
 }
 
 .titles {
-  font-size: 25px;
+  font-size: 30px;
   color: $gray;
 }
 
 .titles-primary{
+  font-size: 30px;
   color: $primary !important;
+  font-weight: bold;
 }
 
 .title-menu{
@@ -304,6 +306,10 @@ body {
   padding-bottom: 55px;
 }
 
+.m-b-20{
+  margin-bottom: 20px;
+}
+
 .m-b-30{
   margin-bottom: 30px;
 }
@@ -400,4 +406,62 @@ body {
       }
     }
   }
+}
+
+table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting{
+  background-color: $primary;
+  height: 25px !important ;
+  padding: 10px 10px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+  color:$white !important;
+  opacity: 1 !important;
+}
+
+// .dataTables_length label{
+//   display: none;
+// }
+
+
+.table.dataTable tbody > tr >td {
+  color: $gray;
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+div.dataTables_wrapper div.dataTables_filter label{
+  color:$gray;
+  font-weight: lighter;
+}
+
+div.dataTables_wrapper div.dataTables_filter input{
+  border-radius: 0px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+  color: $gray;
+  font-weight: lighter;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus{
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.btn--create{
+  width: 35%;
+  border-radius: 0px;
+}
+
+#example_length select{
+  border-radius: 0px !important;
+}
+
+#example_length label{
+  color: $gray;
+  font-weight: lighter;
 }

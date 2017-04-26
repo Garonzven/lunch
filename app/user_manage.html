@@ -66,7 +66,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="#">Settings</a></li>
                   <li><a href="#">Log out</a></li>
-                </ul>
+                </ul>+
               </li>
           </ul>
         </div>
@@ -75,14 +75,27 @@
 
     <div class="container">
       <div class="row m-t-70">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="col-md-9 pull-left p-t-30 m-b-30">
+            <p class="titles titles-primary m-b-50">Welcome <span id="fullname"></span>
+          </p>
 
-          <div class="col-md-9 pull-left">
-            <p class="titles titles-primary p-t-30">Welcome <span id="fullname"></span></p>
           </div>
-          <div class="col-md-3 pull-right">
-            <p class="titles p-t-30 fecha"></p>
+          <div class="col-md-3 pull-right p-t-30 m-b-30">
+            <p class="titles fecha"></p>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" id="create" name="button" class="btn btn--yellow btn--create m-b-20" >Create new user</button>
+            </div>
+          </div>
+          <table id="example" class="table table-striped display responsive" cellspacing="0" width="100%">
+            <thead>
+              <th>Name</th>
+              <th>Creation date</th>
+              <th>Role</th>
+            </thead>
+          </table>
         </div>
       </div>
     </div>
@@ -123,14 +136,8 @@
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
-      <script type="text/javascript">
-      $('document').ready(function(){
-        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-        var d = new Date();
-        var n = monthNames[d.getMonth()]+", "+d.getDate()+" "+d.getFullYear();
-        $('.fecha').html(n);
-      });
-      </script>
+    <script src="scripts/user.js"></script>
+
     </div>
   </body>
 </html>
