@@ -131,6 +131,12 @@ body {
     color: $dark-primary;
     font-weight: 700;
 }
+.loginBox__title--modal{
+  font-size: 30px;
+  color: $dark-primary;
+  font-weight: 700;
+  padding: 0 0 0 40px;
+}
 .loginBox__title--welcome{
   font-size: 36px;
   color: $dark-primary;
@@ -175,6 +181,7 @@ body {
 .btn--large{
   width: 250px;
 }
+
 
 .btn--link {
     font-size: 15px;
@@ -342,4 +349,3 @@ body {
       }
     }
   }
-}
