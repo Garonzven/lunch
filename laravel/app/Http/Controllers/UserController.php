@@ -16,9 +16,13 @@ class UserController extends Controller
       $userToken = JWTAuth::parseToken()->ToUser();
 
       $password = str_random(10);
+
       $user = User::create([
         'name' => $request->get('name'),
-        'jobtitle' => $request->get('jobtitle'),
+
+      $user = new User([
+        'name' => $request->get('name'),
+        'jobtitle' =>$request->get('jobtitle'),
         'country' => $request->get('country'),
         'city' => $request->get('city'),
         'phone' => $request->get('phone'),
@@ -42,13 +46,12 @@ class UserController extends Controller
     }
     public function updateUser(Request $request)
     {
-        $find = User::where('email', $request->get('email'))->get();
 
+        $find = User::where('email', $request->input('email'))->get();
         if(!$find)
         {
             return response()->json(['message'=>'user not found','code'=>'404'], 404);
         }
-
         $user = User::where('email', $request->get('email'))
         ->update(['name' =>$request->input('name'),
         'jobtitle' => $request->get('jobtitle'),
@@ -56,6 +59,7 @@ class UserController extends Controller
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),
         'email' => $request->input('email'),
+        'jobtitle' =>$request->input('jobtitle'),
         'photo' => $request->input('photo'),
         'id_profile' => $request->input('id_profile'),
       ]);
