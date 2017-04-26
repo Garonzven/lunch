@@ -318,6 +318,10 @@ body {
   margin-bottom: 40px;
 }
 
+.m-b-30{
+  margin-bottom: 30px;
+}
+
 .m-t-70 {
   margin-top: 70px;
 }
@@ -329,6 +333,22 @@ body {
 .form-group--error {
   position: relative;
 }
+
+.or {
+  border-top: 2px solid #000;
+  text-align: center;
+  &:after {
+    content: 'OR';
+  	display: inline-block;
+  	position: relative;
+  	top: -15px;
+  	padding: 0 10px;
+  	background: #f0f0f0;
+  	color: #8c8b8b;
+  	font-size: 18px;
+  }
+}
+
 #email-error,
 #password-error,#confirmpassword-error,#resetemail-error {
   display: inline-table;
