@@ -57,3 +57,4 @@ Route::group(['prefix'=>'cycle'],function(){
 	Route::put('update',['uses'=>'CycleController@updateCycle','middleware'=>'jwt.auth']);
 	//Route::put('restore/{id}',['uses'=>'CycleController@restoreDish','middleware'=>'jwt.auth']);
 	Route::delete('delete/{id}',['uses'=>'CycleController@deleteCyle','middleware'=>'jwt.auth']);
+}

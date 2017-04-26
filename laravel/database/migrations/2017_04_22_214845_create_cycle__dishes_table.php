@@ -14,12 +14,12 @@ class CreateCycleDishesTable extends Migration
     public function up()
     {
         Schema::create('cycle_dishes', function (Blueprint $table) {
-           
+
             $table->increments('id');
             $table->unsignedInteger('id_cycle');
             $table->unsignedInteger('id_dishes');
+            $table->DateTime('date_day');
             $table->timestamps();
-
             $table->foreign('id_cycle')->references('id')->on('cycles');
             $table->foreign('id_dishes')->references('id')->on('dishes');
         });
