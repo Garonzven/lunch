@@ -18,6 +18,7 @@ class CreateCyclesTable extends Migration
             $table->DateTime('closing_date');
             $table->DateTime('initial_date');
             $table->boolean('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

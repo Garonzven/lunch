@@ -18,6 +18,7 @@ class CreateCycleDishesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('id_cycle');
             $table->unsignedInteger('id_dishes');
+            $table->DateTime('date_cycle');
             $table->timestamps();
 
             $table->foreign('id_cycle')->references('id')->on('cycles');

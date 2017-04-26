@@ -20,7 +20,7 @@ Route::resource('cycle', 'CycleController');
 
 Route::group(['prefix'=>'login'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
-  Route::get('profile', 'Auth\LoginController@sendProfile');
+  	Route::get('profile', 'Auth\LoginController@sendProfile');
 	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
         {
 					Route::post('logout', 'Auth\LoginController@logout');
@@ -30,12 +30,12 @@ Route::group(['prefix'=>'login'],function(){
 Route::put('recovery',['uses'=>'UserController@recoveryPassword']);
 Route::group(['prefix'=>'user'],function(){
 	Route::post('register',['uses'=>'UserController@registerUser']);
-	Route::get('findlist',['uses'=>'UserController@searchUserlist','middleware'=>'jwt.auth']);
+	Route::get('findlist',['uses'=>'UserController@searchUserlist','middleware'=> ['jwt.auth', 'admin']]);
 	#Route::get('find/{email}',['uses'=>'UserController@searchUser','middleware'=>'jwt.auth']);
 	#Route::get('findname/{name}',['uses'=>'UserController@searchUserName','middleware'=>'jwt.auth']);
 	Route::put('update',['uses'=>'UserController@updateUser','middleware'=>'jwt.auth']);
-  Route::put('change',['uses'=>'UserController@changePassword','middleware'=>'jwt.auth']);
-	#Route::put('restore/{id}',['uses'=>'UserController@restoreUser','middleware'=>'jwt.auth']);
+  	Route::put('change',['uses'=>'UserController@changePassword','middleware'=>'jwt.auth']);
+	//Route::put('restore/{id}',['uses'=>'UserController@restoreUser','middleware'=>'jwt.auth']);
 	Route::delete('delete',['uses'=>'UserController@deleteUser','middleware'=>'jwt.auth']);
 });
 
@@ -43,9 +43,9 @@ Route::group(['prefix'=>'dish'],function(){
 	Route::post('register',['uses'=>'DishController@registerDish']);
 	Route::get('find',['uses'=>'DishController@searchDishList','middleware'=>'jwt.auth']);
 	Route::get('find/{id}',['uses'=>'DishController@searchDish','middleware'=>'jwt.auth']);
-	Route::get('findname/{title}',['uses'=>'DishController@searchDishTitle','middleware'=>'jwt.auth']);
+	//Route::get('findname/{title}',['uses'=>'DishController@searchDishTitle','middleware'=>'jwt.auth']);
 	Route::put('update/{id}',['uses'=>'DishController@updateDish','middleware'=>'jwt.auth']);
-	Route::put('restore/{id}',['uses'=>'DishController@restoreDish','middleware'=>'jwt.auth']);
+	//Route::put('restore/{id}',['uses'=>'DishController@restoreDish','middleware'=>'jwt.auth']);
 	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish','middleware'=>'jwt.auth']);
 });
 

@@ -24,7 +24,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'city' => str_random(10),
         'phone' => str_random(7),
         'photo' => str_random(25),
-        'email' => "carlos@gmail.com",
+        'email' => "jeremyfys25@gmail.com",
         'password' => bcrypt("1234"),
         'change_pass' => $bool,
         'id_profile' => $val,

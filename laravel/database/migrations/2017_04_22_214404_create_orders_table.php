@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_dishes');
             $table->string('observation', 255)->nullable();
+            $table->softDeletes();
             $table->timestamps();
             
             $table->foreign('id_user')->references('id')->on('users');

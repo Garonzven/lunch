@@ -18,6 +18,7 @@ class CreateProfilesTable extends Migration
             
             $table->increments('id');
             $table->string('profile_type', 30);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
