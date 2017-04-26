@@ -253,10 +253,43 @@ body {
   border-color: $boxBg;
   padding: 35px 80px;
 }
+.modal-content--radius{
+  border-radius: 0px;
+  border-color: $boxBg;
+  padding: 15px;
+}
 
 .text-body{
   font-weight: bold;
   font-size: 14px;
+}
+.text-area{
+  overflow: auto;
+  resize: none;
+  height: 16em;
+  width: 38em;
+  margin-bottom: 20px;
+  border: 2px solid #f2f2f2;
+}
+.close-modal{
+  position: relative;
+  top:-35px;
+  right: 17px;
+  font-size: 35px;
+}
+.modal-header--user{
+  margin-top: 10px;
+  padding-top: 20px;
+}
+.btn--modal{
+  font-size: 15px;
+  width: 200px;
+  right: 5px;
+  position: relative;
+  padding-bottom: initial;
+}
+.modal-body--pad{
+  padding-bottom: 55px;
 }
 
 .m-b-30{
@@ -311,6 +344,12 @@ body {
     padding-bottom: 35px;
     background-color: #f2f2f2;
     box-shadow: 4px 3px 5px 0 rgba(0, 0, 0, 0.1), 4px 1px 5px 0 rgba(0, 0, 0, 0.3);
+}
+.loginBox__title--modal{
+  font-size: 30px;
+  color: $dark-primary;
+  font-weight: 700;
+  padding: 0 0 0 40px;
 }
 
 .img-circle--avatar {
