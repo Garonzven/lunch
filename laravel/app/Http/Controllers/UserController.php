@@ -16,11 +16,7 @@ class UserController extends Controller
       $userToken = JWTAuth::parseToken()->ToUser();
 
       $password = str_random(10);
-
       $user = User::create([
-        'name' => $request->get('name'),
-
-      $user = new User([
         'name' => $request->get('name'),
         'jobtitle' =>$request->get('jobtitle'),
         'country' => $request->get('country'),
@@ -29,20 +25,19 @@ class UserController extends Controller
         'email' => $request->get('email'),
         'photo' => $request->get('photo'),
         'password' => bcrypt($password),
-        'change_pass' => $request->get('change_pass'),
-        'id_profile' => $request->get('id_profile')
+        'change_pass' => true,
+        'id_profile' => $request->get('id_profile'),
       ]);
-
       Mail::send('mails.welcome', ['data' => $user,'password' => $password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
 
-      return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201'],201);
+      return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201']);
 
     }
     public function searchUserlist()
     {
         $user = User::all();
-        return response()->json(['data' => $user, 'message' => 'User List','code'=>'200'],200);
+        return response()->json(['data' => $user, 'message' => 'User List','code'=>'200']);
     }
     public function updateUser(Request $request)
     {
@@ -50,7 +45,7 @@ class UserController extends Controller
         $find = User::where('email', $request->input('email'))->get();
         if(!$find)
         {
-            return response()->json(['message'=>'user not found','code'=>'404'], 404);
+            return response()->json(['message'=>'user not found','code'=>'404']);
         }
         $user = User::where('email', $request->get('email'))
         ->update(['name' =>$request->input('name'),
@@ -59,12 +54,11 @@ class UserController extends Controller
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),
         'email' => $request->input('email'),
-        'jobtitle' =>$request->input('jobtitle'),
         'photo' => $request->input('photo'),
         'id_profile' => $request->input('id_profile'),
       ]);
 
-        return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200'],200);
+        return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200']);
     }
     public function recoveryPassword(Request $request)
    {
@@ -72,7 +66,7 @@ class UserController extends Controller
 
       if(!$users)
        {
-          return response()->json(['message' => 'email not exists','code'=>'404'],404);
+          return response()->json(['message' => 'email not exists','code'=>'404']);
        }
 
        $vals = new User();
@@ -86,7 +80,7 @@ class UserController extends Controller
 
        $dish = User::where('email', $vals->email)->update([
                 'password' => bcrypt($vals->password),
-                'change_pass' => true
+                'change_pass' => true,
                 ]);
 
       Mail::send('mails.welcome', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
@@ -96,7 +90,7 @@ class UserController extends Controller
       return response()->json([
                  'user' => $vals,
                  'message' => 'Please check your email for a message with your provisional password',
-                 'code'=>'200'],200);
+                 'code'=>'200']);
    }
     public function deleteUser(Request $request)
     {
@@ -104,7 +98,7 @@ class UserController extends Controller
 
         $find->delete();
 
-        return response()->json(['message' => 'User delete','code'=>'200'],200);
+        return response()->json(['message' => 'User delete','code'=>'200']);
     }
     public function changePassword(Request $request)
     {
@@ -112,7 +106,7 @@ class UserController extends Controller
          'password' => bcrypt($request->get('password')),
          'change_pass' => false,
        ]);
-       return response()->json(['message' => 'Your password has been successfully changed','code'=>'200'],200);
+       return response()->json(['message' => 'Your password has been successfully changed','code'=>'200']);
     }
 
   /*  public function restoreUser(Request $request)
