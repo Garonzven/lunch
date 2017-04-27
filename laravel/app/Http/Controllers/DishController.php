@@ -21,12 +21,12 @@ class DishController extends Controller
         'id_provider' => $request->get('id_provider'),
       ]);
 
-      return response()->json(['data'=> $dish, 'message'=>'Dish created', 'code'=>'201'],201);
+      return response()->json(['data'=> $dish, 'message'=>'Dish created', 'code'=>'201']);
     }
     public function searchDishList()
     {
         $dish = Dish::all();
-        return response()->json(['data' => $dish, 'message' => 'Dish list', 'code'=>'200'],200);
+        return response()->json(['data' => $dish, 'message' => 'Dish list', 'code'=>'200']);
     }
     public function searchDish($id)//Puede estar que no creo
     {
@@ -34,9 +34,9 @@ class DishController extends Controller
 
         if(count($dish)>0)
         {
-            return response()->json(['data' => $dish, 'message' => 'Dish find', 'code'=>'200'],200);
+            return response()->json(['data' => $dish, 'message' => 'Dish find', 'code'=>'200']);
         }
-        return response()->json(['message' => 'Dish not find', 'code'=>'404'],404);
+        return response()->json(['message' => 'Dish not find', 'code'=>'404']);
     }
     public function updateDish(Request $request, $id)
     {
@@ -45,13 +45,13 @@ class DishController extends Controller
             'description' => $request->get('description'),
         ]);
 
-        return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code'=>'200'],200);
+        return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code'=>'200']);
     }
     public function deleteDish($id)
     {
         $dish = Dish::find($id);
         $dish->delete();
-        return response()->json(['message' => 'Dish delete', 'code'=>'200'],200);
+        return response()->json(['message' => 'Dish delete', 'code'=>'200']);
     }
     /* public function restoreDish($id)
     {

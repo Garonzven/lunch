@@ -2,11 +2,16 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Cycle_Dish extends Model
+class Cycle extends Model
 {
-     protected $table = "cycle_dishes";
+	use SoftDeletes;
 
-  	 protected $fillable = ['id_cycle', 'id_dish', 'date_cycle'];
+    protected $table = "cycles";
+
+    protected $dates = ['deleted_at'];
+
+    protected $fillable = ['closing_date', 'initial_date'];
 }

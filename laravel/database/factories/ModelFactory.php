@@ -13,8 +13,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $bool = true;
-    static $val = 1;
 
     return [
         'name' => $faker->name,
@@ -23,8 +21,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'city' => str_random(10),
         'phone' => str_random(7),
         'photo' => str_random(25),
-        'email' => "carlos@gmail.com",
-        'password' => bcrypt("1234"),
+        'email' => "admin@gmail.com",
+        'password' => bcrypt("admin"),
         'change_pass' => true,
         'id_profile' => 1,
 
