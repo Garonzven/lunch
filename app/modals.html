@@ -84,41 +84,40 @@ Launch demo modal2
           <div class="container">
             <div class="row">
               <div class="form-group">
-                <form action="" class="col-xs-12">
+                <form action="" class="col-xs-12" enctype="multipart/form-data">
                   <div class="col-xs-7">
+                    <label class="label--size">Profile Picture</label>
+
                     <div class="form-group">
                       <label for="" class="label__modal">Name:</label>
-                      <input type="text" class="exam" name="" value="">
-                        <label for="" class="label__modal">Profile picture:</label>
+                        <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                       <label for="" class="label__modal">Email:</label>
-                      <input type="text" name="" value="">
+                      <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                       <label for="" class="label__modal">Tel:</label>
-                      <input type="text" name="" value="">
+                      <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                       <label for="" class="label__modal">Job Title:</label>
-                      <input type="text" name="" value="">
+                      <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                       <label for="" class="label__modal">City:</label>
-                      <input type="text" name="" value="">
+                      <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                       <label for="" class="label__modal">Country:</label>
-                      <input type="text" name="" value="">
+                      <input type="text" class="form-control form-control--input input" name="" value="">
                     </div>
                     <div class="form-group">
                     <label for="" class="label__modal">Profile</label>
-                    <select class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select class="form-control form-control--select">
+                      <option>Admin</option>
+                      <option>User</option>
+                      <option>Wacher</option>
                     </select>
                     </div>
                     <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
@@ -126,7 +125,6 @@ Launch demo modal2
 
                 </form>
               </div>
-              </form>
             </div>
           </div>
         </div>
@@ -144,12 +142,52 @@ Launch demo modal3
 <div class="modal-dialog modal-dialog--admin" role="document">
   <div class="modal-content modal-content--admin">
     <div class="modal-header modal-header--admin">
+      <form action="" class="col-xs-12" enctype="multipart/form-data">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>
+      <!--<h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>-->
+      <input type="text" class="modal-title loginBox__title--modal form-control form-control--input input" name="" value="">
       </div class="container">
         <div class="modal-body modal-body--pad">
-
+          <div class="container">
+            <div class="row">
+              <div class="form-group">
+                  <div class="col-xs-7">
+                    <label class="label--size">Profile Picture</label>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Email:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Tel:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Job Title:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">City:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Country:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                    <label for="" class="label__modal">Profile</label>
+                    <select class="form-control form-control--select">
+                      <option>Admin</option>
+                      <option>User</option>
+                      <option>Wacher</option>
+                    </select>
+                    </div>
+                    <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </form>
       </div>
     </div>
   </div>
@@ -175,6 +213,7 @@ Launch demo modal4
 </div>
 </div>
   </body>
+
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->
   <script src="/bower_components/jquery/dist/jquery.js"></script>
