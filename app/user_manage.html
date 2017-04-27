@@ -86,19 +86,74 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <button type="button" id="create" name="button" class="btn btn--yellow btn--create m-b-20" >Create new user</button>
+              <button type="button" data-toggle="modal" data-target="#createuser" id="create" name="button" class="btn btn--yellow btn--create m-b-20" >Create new user</button>
             </div>
           </div>
           <table id="example" class="table table-striped display responsive" cellspacing="0" width="100%">
-            <thead>
-              <th>Name</th>
-              <th>Creation date</th>
-              <th>Role</th>
-            </thead>
           </table>
         </div>
       </div>
     </div>
+
+    <div class="modal modal--top fade" id="createuser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog--admin" role="document">
+      <div class="modal-content modal-content--admin">
+        <div class="modal-header modal-header--admin">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>
+          </div class="container">
+            <div class="modal-body modal-body--pad">
+              <div class="container">
+                <div class="row">
+                  <div class="form-group">
+                    <form action="" class="col-xs-12" enctype="multipart/form-data">
+                      <div class="col-xs-7">
+                        <label class="label--size">Profile Picture</label>
+
+                        <div class="form-group">
+                          <label for="" class="label__modal">Name:</label>
+                            <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Email:</label>
+                          <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Tel:</label>
+                          <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Job Title:</label>
+                          <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">City:</label>
+                          <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Country:</label>
+                          <input type="text" class="form-control form-control--input input" name="" value="">
+                        </div>
+                        <div class="form-group">
+                        <label for="" class="label__modal">Profile</label>
+                        <select class="form-control form-control--select">
+                          <option>Admin</option>
+                          <option>User</option>
+                          <option>Wacher</option>
+                        </select>
+                        </div>
+                        <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->

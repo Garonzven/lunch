@@ -10,9 +10,16 @@ $('document').ready(function(){
       dataSrc: 'data'
     },
     columns: [
-      { data: 'name' },
-      { data: 'created_at' },
-      { data: 'id_profile' }
+      { title: 'Name', data:'name'},
+      { title: 'Creation date', data:'created_at'},
+      { title: 'Profile', data: switch (id_profile){
+        case 1: 'user';
+        case 2: 'admin';
+        case 3: 'watcher'
+      }
+      },
+
+
     ]
   });
 });
