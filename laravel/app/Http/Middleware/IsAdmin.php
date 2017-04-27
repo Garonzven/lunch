@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\User;
+use App\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -22,12 +23,18 @@ class IsAdmin
         $users = JWTAuth::parseToken()->authenticate();
         //$user= User::select('id_profile')->where('email',$request->email)->get();
 
-        
-        if($users->id_profile == 1)
+        $find = Role::where('id_profile', $users->id_profile)->get();
+        $action = "";
+        foreach($find as $val)
         {
-            return response()->json(['message' => 'al fin nojoda','code' => '200'],200);
+            $action = $val->action;
         }
-        
+
+        if($action != 'AUW')
+        {
+          return response()->json(['message'=>'Not Authorize', 'code' => '403'],403);
+        }
+
         return $next($request);
     }
 }

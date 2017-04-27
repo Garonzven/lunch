@@ -13,5 +13,5 @@ class Cycle extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['closing_date', 'initial_date', 'remark'];
+    protected $fillable = ['closing_date', 'initial_date'];
 }

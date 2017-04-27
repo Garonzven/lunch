@@ -11,7 +11,6 @@ use JWTAuth;
 use Mail;
 class UserController extends Controller
 {
-
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
@@ -19,18 +18,17 @@ class UserController extends Controller
       $password = str_random(10);
       $user = new User([
         'name' => $request->get('name'),
+        'jobtitle' =>$request->get('jobtitle'),
         'country' => $request->get('country'),
         'city' => $request->get('city'),
         'phone' => $request->get('phone'),
         'email' => $request->get('email'),
-        'jobtitle' =>$request->get('jobtitle'),
         'photo' => $request->get('photo'),
         'password' => bcrypt($password),
         'change_pass' => $request->get('change_pass'),
         'id_profile' => $request->get('id_profile')
       ]);
       $user->save();
-
       Mail::send('mails.welcome', ['data' => $user,'password' => $password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
 
@@ -52,6 +50,7 @@ class UserController extends Controller
         }
         $user = User::where('email', $request->get('email'))
         ->update(['name' =>$request->input('name'),
+        'jobtitle' => $request->get('jobtitle'),
         'country' => $request->input('country'),
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),

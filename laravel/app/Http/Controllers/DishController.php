@@ -20,7 +20,7 @@ class DishController extends Controller
         'description' => $request->get('description'),
         'id_provider' => $request->get('id_provider'),
       ]);
-    
+
       return response()->json(['data'=> $dish, 'message'=>'Dish created', 'code'=>'201'],201);
     }
     public function searchDishList()
@@ -43,7 +43,6 @@ class DishController extends Controller
         $dish = Dish::where('id', $id)->update([
             'title' =>$request->get('title'),
             'description' => $request->get('description'),
-            'id_provider' => $request->get('id_provider'),
         ]);
 
         return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code'=>'200'],200);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCyclesTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateCyclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cycles', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->DateTime('closing_date');
-            $table->DateTime('initial_date');
-            $table->softDeletes();
+            $table->boolean('remark');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateCyclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cycles');
+        Schema::dropIfExists('settings');
     }
 }

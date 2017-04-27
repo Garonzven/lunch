@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::resource('cycle', 'CycleController');
 #Route::post('register',['uses'=>'UserController@registerUser']);
 
-Route::group(['prefix'=>'login'],function(){
+Route::group(['prefix'=>'login', 'middleware'=>['cors']],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
   	Route::get('profile', 'Auth\LoginController@sendProfile');
 	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
@@ -28,9 +28,9 @@ Route::group(['prefix'=>'login'],function(){
         });
 });
 Route::put('recovery',['uses'=>'UserController@recoveryPassword']);
-Route::group(['prefix'=>'user'],function(){
+Route::group(['prefix'=>'user', 'middleware'=> ['jwt.auth', 'admin']],function(){
 	Route::post('register',['uses'=>'UserController@registerUser']);
-	Route::get('findlist',['uses'=>'UserController@searchUserlist','middleware'=> ['jwt.auth', 'admin']]);
+	Route::get('findlist',['uses'=>'UserController@searchUserlist']);
 	#Route::get('find/{email}',['uses'=>'UserController@searchUser','middleware'=>'jwt.auth']);
 	#Route::get('findname/{name}',['uses'=>'UserController@searchUserName','middleware'=>'jwt.auth']);
 	Route::put('update',['uses'=>'UserController@updateUser','middleware'=>'jwt.auth']);
@@ -49,7 +49,7 @@ Route::group(['prefix'=>'dish'],function(){
 	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish','middleware'=>'jwt.auth']);
 });
 
-Route::group(['prefix'=>'cycle'],function(){
+Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin']],function(){
 	Route::post('register',['uses'=>'CycleController@registerCycle']);
 	Route::get('find',['uses'=>'CycleController@searchCycleList','middleware'=>'jwt.auth']);
 	//Route::get('find/{id}',['uses'=>'CycleController@searchCycle','middleware'=>'jwt.auth']);

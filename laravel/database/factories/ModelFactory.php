@@ -25,8 +25,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'photo' => str_random(25),
         'email' => "carlos@gmail.com",
         'password' => bcrypt("1234"),
-        'change_pass' => $bool,
-        'id_profile' => $val,
+        'change_pass' => true,
+        'id_profile' => 1,
 
     ];
 });
@@ -43,5 +43,24 @@ $factory->define(App\Provider::class, function (Faker\Generator $faker) {
         'country' => str_random(10),
         'city' => str_random(7),
         'email' => $faker->email,
+    ];
+});
+
+$factory->define(App\Dish::class, function (Faker\Generator $faker) {
+
+
+    return [
+        'title' => $faker->name,
+        'description' => str_random(10),
+        'id_provider' => 1,
+    ];
+});
+
+$factory->define(App\Role::class, function (Faker\Generator $faker) {
+
+
+    return [
+        'action' => 'AUW',
+        'id_profile' => 1,
     ];
 });
