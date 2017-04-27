@@ -30,14 +30,15 @@ $(document).ready(function() {
 
       submitHandler: function(form){
         $.ajax({
-          url: "login.json",
-          method: "get",
+          url: "http://lunch.enigmasolutions.com.ve/laravel/public/login/signin",
+          method: "post",
           data: {
             email: $("#email").val(),
             password: $("#password").val()
           },
           dataType: "JSON",
           success: function(data) {
+            console.log(data);
             if (data.token) {
               $.cookie("token", data.token, { expires: 7 });
               switch (data.user.id_profile) {
@@ -46,6 +47,7 @@ $(document).ready(function() {
                   break;
 
                 case 2:
+
                   break;
 
                 case 3:

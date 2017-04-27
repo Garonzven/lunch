@@ -293,6 +293,8 @@ body {
   border-radius: 0px;
   border-bottom: 1px solid #9e9e9e;
   background-color: transparent;
+  color: $gray;
+  font-weight: 300;
   outline: none;
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
@@ -391,13 +393,48 @@ body {
 }
 
 #email-error,
-#password-error,#confirmpassword-error,#resetemail-error {
+#password-error,#confirmpassword-error,#resetemail-error{
   display: inline-table;
   position: absolute;
   left: 0px;
   font-weight: 400;
   color: $dark-primary;
 }
+
+#createForm > #email-error, #name-error,#email-error,#jobtitle-error,#phone-error,#country-error,#city-error,#id_profile-error{
+  position: absolute;
+  color: $dark-primary;
+  font-size: 12px;
+  font-weight: 300;
+  padding-top: 1%;
+  left: 22%;
+  display: inline-table;
+}
+
+.form-control--select {
+  width: 50%;
+  height: 25px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid $gray;
+  color: $gray;
+  font-weight: 300;
+  background-color: transparent;
+  outline: none;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  &:focus {
+    border-bottom: 2px solid $dark-primary;
+
+  }
+}
+
+.form-control--select > option {
+    color: $gray-light
+}
+
 .welcome,
 .welcomeBox{
   margin-top:110px;

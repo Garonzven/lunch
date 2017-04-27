@@ -12,8 +12,9 @@
     "datatables.net-bs": "^2.1.1",
     "datatables.net-responsive": "^2.1.1",
     "datatables.net-responsive-bs": "^2.1.1",
-    "pg-calendar": "^1.4.16"
-
+    "pg-calendar": "^1.4.16",
+    "dropzone": "^4.3.0",
+    "bootpag": "^1.0.7"
   },
   "overrides": {
     "bootstrap-sass": {

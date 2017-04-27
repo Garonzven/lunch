@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.css" />
     <link rel="stylesheet" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.css" />
     <link rel="stylesheet" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/dropzone/dist/min/dropzone.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -89,7 +90,15 @@
               <button type="button" data-toggle="modal" data-target="#createuser" id="create" name="button" class="btn btn--yellow btn--create m-b-20" >Create new user</button>
             </div>
           </div>
-          <table id="example" class="table table-striped display responsive" cellspacing="0" width="100%">
+          <table id="example" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Creation date</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+
           </table>
         </div>
       </div>
@@ -106,43 +115,50 @@
               <div class="container">
                 <div class="row">
                   <div class="form-group">
-                    <form action="" class="col-xs-12" enctype="multipart/form-data">
-                      <div class="col-xs-7">
-                        <label class="label--size">Profile Picture</label>
-
+                    <form class="col-xs-12" name="createForm" id="createForm">
+                      <div class="col-xs-5">
                         <div class="form-group">
                           <label for="" class="label__modal">Name:</label>
-                            <input type="text" class="form-control form-control--input input" name="" value="">
+                            <input type="text" class="form-control form-control--input input" name="name" id="name" value="">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Email:</label>
-                          <input type="text" class="form-control form-control--input input" name="" value="">
+                          <input type="text" class="form-control form-control--input input" name="email" id="email" value="">
                         </div>
                         <div class="form-group">
-                          <label for="" class="label__modal">Tel:</label>
-                          <input type="text" class="form-control form-control--input input" name="" value="">
+                          <label for="" class="label__modal">Phone:</label>
+                          <input type="text" class="form-control form-control--input input" name="phone" id="phone" value="">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Job Title:</label>
-                          <input type="text" class="form-control form-control--input input" name="" value="">
+                          <input type="text" class="form-control form-control--input input" name="jobtitle" id="jobtitle" value="">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">City:</label>
-                          <input type="text" class="form-control form-control--input input" name="" value="">
+                          <input type="text" class="form-control form-control--input input" name="city" id="city" value="">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Country:</label>
-                          <input type="text" class="form-control form-control--input input" name="" value="">
+                          <input type="text" class="form-control form-control--input input" name="country" id="country" value="">
                         </div>
                         <div class="form-group">
-                        <label for="" class="label__modal">Profile</label>
-                        <select class="form-control form-control--select">
-                          <option>Admin</option>
-                          <option>User</option>
-                          <option>Wacher</option>
+                        <label for="" class="label__modal">Role:</label>
+                        <select name="id_profile" id="id_profile" class="form-control form-control--select">
+                          <option value="">Select role</option>
+                          <option value="1">Admin</option>
+                          <option value="2">User</option>
+                          <option value="3">Wacher</option>
                         </select>
                         </div>
-                        <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
+                        <input type="submit" value="Create" name="submit" class="btn btn--yellow btn--fs15 btn--modal pull-right radius"/>             </div>
+                    <div class="col-xs-2">
+                      <!-- <div class="form-group">
+                        <label for="" class="label__modal">Picture</label>
+                        <div id="dZUpload" class="dropzone">
+                             <div class="dz-default dz-message"></div>
+                       </div>
+
+                      </div> -->
                     </div>
                     </form>
                   </div>
@@ -169,6 +185,7 @@
     <script src="/bower_components/datatables.net-responsive/js/dataTables.responsive.js"></script>
     <script src="/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="/bower_components/pg-calendar/dist/js/pignose.calendar.js"></script>
+    <script src="/bower_components/dropzone/dist/min/dropzone.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -185,10 +202,6 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
     <script src="scripts/user.js"></script>
