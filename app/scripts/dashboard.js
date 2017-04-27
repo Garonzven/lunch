@@ -3,32 +3,32 @@ $(document).ready(function() {
     url: 'login.json',
     method: 'get',
     data: {
-        token: $.cookie("token")
+        token: $.cookie('token')
     },
     dataType: 'json',
     success: function(data) {
     	switch (data.user.id_profile) {
     		case 1:
     		case 3:
-                $(".navContainer__logo").addClass("navContainer__logo--center");
+                $('.navContainer__logo').addClass('navContainer__logo--center');
                 if (data.user.id_profile == 1) {
-                    url = "menu_admin.html";
-                    dashboard = "welcome.html";
+                    url = 'menu_admin.html';
+                    dashboard = 'welcome.html';
                 } else {
-                    url = "menu_watcher.html";
+                    url = 'menu_watcher.html';
                 }
                 $.ajax({
                     url: url,
-                    method: "get",
-                    dataType: "text",
+                    method: 'get',
+                    dataType: 'text',
                     success: function(response) {
-                        $(".sidebar-nav").html(response);
+                        $('.sidebar-nav').html(response);
                         $.ajax({
                             url: dashboard,
-                            method: "get",
-                            type: "text",
+                            method: 'get',
+                            type: 'text',
                             success: function(response) {
-                                $(".container").html(response);
+                                $('.container').html(response);
                             },
                             complete: function(data) {
                                 
@@ -38,8 +38,8 @@ $(document).ready(function() {
                                 // 
                                 // ==========================
 
-                                $("#welcome-go").on("click", function() {
-                                    console.log("Welcome");
+                                $('#welcome-go').on('click', function() {
+                                    console.log('Welcome');
                                 });
                             }
                         });
@@ -48,11 +48,11 @@ $(document).ready(function() {
                 break;
 
             case 2:
-                $(".hamburger").remove();
+                $('.hamburger').remove();
                 break;
         }
-        $("#fullname").text(data.user.name);
-        $("#name").text(data.user.name.split(" ")[0]);
+        $('#fullname').text(data.user.name);
+        $('#name').text(data.user.name.split(' ')[0]);
     }
   });
 });

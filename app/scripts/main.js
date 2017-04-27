@@ -1,10 +1,10 @@
 jQuery.validator.setDefaults({
   debug: true,
-  success: "valid"
+  success: 'valid'
   });
 
 $(document).ready(function() {
-  $("#loginForm").validate({
+  $('#loginForm').validate({
       rules: {
         // simple rule, converted to {required:true}
         password: {
@@ -19,31 +19,32 @@ $(document).ready(function() {
 
       messages:{
         password:{
-          required: "Please enter your password"
+          required: 'Please enter your password'
         },
         email:{
-          required: "Please enter your email",
-          email: "Please enter a correct email"
+          required: 'Please enter your email',
+          email: 'Please enter a correct email'
         }
 
       },
 
       submitHandler: function(form){
         $.ajax({
+          // url: "http://lunch.enigmasolutions.com.ve/laravel/public/login/signin",
           url: "http://lunch.enigmasolutions.com.ve/laravel/public/login/signin",
-          method: "post",
+          method: 'post',
           data: {
-            email: $("#email").val(),
-            password: $("#password").val()
+            email: $('#email').val(),
+            password: $('#password').val()
           },
-          dataType: "JSON",
+          dataType: 'JSON',
           success: function(data) {
             console.log(data);
             if (data.token) {
-              $.cookie("token", data.token, { expires: 7 });
+              $.cookie('token', data.token, { expires: 7 });
               switch (data.user.id_profile) {
                 case 1:
-                  $(location).attr("href", "welcome.html");
+                  $(location).attr('href', 'welcome.html');
                   break;
 
                 case 2:
@@ -54,8 +55,11 @@ $(document).ready(function() {
                   break;
               }
             } else {
-              alert("Invalid credentials!");
+              alert('Invalid credentials!');
             }
+          },
+          error: function(res) {
+            console.log(res);
           }
         });
       }
