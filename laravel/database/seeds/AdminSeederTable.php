@@ -12,18 +12,26 @@ class AdminSeederTable extends Seeder
      */
     public function run()
     {
+      $arrays = ['admin','user','watcher'];
+      $count = 1;
+    foreach($arrays as $key)
+    {
+
+
       $user = User::create([
         'name' => 'Admin',
         'jobtitle' => 'El papa de los helados',
         'country' => 'Narnia',
         'city' => 'Ningun lugar',
         'phone' => '0416-5698563',
-        'email' => 'carlos@gmail.com',
+        'email' => $key.'@gmail.com',
         'photo' => 'fuyctydtyluififiyfufkctdtydjdyj',
         'password' => bcrypt('12345'),
         'change_pass' => true,
-        'id_profile' => 1,
+        'id_profile' => $count,
       ]);
+      $count++;
+      }
 
     }
 }

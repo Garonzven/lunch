@@ -14,14 +14,11 @@ class CycleController extends Controller
 {
    public function registerCycle(Request $request)
     {
-      $exist = updateCycle();
-      if($exist){
-
-      }
       $userToken = JWTAuth::parseToken()->ToUser();
       $cycle = Cycle::create([
-        'closing_date' => $request->get('close'),
+
         'initial_date' => $request->get('init'),
+        'closing_date' => $request->get('close'),
       ]);
 
       $data = $request->get('data');
@@ -42,7 +39,10 @@ class CycleController extends Controller
     }
     public function searchCycleList()
     {
-        $cycle = Cycle::all();
+      $dt = date('Y-m-d H:i:s');
+    //  dd($dt);
+      $cycle = Cycle::where('initial_date','>=',$dt)->where('closing_date','<=',$dt)->orWhere('initial_date', '<', $dt)->get();
+      dd($cycle->toArray());
         return response()->json(['data' => $cycle, 'message' => 'Cycle List', 'code' => '200']);
     }
     public function searchCycle($id)//Puede estar que no creo
@@ -59,14 +59,10 @@ class CycleController extends Controller
     }
     public function updateCycle()
     {
-        $cycle = Cycle::first();
+        $dt = date('Y-m-d H:i:s');
+        $cycle = Cycle::where('initial_date','>=',$dt)->where('closing_date','<=',$dt)->orWhere('initial_date', '<', $dt);
+        dd($cycle);
 
-        if(!$cycle)
-        {
-          return false;
-        }
-
-        return true;
     }
 
 }
