@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use JWTAuth;
 
-class isUser
+class isWatcher
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class isUser
      * @param  \Closure  $next
      * @return mixed
      */
-     public function handle($request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $users = JWTAuth::parseToken()->authenticate();
         //$user= User::select('id_profile')->where('email',$request->email)->get();
@@ -30,14 +30,15 @@ class isUser
             $action = $val->action;
         }
 
-        if($action != 'U')
+        if($action != 'UW')
         {
-          if($action == 'AUW' || $action = 'UW')
+          if($action == 'AUW')
           {
             return $next($request);
           }
-          return response()->json(['message'=>'Not Authorize User', 'code' => '403']);
+          return response()->json(['message'=>'Not Authorize watcher', 'code' => '403']);
         }
+
 
         return $next($request);
     }

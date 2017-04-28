@@ -19,10 +19,10 @@ class CycleController extends Controller
 
         'initial_date' => $request->get('init'),
         'closing_date' => $request->get('close'),
+        'limit_date' => $request->get('limit'),
       ]);
 
       $data = $request->get('data');
-
 
       foreach($data as $val)
       {
@@ -41,7 +41,7 @@ class CycleController extends Controller
     {
       $dt = date('Y-m-d H:i:s');
       //$dt = '2017-05-14 00:00:00';
-      
+
       $cycle = Cycle::where('initial_date','>',$dt)
       ->where('closing_date','<',$dt)
       ->orWhere('initial_date', '=', $dt)
@@ -55,7 +55,7 @@ class CycleController extends Controller
       {
         return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
       }
-      
+
       $val = new Cycle();
 
       foreach($cycle as $key)
@@ -64,44 +64,39 @@ class CycleController extends Controller
         $val->initial_date = $key->initial_date;
         $val->closing_date = $key->closing_date;
       }
-      
-      $anterior = Cycle::select('id', 'initial_date', 'closing_date')
+
+      $anterior = Cycle::select('id', 'initial_date', 'closing_date', 'limit_date')
       ->where('id', '<=', $val->id)
       ->limit(3)
       ->orderBy('id', 'DESC')
       ->get();
 
-      foreach ($anterior as $key) {
-        
-        if($val->id == $key->id)
-        {
-         $key->active =  'Activo';
-        }
-        else
-        {
-         $key->active =  'Terminado';
-        }
+      foreach ($anterior as $key){
 
+        if($val->id == $key->id){
+         $key->active =  1;
+        }
+        else{
+         $key->active =  0;
+        }
       }
 
-      $posterior = Cycle::select('id', 'initial_date', 'closing_date')
+      $posterior = Cycle::select('id', 'initial_date', 'closing_date', 'limit_date')
       ->where('id', '>', $val->id)
       ->limit(2)
       ->get();
 
       foreach ($posterior as $key) {
-        
-         $key->active =  'Siguiente';
- 
-
+         $key->active =  2;
       }
 
       $union = $posterior->merge($anterior);
-      
+
       $union = $union->sortBy(function($col)
         {
             return $col;
         })->values()->all();
+        
       foreach($union as $key)
       {
             $val = \DB::table('dishes')
@@ -114,16 +109,16 @@ class CycleController extends Controller
             $key = array_add($key, 'dishes', $val);
       }
 
-      
-      
+
+
         return response()->json(['data' => $union, 'message' => 'Cycle List', 'code' => '200']);
     }
 
     public function searchCycleActive()
     {
       $dt = date('Y-m-d H:i:s');
-      
-      
+
+
       $cycle = Cycle::where('initial_date','>',$dt)
       ->where('closing_date','<',$dt)
       ->orWhere('initial_date', '=', $dt)
@@ -137,7 +132,7 @@ class CycleController extends Controller
       {
         return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
       }
-      
+
       $valores = new Cycle();
 
       foreach($cycle as $key)
@@ -154,8 +149,8 @@ class CycleController extends Controller
             ->orderBy('cycle_dishes.date_cycle')
             ->get();
 
-            $valores = array_add($valores, 'dishes', $active);  
-      
+            $valores = array_add($valores, 'dishes', $active);
+
         return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
     }
     public function updateCycle(Request $request)
@@ -185,27 +180,33 @@ class CycleController extends Controller
             $valores->initial_date = $key->initial_date;
             $valores->closing_date = $key->closing_date;
         }
-        
+
         if($valores->id < $id)
         {
             return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '404']);
         }
 
         $deleteDish = Cycle_dish::where('id_cycle', $id)->get();
+
+        //dd($deleteDish);
         $collection = collect([]);
         foreach($deleteDish as $key)
         {
-            if(!$collection->contains($key->id_dish))
+            if(!$collection->contains($key->date_cycle))
             {
-                $collection->push($key->id_dish);
+                $collection->push($key->date_cycle);
                 $collection->all();
             }
 
-            $var = Cycle_dish::find($key->id);
-            $var->delete();
+            // $var = Cycle_dish::find($key->id);
+            // $var->delete();
         }
         dd($collection);
-
+        foreach($collection as $key)
+        {
+            $orders = Order::find($key);
+            dd($orders);
+        }
 
     }
 

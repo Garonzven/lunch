@@ -16,9 +16,9 @@ Route::get('/', function () {
 Route::get('date', function(){
   $dt = date('Y-m-d');
   return response()->json(['date' => $dt, 'code' => '200']);
-});
+})->middleware('cors');
 
-Route::put('recovery',['uses'=>'UserController@recoveryPassword']);
+Route::put('recovery',['uses'=>'UserController@recoveryPassword'])->middleware('cors');
 
 Route::group(['prefix'=>'login', 'middleware'=>'cors'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
@@ -28,27 +28,36 @@ Route::group(['prefix'=>'login', 'middleware'=>'cors'],function(){
 					Route::post('signout', 'Auth\LoginController@logout');
         });
 });
-
 Route::group(['prefix'=>'user', 'middleware'=> ['jwt.auth', 'admin','cors']],function(){
 	Route::post('register',['uses'=>'UserController@registerUser']);
 	Route::get('findlist',['uses'=>'UserController@searchUserlist']);
-	Route::put('update',['uses'=>'UserController@updateUser','middleware'=>'jwt.auth']);
-  Route::put('change',['uses'=>'UserController@changePassword','middleware'=>'jwt.auth']);
-	Route::delete('delete',['uses'=>'UserController@deleteUser','middleware'=>'jwt.auth']);
+	Route::put('update',['uses'=>'UserController@updateUser']);
+  Route::put('change',['uses'=>'UserController@changePassword']);
+	Route::delete('delete',['uses'=>'UserController@deleteUser']);
 });
 
 Route::group(['prefix'=>'dish','middleware'=>['cors', 'jwt.auth', 'admin']],function(){
 	Route::post('register',['uses'=>'DishController@registerDish']);
-	Route::get('find',['uses'=>'DishController@searchDishList','middleware'=>'jwt.auth']);
-	Route::get('find/{id}',['uses'=>'DishController@searchDish','middleware'=>'jwt.auth']);
-	Route::put('update/{id}',['uses'=>'DishController@updateDish','middleware'=>'jwt.auth']);
-	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish','middleware'=>'jwt.auth']);
+	Route::get('find',['uses'=>'DishController@searchDishList']);
+	Route::get('find/{id}',['uses'=>'DishController@searchDish']);
+	Route::put('update/{id}',['uses'=>'DishController@updateDish']);
+	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish']);
 });
 
 Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin','cors']],function(){
 	Route::post('register',['uses'=>'CycleController@registerCycle']);
-	Route::get('find',['uses'=>'CycleController@searchCycleList','middleware'=>'jwt.auth']);
-	Route::put('update',['uses'=>'CycleController@updateCycle','middleware'=>'jwt.auth']);
-	Route::get('findActive',['uses'=>'CycleController@searchCycleActive','middleware'=>'jwt.auth']);
-	Route::delete('delete/{id}',['uses'=>'CycleController@deleteCyle','middleware'=>'jwt.auth']);
+	Route::get('find',['uses'=>'CycleController@searchCycleList']);
+	Route::put('update',['uses'=>'CycleController@updateCycle']);
+});
+
+Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'admin', 'user', 'watcher', 'cors']],function(){
+	Route::post('register',['uses'=>'OrderController@registerOrder']);
+  Route::get('active',['uses'=>'OrderController@searchCycleActive']);
+	Route::put('update',['uses'=>'OrderController@updateOrder']);
+});
+
+Route::group(['prefix'=>'report', 'middleware'=> ['jwt.auth', 'admin', 'watcher', 'cors']],function(){
+	Route::post('register',['uses'=>'OrderController@registerOrder']);
+  Route::get('active',['uses'=>'OrderController@searchCycleActive']);
+	Route::put('update',['uses'=>'OrderController@updateOrder']);
 });

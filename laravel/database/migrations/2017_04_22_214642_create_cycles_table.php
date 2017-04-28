@@ -17,6 +17,7 @@ class CreateCyclesTable extends Migration
             $table->increments('id');
             $table->dateTime('initial_date');
             $table->dateTime('closing_date');
+            $table->dateTime('limit_date');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -14,19 +14,23 @@ class UserController extends Controller
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
-
+      $find = User::where('email', $request->input('email'))->get();
+      if(count($find)==0)
+      {
+          return response()->json(['message'=>'email exists','code'=>'404']);
+      }
       $password = str_random(10);
       $user = User::create([
-        'name' => $request->get('name'),
-        'jobtitle' =>$request->get('jobtitle'),
-        'country' => $request->get('country'),
-        'city' => $request->get('city'),
-        'phone' => $request->get('phone'),
-        'email' => $request->get('email'),
-        'photo' => $request->get('photo'),
+        'name' => $request->input('name'),
+        'jobtitle' =>$request->input('jobtitle'),
+        'country' => $request->input('country'),
+        'city' => $request->input('city'),
+        'phone' => $request->input('phone'),
+        'email' => $request->input('email'),
+        'photo' => $request->input('photo'),
         'password' => bcrypt($password),
         'change_pass' => true,
-        'id_profile' => $request->get('id_profile'),
+        'id_profile' => $request->input('id_profile'),
       ]);
       Mail::send('mails.welcome', ['data' => $user,'password' => $password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
@@ -43,7 +47,7 @@ class UserController extends Controller
     {
 
         $find = User::where('email', $request->input('email'))->get();
-        if(!$find)
+        if(count($find)==0)
         {
             return response()->json(['message'=>'user not found','code'=>'404']);
         }
@@ -64,7 +68,7 @@ class UserController extends Controller
    {
        $users = User::select('name', 'email')->where('email', $request->get('email'))->get();
 
-      if(!$users)
+      if(count($users)==0)
        {
           return response()->json(['message' => 'email not exists','code'=>'404']);
        }
