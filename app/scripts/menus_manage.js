@@ -92,18 +92,35 @@ $('#calendar').fullCalendar({
   },
   dayClick: function(start) {
     if (canCreate(start)) {
-      var dish = {
-        title: 'Dish',
-        start: start.add(1, 'seconds'),
-        type: 9,
-        overlap: false,
-        editable: false,
-        backgroundColor: '#254154',
-        borderColor: '#254154',
-      }
-      $('#calendar').fullCalendar('renderEvent', dish, true);
-      theCycle.dishes.push(dish);
-      console.log(theCycle.dishes);
+      $('.dish-list').empty();
+      var dayDishes = [];
+      dayDishes = $.grep(theCycle.dishes, function(e) {
+        return e.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
+      });
+      $.each(dayDishes, function(i, e) {
+        $('.dish-list').append('<li>' + e.title + '</li>');
+      });
+      $('#modalDish').modal('show');
+      $('#dish-add').on('click', function(e) {
+        var dish = {};
+        dish = {
+          title: $('#dish-title').val(),
+          description: $('#dish-description').val(),
+          start: start.add(1, 'seconds'),
+          type: 9,
+          overlap: false,
+          editable: false,
+          backgroundColor: '#254154',
+          borderColor: '#254154',|
+        }
+        console.log(dish);
+        $('.dish-list').append('<li>' + dish.title + '</li>');
+        $('#calendar').fullCalendar('renderEvent', dish, true);
+        theCycle.dishes.push(dish);
+        $('#dish-title').text('');
+        $('#dish-description').text('');
+        e.stopPropagation();
+      });
     }
   },
   eventClick: function(event) {
