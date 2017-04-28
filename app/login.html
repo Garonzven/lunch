@@ -155,7 +155,7 @@
       },
       submitHandler: function(form) {
         $.ajax({
-          url:"recoverypassword.json",
+          url:"http://13.92.198.201/laravel/public/recovery",
           method: "get",
           data:{
             email:$("resetemail").val()
