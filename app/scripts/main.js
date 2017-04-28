@@ -30,7 +30,7 @@ $(document).ready(function() {
 
       submitHandler: function(form){
         $.ajax({
-          url: "http://13.92.198.201/laravel/public/login/signin",
+          url: 'http://13.92.198.201/laravel/public/login/signin',
           method: 'post',
           data: {
             email: $('#email').val(),

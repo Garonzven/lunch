@@ -111,7 +111,7 @@ $('#calendar').fullCalendar({
           overlap: false,
           editable: false,
           backgroundColor: '#254154',
-          borderColor: '#254154',|
+          borderColor: '#254154',
         }
         console.log(dish);
         $('.dish-list').append('<li>' + dish.title + '</li>');

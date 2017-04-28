@@ -7,11 +7,11 @@ $('document').ready(function(){
 
   $(document).ready(function() {
     $('#example').DataTable( {
-        "ajax": "user.json",
-        "columns": [
-            { "name": "Name", "data": "name" },
-            { "name": "Creation date", "data": "created_at" },
-            { "name": "Role", "data": "id_profile" }
+        'ajax': 'user.json',
+        'columns': [
+            { 'name': 'Name', 'data': 'name' },
+            { 'name': 'Creation date', 'data': 'created_at' },
+            { 'name': 'Role', 'data': 'id_profile' }
         ]
     } );
 } );
@@ -34,7 +34,7 @@ $(document).ready(function () {
     //     }
     // });
 
-    $("#createForm").validate({
+    $('#createForm').validate({
         rules: {
           // simple rule, converted to {required:true}
           name: {
@@ -63,19 +63,19 @@ $(document).ready(function () {
 
         submitHandler: function(form){
           $.ajax({
-            url: "http://13.92.198.201/laravel/public/user/register",
-            method: "post",
+            url: 'http://13.92.198.201/laravel/public/user/register',
+            method: 'post',
             data: {
               token: $.cookie(token),
-              name: $("#name").val(),
-              phone: $("#phone").val(),
-              jobtitle: $("#jobtitle").val(),
-              city: $("#city").val(),
-              country: $("country").val(),
-              email: $("#email").val(),
-              id_profile: $("#id_profile").val(),
+              name: $('#name').val(),
+              phone: $('#phone').val(),
+              jobtitle: $('#jobtitle').val(),
+              city: $('#city').val(),
+              country: $('country').val(),
+              email: $('#email').val(),
+              id_profile: $('#id_profile').val(),
             },
-            dataType: "JSON",
+            dataType: 'JSON',
             success: function(data) {
               console.log(data);
               // switch (data.code) {
