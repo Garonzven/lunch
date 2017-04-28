@@ -97,11 +97,13 @@ $('#calendar').fullCalendar({
       dayDishes = $.grep(theCycle.dishes, function(e) {
         return e.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
       });
+      // console.log(dayDishes);
       $.each(dayDishes, function(i, e) {
+        // console.log(e);
         $('.dish-list').append('<li>' + e.title + '</li>');
       });
       $('#modalDish').modal('show');
-      $('#dish-add').on('click', function(e) {
+      $('#dish-add').off().on('click', function() {
         var dish = {};
         dish = {
           title: $('#dish-title').val(),
@@ -113,13 +115,24 @@ $('#calendar').fullCalendar({
           backgroundColor: '#254154',
           borderColor: '#254154',
         }
-        console.log(dish);
+
+        $.ajax({
+          url: 'http://13.92.198.201/laravel/public/dish/register?token=' + $.cookie('token'),
+          method: 'post',
+          data: {
+            title: $('#dish-title').val(),
+            description: $('#dish-description').val(),
+            id_provider: 1
+          },
+          success: function(data) {
+            console.log(data);
+          }
+        });
         $('.dish-list').append('<li>' + dish.title + '</li>');
         $('#calendar').fullCalendar('renderEvent', dish, true);
         theCycle.dishes.push(dish);
-        $('#dish-title').text('');
-        $('#dish-description').text('');
-        e.stopPropagation();
+        $('#dish-title').val('').focus();
+        $('#dish-description').val('');
       });
     }
   },
@@ -127,4 +140,14 @@ $('#calendar').fullCalendar({
     if (event.type == 9)
       alert(event.start.format('YYYY-MM-DD'));
   }
+});
+
+$('#modalDish').on('shown.bs.modal', function(e) {
+  $('#dish-title').focus();
+});
+
+$('#save-cycle').on('click', function() {
+  var _cycle = {};
+
+  console.log(theCycle);
 });

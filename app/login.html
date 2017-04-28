@@ -156,7 +156,7 @@
       submitHandler: function(form) {
         $.ajax({
           url:"http://13.92.198.201/laravel/public/recovery",
-          method: "put",
+          method: "post",
           data:{
             email:$("#resetemail").val()
           },
