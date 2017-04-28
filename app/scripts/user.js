@@ -63,7 +63,7 @@ $(document).ready(function () {
 
         submitHandler: function(form){
           $.ajax({
-            url: "http://lunch.enigmasolutions.com.ve/laravel/public/user/register",
+            url: "http://13.92.198.201/laravel/public/user/register",
             method: "post",
             data: {
               token: $.cookie(token),
