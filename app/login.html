@@ -156,29 +156,30 @@
       submitHandler: function(form) {
         $.ajax({
           url:"http://13.92.198.201/laravel/public/recovery",
-          method: "get",
+          method: "put",
           data:{
-            email:$("resetemail").val()
+            email:$("#resetemail").val()
           },
           dataType:"JSON",
           success: function(data){
-            switch (data.code) {
-              case 200:
-                swal({
-                text: data.message,
-                type: 'success',
-                confirmButtonText: 'Ok'
-                });
-              break;
-
-              case 404:
-              swal({
-              text: data.message,
-              type: 'error',
-              confirmButtonText: 'Ok'
-              });
-              break;
-            }
+            console.log(data);
+            // switch (data.code) {
+            //   case 200:
+            //     swal({
+            //     text: data.message,
+            //     type: 'success',
+            //     confirmButtonText: 'Ok'
+            //     });
+            //   break;
+            //
+            //   case 404:
+            //   swal({
+            //   text: data.message,
+            //   type: 'error',
+            //   confirmButtonText: 'Ok'
+            //   });
+            //   break;
+            // }
           }
 
         });
