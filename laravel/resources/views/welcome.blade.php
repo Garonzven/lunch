@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{$password}}
+                    laravel
                 </div>
 
                 <div class="links">
