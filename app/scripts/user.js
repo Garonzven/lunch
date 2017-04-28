@@ -20,6 +20,7 @@ $('document').ready(function(){
 });
 
 $(document).ready(function () {
+<<<<<<< 94457bee31bdd392aad70c6e9d6459688037151b
     // Dropzone.autoDiscover = false;
     // $("#dZUpload").dropzone({
     //     url: "hn_SimpeFileUploader.ashx",
@@ -35,6 +36,9 @@ $(document).ready(function () {
     // });
 
     $('#createForm').validate({
+=======
+    $("#createForm").validate({
+>>>>>>> c277ff4a44f81d8e6aeadf2cc0e0a1c03203d41a
         rules: {
           // simple rule, converted to {required:true}
           name: {
@@ -62,7 +66,9 @@ $(document).ready(function () {
         },
 
         submitHandler: function(form){
+        $('#Create').on('click', function(e){
           $.ajax({
+<<<<<<< 94457bee31bdd392aad70c6e9d6459688037151b
             url: 'http://13.92.198.201/laravel/public/user/register',
             method: 'post',
             data: {
@@ -100,5 +106,47 @@ $(document).ready(function () {
           // event.preventDefault();
         }
       });
+=======
+              url: "createuser.json",
+              method: "post",
+              data: {
+                token: $.cookie(token),
+                name: $("#name").val(),
+                phone: $("#phone").val(),
+                jobtitle: $("#jobtitle").val(),
+                city: $("#city").val(),
+                country: $("country").val(),
+                email: $("#email").val(),
+                id_profile: $("#id_profile").val(),
+              },
+              dataType: "JSON",
+              success: function(data) {
+                console.log(data);
+                // switch (data.code) {
+                //   case 200:
+                //     swal({
+                //     text: data.message,
+                //     type: 'success',
+                //     confirmButtonText: 'Ok'
+                //     });
+                //   break;
+                //
+                //   case 404:
+                //   swal({
+                //   text: data.message,
+                //   type: 'error',
+                //   confirmButtonText: 'Ok'
+                //   });
+                //   break;
+                // }
+              }
+            });
+            // event.preventDefault();
+          }
+        });
+
+          e.preventDefault();
+        });
+>>>>>>> c277ff4a44f81d8e6aeadf2cc0e0a1c03203d41a
 
 });
