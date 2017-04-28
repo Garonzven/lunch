@@ -340,6 +340,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
     );
 
     public static $classMap = array (
+        'AdminSeederTable' => __DIR__ . '/../..' . '/database/seeds/AdminSeederTable.php',
         'CreateCycleDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214845_create_cycle__dishes_table.php',
         'CreateCyclesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214642_create_cycles_table.php',
         'CreateDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214105_create_dishes_table.php',
@@ -348,6 +349,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170644_create_profiles_table.php',
         'CreateProvidersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_213822_create_providers_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_171559_create_roles_table.php',
+        'CreateSettingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_27_133023_create_settings_table.php',
         'CreateUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170805_create_user_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

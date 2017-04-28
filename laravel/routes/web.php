@@ -49,5 +49,6 @@ Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin','cors']],fu
 	Route::post('register',['uses'=>'CycleController@registerCycle']);
 	Route::get('find',['uses'=>'CycleController@searchCycleList','middleware'=>'jwt.auth']);
 	Route::put('update',['uses'=>'CycleController@updateCycle','middleware'=>'jwt.auth']);
+	Route::get('findActive',['uses'=>'CycleController@searchCycleActive','middleware'=>'jwt.auth']);
 	Route::delete('delete/{id}',['uses'=>'CycleController@deleteCyle','middleware'=>'jwt.auth']);
 });
