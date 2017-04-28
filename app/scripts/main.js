@@ -30,9 +30,8 @@ $(document).ready(function() {
 
       submitHandler: function(form){
         $.ajax({
-          // url: "http://lunch.enigmasolutions.com.ve/laravel/public/login/signin",
-          url: "http://lunch.enigmasolutions.com.ve/laravel/public/login/signin",
-          method: 'post',
+          url: "http://13.92.198.201/laravel/public/login/signin",
+          method: "post",
           data: {
             email: $('#email').val(),
             password: $('#password').val()
