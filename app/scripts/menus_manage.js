@@ -26,26 +26,26 @@ $.ajax({
   }
 });
 
-var theCycle = [];
+var theCycle = {};
 var today = moment();
-var oneDay = false;
 
 function hasCycle() {
   var cycle = [];
   cycle = $('#calendar').fullCalendar('clientEvents', function(e) {
     return e.type == 0;
   });
-  // if (cycle.length == 0) {
-  //   theCycle.push(cycle[0]);
-  // }
+  if (cycle.length == 1 && !theCycle.title) {
+    theCycle = cycle[0];
+    theCycle.dishes = [];
+  }
   return cycle.length > 0;
 }
 
 function canCreate(start) {
   if (hasCycle()) {
-    if (start.isBetween(theCycle[0].start, theCycle[0].end) ||
-      start.isSame(theCycle[0].start) ||
-      start.isSame(theCycle[0].end)) {
+    if (start.isBetween(theCycle.start, theCycle.end) ||
+      start.isSame(theCycle.start) ||
+      start.isSame(theCycle.end)) {
       return true;
     } else {
       return false;
@@ -78,36 +78,36 @@ $('#calendar').fullCalendar({
     }
   ],
   select: function(start, end) {
-    if (!oneDay) {
-      if (!hasCycle() && today.diff(start) < 0) {
-        var cycle = {
-          title: 'Cycle',
-          start: start,
-          end: end,
-          type: 0,
-          overlap: false,
-          editable: false,
-        }
-        $('#calendar').fullCalendar('renderEvent', cycle, true);
-      }
-    }
-    oneDay = false;
-  },
-  dayClick: function(start) {
-    oneDay = true;
-    if (canCreate(start)) {
-      var dish = {
-        title: 'Dish',
+    if (!hasCycle() && today.diff(start) < 0) {
+      var cycle = {
+        title: 'Cycle',
         start: start,
-        type: 9,
+        end: end.subtract(1, 'seconds'),
+        type: 0,
         overlap: false,
         editable: false,
       }
-      $('#calendar').fullCalendar('renderEvent', dish, true);
-    } else {
-      console.log('no');
+      $('#calendar').fullCalendar('renderEvent', cycle, true);
     }
   },
-  eventResize: function(event, delta) {
+  dayClick: function(start) {
+    if (canCreate(start)) {
+      var dish = {
+        title: 'Dish',
+        start: start.add(1, 'seconds'),
+        type: 9,
+        overlap: false,
+        editable: false,
+        backgroundColor: '#254154',
+        borderColor: '#254154',
+      }
+      $('#calendar').fullCalendar('renderEvent', dish, true);
+      theCycle.dishes.push(dish);
+      console.log(theCycle.dishes);
+    }
+  },
+  eventClick: function(event) {
+    if (event.type == 9)
+      alert(event.start.format('YYYY-MM-DD'));
   }
 });

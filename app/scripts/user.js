@@ -50,7 +50,7 @@ $(document).ready(function () {
             required:true
           },
           country: {
-            required:true;
+            required:true,
           },
           email: {
             required: true,
@@ -59,8 +59,6 @@ $(document).ready(function () {
           id_profile: {
             required: true,
           }
-        }
-
         },
 
         submitHandler: function(form){
@@ -73,7 +71,7 @@ $(document).ready(function () {
               phone: $("#phone").val(),
               jobtitle: $("#jobtitle").val(),
               city: $("#city").val(),
-              country: $("country").val();
+              country: $("country").val(),
               email: $("#email").val(),
               id_profile: $("#id_profile").val(),
             },
