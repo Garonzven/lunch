@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <title>Welcome user</title>
+    <title>Recovery password</title>
   </head>
   <body>
     <nav class="nav navbar-default navbar-fixed-top navContainer">
@@ -22,22 +22,31 @@
    <div class="container ">
      <div class="row">
        <div class="p-50 text-ali">
-         <img class="img-size" src="/images/welcome_dishd.png" alt="logo">
+         <hr class="hr-size">
+         <!--nombre aqui-->
+         <p style="text-align:left;"class="loginBox__title--welcome">Hi Rose,</p>
+         <h4>We received a request to reset your password for you</h4>
+         <h4>Luch Time account.</h4>
+         <!--Correo garonz aqui-->
+         <h4><b style="color:#d32f2f;">rosa.isla@garonz.com</b></h4>
          <br>
+         <h4>Easy! we know you are hungry! so we re here to help!</h4>
          <br>
-         <h1><b>WELCOME</b></h1>
-         <h4>Hi, we are glad you came</h4>
-         <h4>Welcome to lunch time, here you can be able to pick your</h4>
-         <h4>dishes for your entire menu offered by us</h4>
-           <a class="btn btn--large radius" href="#"><b>Check menu</b></a>
-         <h5>Click on the button to check new dishes.</h5>
+         <h4><b>So, here is your provisional password:</b></h4>
+         <div class="box-welcome">
+           <!--passwor aqui-->
+           <h4><b>Av4r9hlPe8</b></h4>
+         </div>
+         <br>
+         <h4><b>Please click link below to log in wit your provisional password</b></h4>
+           <a class="btn btn--extralarge" href="#">Url</a>
+         <p>If you didn't ask to chage your password don't worry! Your password is still safe</p>
+         <p>and you can delete this mail.</p>
        </div>
-       <br>
        <h4><b>Bon Appetite!</b></h4>
        <h4><b>The Lunch Time Team</b></h4>
      </div>
    </div>
-   <br>
    <footer class="footer footer-recovery">
      <div class="container">
        <h4 class="text-muted text-ali" style="color:#ffffff;">Lunch Time - Garonz 2017</h4>

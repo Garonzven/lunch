@@ -13,6 +13,28 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('pdf' , function(){
+  $pdf = PDF::loadView('reports.report');
+  return $pdf->download('archivo.pdf');
+});
+Route::get('pdfview' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('reports.report');
+});
+Route::get('pass' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('mails.recoverypass');
+});
+Route::get('new' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('mails.newlunch');
+});
+Route::get('wel' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('mails.welcome');
+});
+
+
 Route::get('date', function(){
   $dt = date('Y-m-d');
   return response()->json(['date' => $dt, 'code' => '200']);

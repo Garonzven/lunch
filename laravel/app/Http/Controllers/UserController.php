@@ -83,7 +83,7 @@ class UserController extends Controller
                 'change_pass' => true,
                 ]);
 
-      Mail::send('mails.welcome', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
+      Mail::send('mails.recoverypass', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
                $message->to($vals->email, 'To:'. $vals->name)->subject('Change password');
                });
 

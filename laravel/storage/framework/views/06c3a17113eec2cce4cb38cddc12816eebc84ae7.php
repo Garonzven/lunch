@@ -79,8 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <?php echo e($password); ?>
-
+                    laravel
                 </div>
 
                 <div class="links">
