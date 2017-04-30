@@ -36,7 +36,10 @@ class isWatcher
           {
             return $next($request);
           }
-          return response()->json(['message'=>'Not Authorize watcher', 'code' => '403']);
+          else {
+            return response()->json(['message'=>'Not Authorize watcher', 'code' => '403']);
+          }
+
         }
 
 

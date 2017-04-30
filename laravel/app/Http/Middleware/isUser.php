@@ -36,7 +36,10 @@ class isUser
           {
             return $next($request);
           }
-          return response()->json(['message'=>'Not Authorize User', 'code' => '403']);
+          else {
+            return response()->json(['message'=>'Not Authorize User', 'code' => '403']);
+          }
+
         }
 
         return $next($request);

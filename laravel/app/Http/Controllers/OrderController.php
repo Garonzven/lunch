@@ -18,17 +18,26 @@ class OrderController extends Controller
      $userToken = JWTAuth::parseToken()->ToUser();
 
      $data = $request->get('dishes');
-     $result;
+     $id = $request->get('id_user');
+     $collections = collect([]);
+
+     foreach($data as $key)
+     {
+       $find = Order::where('id_user', $id)->where('date_order', '=', $key['date_order']);
+       $find->delete();
+       $collections->push($find);
+     }
+     $collection = collect([]);
      foreach($data as $val)
      {
          $order = Order::create([
-           'id_user' => $request->get('id_user'),
+           'id_user' =>$id,
            'id_dish' => $val['id_dish'],
            'date_order' => $val['date_order'],
            'observation' => '',
          ]);
-        $val= array_add($val, 'order', $order);
+        $collection->push($order);
      }
-     return response()->json(['data'=> $val, 'message'=>'order created', 'code' => '201']);
+     return response()->json(['data'=> $collection, 'message'=>'order created', 'code' => '201']);
    }
 }

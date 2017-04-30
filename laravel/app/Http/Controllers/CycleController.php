@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Dish;
 use App\Cycle;
+use App\Order;
 use App\Cycle_dish;
 use JWTAuth;
 use Mail;
@@ -96,7 +97,7 @@ class CycleController extends Controller
         {
             return $col;
         })->values()->all();
-        
+
       foreach($union as $key)
       {
             $val = \DB::table('dishes')
@@ -108,9 +109,6 @@ class CycleController extends Controller
 
             $key = array_add($key, 'dishes', $val);
       }
-
-
-
         return response()->json(['data' => $union, 'message' => 'Cycle List', 'code' => '200']);
     }
 
@@ -153,9 +151,10 @@ class CycleController extends Controller
 
         return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
     }
-    public function updateCycle(Request $request)
+    public function updateCycle(Request $request)//falta las notificaciones
     {
         $dt = date('Y-m-d H:i:s');
+
         $id = $request->get('id');
 
 
@@ -186,7 +185,7 @@ class CycleController extends Controller
             return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '404']);
         }
 
-        $deleteDish = Cycle_dish::where('id_cycle', $id)->get();
+        $deleteDish = Cycle_dish::where('id_cycle', $id)->orderBy('date_cycle')->get();
 
         //dd($deleteDish);
         $collection = collect([]);
@@ -198,15 +197,24 @@ class CycleController extends Controller
                 $collection->all();
             }
 
-            // $var = Cycle_dish::find($key->id);
-            // $var->delete();
+            $var = Cycle_dish::find($key->id);
+            $var->delete();
         }
-        dd($collection);
         foreach($collection as $key)
         {
-            $orders = Order::find($key);
-            dd($orders);
+
+            $orders = Order::where('date_order', '=', $key);
+            $orders->delete();
         }
+
+
+        Mail::send('mails.welcome', ['primero' => $collection->first(), 'ultimo' => $collection->last()], function($message) use($user){
+          $message->to($user->email, 'To:'. $user->name)->subject('New Menu');
+        });
+
+        return response()->json(['message' => 'Update cycle', 'code' => '200']);
+
+
 
     }
 

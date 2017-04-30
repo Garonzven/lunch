@@ -53,7 +53,7 @@ class UserController extends Controller
         }
         $user = User::where('email', $request->get('email'))
         ->update(['name' =>$request->input('name'),
-        'jobtitle' => $request->get('jobtitle'),
+        'jobtitle' => $request->input('jobtitle'),
         'country' => $request->input('country'),
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),
