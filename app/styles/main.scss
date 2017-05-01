@@ -190,6 +190,12 @@ body {
     color: $secondary-text;
     font-weight: 300;
 }
+.btn--linkprofile {
+    font-size: 15px;
+    color:$dark-primary;
+    font-weight: 300;
+    text-decoration: underline !important;
+}
 
 .btn--yellow {
     background-color: $accent;
@@ -562,4 +568,22 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 #example_length label, div.dataTables_wrapper div.dataTables_info {
   color: $gray !important;
   font-weight: lighter !important;
+}
+.position{
+  position: relative;
+  top: 80px;
+}
+.position--name{
+margin-top: 60px;
+margin-bottom: 40px;
+}
+.img-posi{
+  float: right;
+  position: relative;
+  right: 20%;
+  top: 120px;
+}
+.text-profile{
+  font-size: 16px !important;
+  color:$secondary-text !important;
 }
