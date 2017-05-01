@@ -7,15 +7,22 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
+use App\Log;
 use JWTAuth;
 use Mail;
 class UserController extends Controller
 {
+    public function idUser()
+    {
+      $users = JWTAuth::parseToken()->authenticate();
+      return $users->id;
+    }
+
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
       $find = User::where('email', $request->input('email'))->get();
-      if(count($find)==0)
+      if(count($find)!=0)
       {
           return response()->json(['message'=>'email exists','code'=>'404']);
       }
@@ -32,8 +39,19 @@ class UserController extends Controller
         'change_pass' => true,
         'id_profile' => $request->input('id_profile'),
       ]);
-      Mail::send('mails.welcome', ['data' => $user,'password' => $password], function($message) use($user){
-        $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
+      $values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('email').', '.$request->input('id_profile').'';
+      $fields = 'name, jobtitle, country, city, phone, email, id_profile';
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Create new user',
+        'table' => 'users',
+        'fields' => $fields,
+        'value' => $values,
+      ]);
+
+      Mail::send('mails.example', ['data' => $user, 'password' => $password], function($message) use($user){
+        $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
+      });
 
       return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201']);
 
@@ -45,29 +63,49 @@ class UserController extends Controller
     }
     public function updateUser(Request $request)
     {
+        $bandera = false;
 
-        $find = User::where('email', $request->input('email'))->get();
+        if($request->input('emailold') == $request->input('emailnew'))
+        {
+            $bandera = true;
+        }
+        $find = User::where('email', $request->input('emailold'))->get();
         if(count($find)==0)
         {
             return response()->json(['message'=>'user not found','code'=>'404']);
         }
-        $user = User::where('email', $request->get('email'))
+        $findnew = User::where('email', $request->input('emailnew'))->get();
+
+        if(count($findnew)>0 && $bandera == false)
+        {
+          return response()->json(['message'=>'The email entered is already used','code'=>'304']);
+        }
+        $user = User::where('email', $request->get('emailnew'))
         ->update(['name' =>$request->input('name'),
         'jobtitle' => $request->input('jobtitle'),
         'country' => $request->input('country'),
         'city' => $request->input('city'),
         'phone' => $request->input('phone'),
-        'email' => $request->input('email'),
+        'email' => $request->input('emailnew'),
         'photo' => $request->input('photo'),
         'id_profile' => $request->input('id_profile'),
+      ]);
+
+      $values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('emailnew').', '.$request->input('id_profile').'';
+      $fields = 'name, jobtitle, country, city, phone, email, id_profile';
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Update user',
+        'table' => 'users',
+        'fields' => $fields,
+        'value' => $values,
       ]);
 
         return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200']);
     }
     public function recoveryPassword(Request $request)
    {
-       $users = User::select('name', 'email')->where('email', $request->get('email'))->get();
-
+      $users = User::select('id', 'name', 'email')->where('email', $request->get('email'))->get();
       if(count($users)==0)
        {
           return response()->json(['message' => 'email not exists','code'=>'404']);
@@ -77,18 +115,27 @@ class UserController extends Controller
 
        foreach($users as $user)
        {
-           $vals->name = $user->name;
-           $vals->email = $user->email;
+          $vals->id = $user->id;
+          $vals->name = $user->name;
+          $vals->email = $user->email;
        }
        $vals->password = str_random(10);
 
-       $dish = User::where('email', $vals->email)->update([
+       $user = User::where('email', $vals->email)->update([
                 'password' => bcrypt($vals->password),
                 'change_pass' => true,
                 ]);
 
-      Mail::send('mails.welcome', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
-               $message->to($vals->email, 'To:'. $vals->name)->subject('Change password');
+      $logs = Log::create([
+        'id_user' => $vals->id,
+                  'action' => 'Recovery password',
+                  'table' => 'users',
+                  'fields' => 'password, change_pass',
+                  'value' => 'true'.'secret',
+                ]);
+
+      Mail::send('mails.example', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
+               $message->to($vals->email, 'To:'. $vals->name)->subject('Recovery password');
                });
 
       return response()->json([
@@ -102,6 +149,14 @@ class UserController extends Controller
 
         $find->delete();
 
+        $logs = Log::create([
+          'id_user' => $this->idUser(),
+          'action' => 'Delete user',
+          'table' => 'users',
+          'fields' => 'All',
+          'value' => 'All',
+        ]);
+
         return response()->json(['message' => 'User delete','code'=>'200']);
     }
     public function changePassword(Request $request)
@@ -109,6 +164,15 @@ class UserController extends Controller
        $password = User::where('email', $request->get('email'))->update([
          'password' => bcrypt($request->get('password')),
          'change_pass' => false,
+       ]);
+
+
+       $logs = Log::create([
+         'id_user' => $this->idUser(),
+         'action' => 'Change password',
+         'table' => 'users',
+         'fields' => 'password',
+         'value' => 'secret',
        ]);
        return response()->json(['message' => 'Your password has been successfully changed','code'=>'200']);
     }
@@ -119,5 +183,7 @@ class UserController extends Controller
         $user->restore();
         return response()->json(['user' => $user, 'message' => 'User restore'], 200);
     }*/
+
+
 
 }

@@ -10,8 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('pdf' , function(){
+  $pdf = PDF::loadView('reports.report');
+  return $pdf->download('archivo.pdf');
+});
+Route::get('pdfview' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('reports.report');
 });
 Route::get('date', function(){
   $dt = date('Y-m-d');
@@ -47,17 +58,14 @@ Route::group(['prefix'=>'dish','middleware'=>['cors', 'jwt.auth', 'admin']],func
 Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin','cors']],function(){
 	Route::post('register',['uses'=>'CycleController@registerCycle']);
 	Route::get('find',['uses'=>'CycleController@searchCycleList']);
+  Route::get('active',['uses'=>'CycleController@searchCycleActive']);
 	Route::put('update',['uses'=>'CycleController@updateCycle']);
 });
 
-Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'admin', 'user', 'watcher', 'cors']],function(){
+Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],function(){
 	Route::post('register',['uses'=>'OrderController@registerOrder']);
   Route::get('active',['uses'=>'OrderController@searchCycleActive']);
-	Route::put('update',['uses'=>'OrderController@updateOrder']);
 });
 
-Route::group(['prefix'=>'report', 'middleware'=> ['jwt.auth', 'admin', 'watcher', 'cors']],function(){
-	Route::post('register',['uses'=>'OrderController@registerOrder']);
-  Route::get('active',['uses'=>'OrderController@searchCycleActive']);
-	Route::put('update',['uses'=>'OrderController@updateOrder']);
-});
+Route::get('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
+Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);

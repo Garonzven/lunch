@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Dish;
 use App\Cycle;
+use App\User;
+use App\Log;
 use App\Order;
 use App\Cycle_dish;
 use JWTAuth;
@@ -13,6 +15,12 @@ use Mail;
 
 class CycleController extends Controller
 {
+    public function idUser()
+    {
+      $users = JWTAuth::parseToken()->authenticate();
+      return $users->id;
+    }
+
    public function registerCycle(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
@@ -22,9 +30,18 @@ class CycleController extends Controller
         'closing_date' => $request->get('close'),
         'limit_date' => $request->get('limit'),
       ]);
+      $value = ''.$cycle->initial_date.', '.$cycle->closing_date.', '.$cycle->limit_date.'';
+      $field = 'initial_date, closing_date, limit_date';
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Create new cycle',
+        'table' => 'cycles',
+        'fields' => $field,
+        'value' => $value,
+      ]);
 
       $data = $request->get('data');
-
+      $value = '';
       foreach($data as $val)
       {
         foreach($val['id_dishes'] as $key)
@@ -34,8 +51,18 @@ class CycleController extends Controller
             'id_dish' => $key,
             'date_cycle' => $val['date_cycle'],
           ]);
+          $data = '['.$cycle->id.', '.$key.', '.$val['date_cycle'].'], ';
+          $value = ''.$value.''.$data.'';
         }
       }
+
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Assign dishes to the cycle',
+        'table' => 'cycle_dishes',
+        'fields' => 'id_cycle, id_dish, date_cycle',
+        'value' => $value,
+      ]);
       return response()->json(['data'=> $cycle, 'message'=>'cycle created', 'code' => '201']);
     }
     public function searchCycleList()
@@ -156,8 +183,6 @@ class CycleController extends Controller
         $dt = date('Y-m-d H:i:s');
 
         $id = $request->get('id');
-
-
         $cycle = Cycle::where('initial_date','>',$dt)
         ->where('closing_date','<',$dt)
         ->orWhere('initial_date', '=', $dt)
@@ -203,19 +228,39 @@ class CycleController extends Controller
         foreach($collection as $key)
         {
 
-            $orders = Order::where('date_order', '=', $key);
-            $orders->delete();
+            $orders = Order::where('date_order', '=', $key)->update([
+              'id_dish' => 1,
+            ]);
         }
 
+        $data = $request->get('data');
 
-        Mail::send('mails.welcome', ['primero' => $collection->first(), 'ultimo' => $collection->last()], function($message) use($user){
-          $message->to($user->email, 'To:'. $user->name)->subject('New Menu');
+        foreach($data as $val)
+        {
+          foreach($val['id_dishes'] as $key)
+          {
+            $dish =  Cycle_Dish::create([
+              'id_cycle' => $id,
+              'id_dish' => $key,
+              'date_cycle' => $val['date_cycle'],
+            ]);
+          }
+        }
+
+        $listUser = User::select('email')->get();
+        $array = [];
+        foreach($listUser as $key)
+        {
+           $array = array_prepend($array, $key->email);
+        }
+
+          Mail::send('mails.newlunch', ['primero' => $collection->first()], function($message) use($array){
+            $message->to($array)->subject('New Menu');
         });
 
+
+
         return response()->json(['message' => 'Update cycle', 'code' => '200']);
-
-
-
     }
 
 }

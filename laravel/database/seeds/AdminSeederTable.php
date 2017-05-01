@@ -12,14 +12,14 @@ class AdminSeederTable extends Seeder
      */
     public function run()
     {
-      $arrays = ['admin','user','watcher'];
+      $arrays = ['carlosolivero2','jeremyfys25','pedro.bracho'];
       $count = 1;
     foreach($arrays as $key)
     {
 
 
       $user = User::create([
-        'name' => 'Admin',
+        'name' => $key,
         'jobtitle' => 'El papa de los helados',
         'country' => 'Narnia',
         'city' => 'Ningun lugar',
