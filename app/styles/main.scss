@@ -605,9 +605,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 .disable-input, .disable-select {
-  // border-bottom: 0px;
   position: relative;
-  top: 80px;
 }
 .position--name{
 margin-top: 60px;
@@ -629,11 +627,6 @@ margin-bottom: 40px;
   color:$secondary-text !important;
 }
 
-
-.disable-input, .disable-select {
-  // border-bottom: 0px;
-  // outline: none;
-}
 
 .input--modal, .select--modal{
   font-size: 12px !important;
@@ -686,5 +679,4 @@ margin-bottom: 40px;
 
 .hide-btn{
   display: none;
-
 }
