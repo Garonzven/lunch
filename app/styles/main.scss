@@ -628,3 +628,63 @@ margin-bottom: 40px;
   font-size: 16px !important;
   color:$secondary-text !important;
 }
+
+
+.disable-input, .disable-select {
+  // border-bottom: 0px;
+  // outline: none;
+}
+
+.input--modal, .select--modal{
+  font-size: 12px !important;
+  padding-top: 0px !important;
+}
+
+.form-control[disabled]{
+  background-color: transparent;
+  border-bottom: 0px;
+  outline: none;
+}
+
+.btn--green{
+  background-color: $green;
+  color: $white !important;
+  &:hover {
+    background-color: darken($green, 5%);
+    color: darken($white,5%);
+  }
+  &:active {
+    background-color: darken($green, 15%);
+    color: darken($white,15%);
+  }
+  &:hover {
+    background-color: darken($green, 25%);
+    color: darken($white,15%);
+  }
+}
+
+.btn--red{
+  background-color: $primary;
+  color: $white !important;
+  &:hover {
+    background-color: darken($primary, 5%);
+    color: darken($white,5%);
+  }
+  &:active {
+    background-color: darken($primary, 15%);
+    color: darken($white,15%);
+  }
+  &:hover {
+    background-color: darken($primary, 25%);
+    color: darken($white,15%);
+  }
+}
+
+.show-btn{
+  display: block;
+}
+
+.hide-btn{
+  display: none;
+
+}
