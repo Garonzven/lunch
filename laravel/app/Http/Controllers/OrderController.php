@@ -19,12 +19,13 @@ class OrderController extends Controller
     $users = JWTAuth::parseToken()->authenticate();
     return $users->id;
   }
+
   public function registerOrder(Request $request)
    {
      $userToken = JWTAuth::parseToken()->ToUser();
 
      $data = $request->get('dishes');
-     $id = $request->get('id_user');
+     $id = $this->idUser();
      $collections = collect([]);
 
      foreach($data as $key)

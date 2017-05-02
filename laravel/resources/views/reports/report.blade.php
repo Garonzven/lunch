@@ -71,7 +71,7 @@
         <tbody>
           @foreach($dishes as $key)
               <tr>
-                <td>{{$key->day}}</td>
+                <td>{{$key->day}} <br> {{$key->date_cycle}}</td>
                 <td>
                 @foreach($key->dish as $val)
                 {{$val->title}}<br>
