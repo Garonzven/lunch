@@ -48,6 +48,8 @@ body {
   border-style: solid;
   height: 250px;
   padding: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border: 1px solid $boxBg;
 
 }
 .thumbnail-button{
@@ -59,8 +61,19 @@ body {
   font-weight: 300;
 }
 
+.ciclo-day > a{
+  color:#fff;
+  text-decoration: none;
+}
+.menus > div {
+  display: none;
+}
+
+.menus > .current{
+  display: block !important;
+}
 .ciclo{
-  background-color: $dark-primary;
+  background-color: $primary;
   color: $white;
   font-size: 20px;
   font-weight: bold;
@@ -72,12 +85,26 @@ body {
   padding: 0;
 }
 
+.ciclo > .current{
+  border-bottom: 12px solid $yellow;
+}
+
+.ciclo > .selected{
+  border-bottom: 12px solid $green;
+}
+
+
 .ciclo-day{
   float: left;
   list-style: none;
   margin: 0px;
-  padding: 15px 50px;
+  padding: 10px 50px;
+  &:hover{
+    background-color: $dark-primary !important;
+    border-bottom:12px solid $dark-primary !important;
+  }
 }
+
 
 .swal2-title {
   color: $dark-primary !important;
