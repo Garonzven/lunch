@@ -67,5 +67,5 @@ Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],fu
   Route::get('active',['uses'=>'OrderController@searchCycleActive']);
 });
 
-Route::get('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
+Route::put('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
 Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);

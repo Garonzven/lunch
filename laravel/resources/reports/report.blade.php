@@ -69,31 +69,13 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>MONDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>TUESDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>WEDNESDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>THURSDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>FRYDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-              <td> 4 <br> 5 </td>
-            </tr>
+            @foreach($dishes as $key)
+                <tr>
+                  <td>$key->day</td>
+                  <td>$key->title</td>
+                  <td>$key->count</td>
+                </tr>
+            @endforeach 
         </tbody>
       </table>
       <div class="container container-pa">

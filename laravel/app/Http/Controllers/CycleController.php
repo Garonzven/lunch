@@ -63,6 +63,17 @@ class CycleController extends Controller
         'fields' => 'id_cycle, id_dish, date_cycle',
         'value' => $value,
       ]);
+
+      $listUser = User::select('email')->get();
+        $array = [];
+        foreach($listUser as $key)
+        {
+           $array = array_prepend($array, $key->email);
+        }
+
+          Mail::send('mails.welcome', ['data' => $data], function($message) use($array){
+            $message->to($array)->subject('New Menu');
+        });
       return response()->json(['data'=> $cycle, 'message'=>'cycle created', 'code' => '201']);
     }
     public function searchCycleList()
@@ -191,6 +202,8 @@ class CycleController extends Controller
         ->where('closing_date','>',$dt)
         ->limit(1)
         ->get();
+
+        //dd($cycle);
 
         if(count($cycle)==0)
         {
