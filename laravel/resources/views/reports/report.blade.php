@@ -69,31 +69,21 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>MONDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>TUESDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>WEDNESDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>THURSDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-                <td> 4 <br> 5 </td>
-            </tr>
-            <tr>
-              <td>FRYDAY</td>
-              <td>Ensalda cesar <br> Pasta carbonata</td>
-              <td> 4 <br> 5 </td>
-            </tr>
+          @foreach($dishes as $key)
+              <tr>
+                <td>{{$key->day}}</td>
+                <td>
+                @foreach($key->dish as $val)
+                {{$val->title}}<br>
+                @endforeach
+                </td>
+                <td>
+                @foreach($key->dish as $val)
+                {{$val->count}}<br>
+                @endforeach
+                </td>
+              </tr>
+          @endforeach
         </tbody>
       </table>
       <div class="container container-pa">
@@ -101,7 +91,7 @@
 
       </div>
     </div>
-        <p class="p-der">TOTAL FOOD DISHES:<span style="text-decoration:underline;">45</span></p>
+        <p class="p-der">TOTAL FOOD DISHES:<span style="text-decoration:underline;">{{$sum}}</span></p>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </body>

@@ -72,10 +72,12 @@
             @foreach($dishes as $key)
                 <tr>
                   <td>$key->day</td>
-                  <td>$key->title</td>
-                  <td>$key->count</td>
+                  @foreach($key->dish as $val)
+                  <td>$val->title</td>
+                  <td>$val->count</td>
+                  @endforeach
                 </tr>
-            @endforeach 
+            @endforeach
         </tbody>
       </table>
       <div class="container container-pa">
