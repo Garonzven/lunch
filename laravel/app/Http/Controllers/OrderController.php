@@ -38,7 +38,7 @@ class OrderController extends Controller
          $collections->push($find);
        }
      }
-     //dd($collections);
+     
      if($collections->isNotEmpty())
      {
        return response()->json(['data'=> $collections, 'message'=>'order update', 'code' => '200']);
