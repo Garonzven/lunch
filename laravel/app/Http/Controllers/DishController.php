@@ -84,19 +84,4 @@ class DishController extends Controller
         ]);
         return response()->json(['message' => 'Dish delete', 'code'=>'200']);
     }
-    /* public function restoreDish($id)
-    {
-        $dish = Dish::withTrashed()->where('id', $id)->first();
-        $dish->restore();
-        return response()->json(['data' => $dish, 'message' => 'Dish restore'], 200);
-    }
-    public function searchDishTitle($title)
-    {
-            $dish = Dish::name($title)->get();
-            if(count($dish)>0)
-            {
-                return response()->json(['data' => $dish, 'message' => 'Search for title'],200);
-            }
-            return response()->json(['message' => 'Search fail'],404);
-    }*/
 }

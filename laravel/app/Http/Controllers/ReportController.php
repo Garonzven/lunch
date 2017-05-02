@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Log;
+use JWTAuth;
 
 use Illuminate\Http\Request;
 
