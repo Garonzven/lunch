@@ -145,21 +145,38 @@ $('#modalDish').on('shown.bs.modal', function(e) {
   $('#dish-title').focus();
 });
 
+
+function dateExists(date) {
+  var res=false;
+
+  $.each(theCycle.dishes, function(i, v) {
+    if (v.start.format('YYYY-MM-DD') == date) {
+      res = true;
+      return false;
+    }
+  });
+  return res;
+}
+
 $('#save-cycle').on('click', function() {
   var _cycle = {};
 
   var theDishes = [];
   var tmp = [];
   theDishes.push({date_cycle: theCycle.dishes[0].start.format('YYYY-MM-DD')});
-  for (var i=1; i < theCycle.dishes.length, i++) {
-    for (var j=0; j < theDishes.length; j++) {
-      if (theDishes[j].date_cycle != theCycle.dishes[i].start.format('YYYY-MM-DD')) {
-        theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
-      }
-      break;
-    }
+  for (var i=1; i < theCycle.dishes.length; i++) {
+    console.log(dateExists(theCycle.dishes[i].start.format('YYYY-MM-DD')));
+    // if (dateNotExists(theCycle.dishes[i].start.format('YYYY-MM-DD'))) {
+    //   theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
+    // }
   }
-  console.log(theDishes);
+    // for (var j=0; j < theDishes.length; j++) {
+    //   if (theDishes[j].date_cycle != theCycle.dishes[i].start.format('YYYY-MM-DD')) {
+    //     theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
+    //   }
+    //   break;
+    // }
+  // console.log(theDishes);
 
   if (theCycle.init) {
     _cycle = {

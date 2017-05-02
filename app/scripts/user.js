@@ -1,7 +1,35 @@
+$.ajax({
+  url: 'login.json',
+  method: 'get',
+  data: {
+    token: $.cookie('token')
+  },
+  dataType: 'json',
+  success: function(data) {
+    switch (data.code) {
+      case 200:
+        $.ajax({
+          url: 'menu_admin.html',
+          method: 'get',
+          dataType: 'text',
+          success: function(data) {
+            $('.sidebar-nav').html(data);
+          }
+        });
+        break;
+
+      case 400:
+        $(location).attr('href', 'login.html');
+        break;
+    }
+  }
+});
+
+
 function submitForm(button){
   var formid = $(button).closest('form').attr('id');
+  console.log('button', button);
   var datos = $(formid).serializeArray();
-  console.log(datos);
 
   $.ajax({
     url: 'http://13.92.198.201/laravel/public/user/update?token='+$.cookie('token'),
@@ -14,6 +42,7 @@ function submitForm(button){
       country: $('#'+formid).closest('#country').val(),
       email: $('#'+formid).closest('#email').val(),
       id_profile: $('#'+formid).closest('#id_profile').val(),
+      photo: 'asdasdas',
       emailold:$('#'+formid).closest('#emailold').val()
     },
     dataType: 'JSON',
@@ -149,6 +178,7 @@ $('document').ready(function(){
               city: $('#city').val(),
               country: $('#country').val(),
               email: $('#email').val(),
+              photo: 'asdasdasd',
               id_profile: $('#id_profile').val(),
             },
             dataType: 'JSON',

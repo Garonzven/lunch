@@ -27,7 +27,7 @@ $('document').ready(function(){
     type:'get',
     dataType:'JSON',
     success: function(data){
-    date = "";
+    date = '';
       $.each(data.data.dishes,function(key,data){
         console.log(data);
         if(date != data.date_cycle){
