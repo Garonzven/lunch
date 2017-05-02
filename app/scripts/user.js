@@ -5,7 +5,7 @@ function submitForm(button){
 
   $.ajax({
     url: 'http://13.92.198.201/laravel/public/user/update?token='+$.cookie('token'),
-    type: "PUT",
+    type: 'PUT',
     data: {
       name: $('#'+formid).closest('#name').val(),
       phone: $('#'+formid).closest('#phone').val(),
@@ -16,7 +16,7 @@ function submitForm(button){
       id_profile: $('#'+formid).closest('#id_profile').val(),
       emailold:$('#'+formid).closest('#emailold').val()
     },
-    dataType: "JSON",
+    dataType: 'JSON',
     success: function(response){
       console.log(response);
     }
@@ -28,10 +28,10 @@ function editForm(button){
   var formid = $(button).closest('form').attr('id');
   console.log(formid);
   $('#'+formid+' input').each(function(){
-      $(this).attr("disabled", false);
+      $(this).attr('disabled', false);
   });
   $('#'+formid+' select').each(function(){
-      $(this).attr("disabled", false);
+      $(this).attr('disabled', false);
   });
   $('#'+formid+' #ok').removeClass('show-btn').addClass('hide-btn');
   $('#'+formid+' #update').removeClass('hide-btn').addClass('show-btn');
@@ -48,13 +48,13 @@ $('document').ready(function(){
   function viewRole(id){
     switch (id) {
       case 1:
-      return "Admin";
+      return 'Admin';
       break;
       case 2:
-      return "User";
+      return 'User';
       break;
       case 3:
-      return "Watcher";
+      return 'Watcher';
       break;
     }
   }
@@ -103,7 +103,7 @@ $('document').ready(function(){
     success: function(data){
       $.each(data.data, function (key, data) {
         $('.modales').append(createModal(data.id,data.name,data.email,data.phone,data.jobtitle,data.city,data.country,data.id_profile));
-        $('#user-detail').append("<a href='#'><tr id='"+data.email+"' data-toggle='modal'  data-target='#"+data.id+"'> <td align='center'>"+data.name+"</td><td align='center'>"+data.email+"</td><td align='center'>"+data.created_at+"</td> <td align='center'>"+viewRole(data.id_profile)+"</td></tr></a>");
+        $('#user-detail').append('<a href=\'#\'><tr id=\''+data.email+'\' data-toggle=\'modal\'  data-target=\'#'+data.id+'\'> <td align=\'center\'>'+data.name+'</td><td align=\'center\'>'+data.email+'</td><td align=\'center\'>'+data.created_at+'</td> <td align=\'center\'>'+viewRole(data.id_profile)+'</td></tr></a>');
       });
     $('#example').dataTable();
     }

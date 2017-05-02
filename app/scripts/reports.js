@@ -4,7 +4,7 @@ $(document).ready(function(){
   $('.print').on('click',function(){
     swal({
       title: 'Are you sure?',
-      text: "There are some lunchers who haven't choose their dishes",
+      text: 'There are some lunchers who haven\'t choose their dishes',
       imageUrl: 'assets/warning_1.png',
       imageWidth: 200,
       showCancelButton: true,

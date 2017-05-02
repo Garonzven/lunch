@@ -97,9 +97,7 @@ $('#calendar').fullCalendar({
       dayDishes = $.grep(theCycle.dishes, function(e) {
         return e.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
       });
-      // console.log(dayDishes);
       $.each(dayDishes, function(i, e) {
-        // console.log(e);
         $('.dish-list').append('<li>' + e.title + '</li>');
       });
       $('#modalDish').modal('show');
@@ -128,6 +126,7 @@ $('#calendar').fullCalendar({
             console.log(data);
           }
         });
+
         $('.dish-list').append('<li>' + dish.title + '</li>');
         $('#calendar').fullCalendar('renderEvent', dish, true);
         theCycle.dishes.push(dish);
@@ -149,5 +148,30 @@ $('#modalDish').on('shown.bs.modal', function(e) {
 $('#save-cycle').on('click', function() {
   var _cycle = {};
 
-  console.log(theCycle);
+  var theDishes = [];
+  var tmp = [];
+  theDishes.push({date_cycle: theCycle.dishes[0].start.format('YYYY-MM-DD')});
+  for (var i=1; i < theCycle.dishes.length, i++) {
+    for (var j=0; j < theDishes.length; j++) {
+      if (theDishes[j].date_cycle != theCycle.dishes[i].start.format('YYYY-MM-DD')) {
+        theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
+      }
+      break;
+    }
+  }
+  console.log(theDishes);
+
+  if (theCycle.init) {
+    _cycle = {
+      init: theCycle.start.format('YYYY-MM-DD'),
+      close: theCycle.end.format('YYYY-MM-DD'),
+      limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
+    }
+  }
+
+  // console.log(theCycle);
 });
+
+// $('#limit-time').on('change', function() {
+  // console.log($(this).val());
+// });
