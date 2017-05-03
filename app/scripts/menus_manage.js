@@ -1,5 +1,6 @@
+// Load profile
 $.ajax({
-  url: 'login.json',
+  url: constants().server + constants().profile + '?token=' + $.cookie('token'),
   method: 'get',
   data: {
     token: $.cookie('token')
@@ -7,14 +8,14 @@ $.ajax({
   dataType: 'json',
   success: function(data) {
     switch (data.code) {
-      case 200:
+      case '200':
         $('#fullname').text(data.user.name);
         $.ajax({
           url: 'menu_admin.html',
           method: 'get',
           dataType: 'text',
           success: function(data) {
-            $('.sidebar-nav').html(data);
+        $('.sidebar-nav').load('menu_admin.html');
           }
         });
         break;
@@ -26,7 +27,61 @@ $.ajax({
   }
 });
 
+// Cycles
 var theCycle = {};
+// $.ajax({
+//   url: constants().server + constants().cycleFind + '?token=' + $.cookie('token'),
+//   method: 'get',
+//   dataType: 'json',
+//   success: function(data) {
+//     console.log(data);
+//     switch (data.code) {
+//       case '200':
+//         if (data.data.length > 0) {
+//           $.each(data.data, function(i, o) {
+//             switch (o.active) {
+//               case 0:
+//                 break;
+//
+//               case 1:
+//                 theCycle = {
+//                   title: 'Cycle from ' + moment(o.initial_date).format('YYYY-MM-DD') + ' to ' + moment(o.closing_date).format('YYYY-MM-DD'),
+//                   start: moment(o.initial_date).format('YYYY-MM-DD'),
+//                   end: moment(o.closing_date).format('YYYY-MM-DD'),
+//                   type: 0,
+//                   overlap: false,
+//                   editable: false
+//                 }
+//                 console.log(theCycle);
+//                 break;
+//
+//               case 2:
+//                 break;
+//             }
+//           });
+//           $('#calendar').fullCalendar({
+//             eventLimit: true,
+//             editable: true,
+//             selectable: true,
+//             header: {
+//               left: '',
+//               center: 'title'
+//             },
+//             events: [],
+//             select: function(start, end) {
+//
+//             }
+//           });
+//           $('#calendar').fullCalendar('renderEvent', theCycle, true);
+//         }
+//         break;
+//
+//       case '404':
+//         break;
+//     }
+//   }
+// });
+
 var today = moment();
 
 function hasCycle() {
@@ -65,28 +120,17 @@ $('#calendar').fullCalendar({
     left: '',
     center: 'title'
   },
-  events: [
-    {
-      start: '2017-04-18',
-      end: moment('2017-04-21').add(1, 'days'),
-      allDay: true,
-      title: 'asdasdas',
-      editable: false,
-      type: 1,
-      backgroundColor: '#ff0000',
-      borderColor: '#ff0000'
-    }
-  ],
   select: function(start, end) {
     if (!hasCycle() && today.diff(start) < 0) {
       var cycle = {
-        title: 'Cycle',
+        title: 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.subtract(1, 'seconds').format('YYYY-MM-DD'),
         start: start,
-        end: end.subtract(1, 'seconds'),
+        end: end,
         type: 0,
         overlap: false,
         editable: false,
       }
+      console.log(cycle);
       $('#calendar').fullCalendar('renderEvent', cycle, true);
     }
   },
@@ -103,7 +147,7 @@ $('#calendar').fullCalendar({
       $('#modalDish').modal('show');
       $('#dish-add').off().on('click', function() {
         var dish = {};
-        dish = {
+        var dish = {
           id: Math.random().toString().substr(4,5),
           title: $('#dish-title').val(),
           description: $('#dish-description').val(),
@@ -116,7 +160,7 @@ $('#calendar').fullCalendar({
         }
 
         $.ajax({
-          url: 'http://13.92.198.201/laravel/public/dish/register?token=' + $.cookie('token'),
+          url: constants().server + constants().dishRegister + '?token=' + $.cookie('token'),
           method: 'post',
           data: {
             title: $('#dish-title').val(),
@@ -124,10 +168,7 @@ $('#calendar').fullCalendar({
             id_provider: 1
           },
           success: function(data) {
-            console.log(data);
-          }
-        });
-
+            dish.id = data.data.id;
         $('.dish-list').append('<li>' + dish.title + '</li>');
         $('#calendar').fullCalendar('renderEvent', dish, true);
         theCycle.dishes.push(dish);
@@ -187,5 +228,14 @@ $('#save-cycle').on('click', function() {
     limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
     data: theDishes,
   }
-  console.log(cycle);
+
+  $.ajax({
+    url: constants().server + constants().cycleRegister + '?token=' + $.cookie('token'),
+    method: 'post',
+    data: cycle,
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+    }
+  });
 });
