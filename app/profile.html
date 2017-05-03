@@ -52,16 +52,15 @@
           </a>
         </div>
         <div class="collapse navbar-collapse avatar" id="avatar">
-          <ul class="nav navbar-nav navbar-right navbar-right--menu">
+          <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <span id="fullname"></span>
                   <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Profile</a></li>
-                  <li><a href="#">Settings</a></li>
-                  <li><a href="#" class="logout">Log out</a></li>
+                  <li><a href="profile.html">Profile</a></li>
+                  <li><a href="" class="logout">Log out</a></li>
                 </ul>
               </li>
           </ul>
@@ -74,35 +73,35 @@
           <img class="img-posi" src="images/user-01.png" alt="avatar">
           <div class="col-md-6 col-md-offset-1">
               <h1><b>Profile</b></h1>
-              <h1 class="loginBox__title position--name">Fabiana Guerrero</h1>
+              <h1 class="loginBox__title position--name p-name"></h1>
               <div>
                 <div class="form-group">
                   <label for="" class="label__modal">Name:</label>
-                  <p class="text-profile">Sara Guerrero</p>
+                  <p class="text-profile p-name">Sara Guerrero</p>
                 </div>
                 <div class="form-group">
                   <label for="" class="label__modal">Email:</label>
-                  <p class="text-profile">sara.guerrero@gmail.com</p>
+                  <p class="text-profile" id="p-email">sara.guerrero@gmail.com</p>
                 </div>
                 <div class="form-group">
                   <label for="" class="label__modal">Tel:</label>
-                  <p class="text-profile">XXXXXXXXXXXXX</p>
+                  <p class="text-profile" id="p-phone">XXXXXXXXXXXXX</p>
                 </div>
                 <div class="form-group">
                   <label for=""class="label__modal">Job Title:</label>
-                  <p class="text-profile">Diseñador grafio</p>
+                  <p class="text-profile" id="p-jobtitle">Diseñador grafio</p>
                 </div>
                 <div class="form-group">
                   <label for=""class="label__modal">City:</label>
-                  <p class="text-profile">Maracaibo</p>
+                  <p class="text-profile" id="p-city">Maracaibo</p>
                 </div>
                 <div class="form-group">
                   <label for=""class="label__modal">Country:</label>
-                  <p class="text-profile">Venezuela</p>
+                  <p class="text-profile" id="p-country">Venezuela</p>
                 </div>
                 <div class="form-group">
                   <label for=""class="label__modal">Role:</label>
-                  <p class="text-profile">Admin</p>
+                  <p class="text-profile" id="p-id_profile">Admin</p>
                 </div>
                 <div class="form-group">
                   <label for="" class="label__modal">password:</label>
@@ -157,9 +156,13 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/menus_manage.js -->
-    <script src="scripts/menus_manage.js"></script>
+    <script src="scripts/constants.js"></script>
     <script src="scripts/logout.js"></script>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/profile.js"></script>
+
+
+
     <!-- endbuild -->
 
   </body>

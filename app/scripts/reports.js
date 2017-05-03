@@ -1,3 +1,12 @@
+$.ajax({
+  url: 'menu_admin.html',
+  method: 'get',
+  dataType: 'text',
+  success: function(data) {
+    $('.sidebar-nav').html(data);
+  }
+});
+
 $(document).ready(function(){
   $('#example').dataTable();
 
@@ -11,12 +20,6 @@ $(document).ready(function(){
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Print'
-    }).then(function () {
-      swal(
-        'Deleted!',
-        'Your file has been deleted.',
-        'success'
-      )
+    });
     });
   });
-});

@@ -1,27 +1,10 @@
 $.ajax({
-  url: 'login.json',
+  url: 'menu_admin.html',
   method: 'get',
-  data: {
-    token: $.cookie('token')
-  },
-  dataType: 'json',
+  dataType: 'text',
   success: function(data) {
-    switch (data.code) {
-      case 200:
-        $.ajax({
-          url: 'menu_admin.html',
-          method: 'get',
-          dataType: 'text',
-          success: function(data) {
-            $('.sidebar-nav').html(data);
-          }
-        });
-        break;
-
-      case 400:
-        $(location).attr('href', 'login.html');
-        break;
-    }
+    $('.sidebar-nav').html(data);
+    console.log(data);
   }
 });
 
