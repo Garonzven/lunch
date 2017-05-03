@@ -21,9 +21,9 @@ class CreateOrdersTable extends Migration
             $table->string('observation', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            
+
             $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_dishes')->references('id')->on('dishes');
+            $table->foreign('id_dish')->references('id')->on('dishes');
         });
     }
 
