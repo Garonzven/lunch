@@ -23,7 +23,7 @@ function addActive(li){
 
 $('document').ready(function(){
   $.ajax({
-    url:'cycleactive.json',
+    url:'http://13.92.198.201/laravel/public/cycle/find?token='+$.cookie('token'),
     type:'get',
     dataType:'JSON',
     success: function(data){
