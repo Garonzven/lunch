@@ -49,7 +49,7 @@ class UserController extends Controller
         'value' => $values,
       ]);
 
-      Mail::send('mails.example', ['data' => $user, 'password' => $password], function($message) use($user){
+      Mail::send('mails.welcome', ['data' => $user, 'password' => $password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
       });
 
@@ -80,7 +80,8 @@ class UserController extends Controller
         {
           return response()->json(['message'=>'The email entered is already used','code'=>'304']);
         }
-        $user = User::where('email', $request->get('emailnew'))
+
+        $user = User::where('email', $request->get('emailold'))
         ->update(['name' =>$request->input('name'),
         'jobtitle' => $request->input('jobtitle'),
         'country' => $request->input('country'),
@@ -91,7 +92,7 @@ class UserController extends Controller
         'id_profile' => $request->input('id_profile'),
       ]);
 
-      $values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('emailnew').', '.$request->input('id_profile').'';
+      /*$values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('emailnew').', '.$request->input('id_profile').'';
       $fields = 'name, jobtitle, country, city, phone, email, id_profile';
       $logs = Log::create([
         'id_user' => $this->idUser(),
@@ -99,7 +100,7 @@ class UserController extends Controller
         'table' => 'users',
         'fields' => $fields,
         'value' => $values,
-      ]);
+      ]);*/
 
         return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200']);
     }
@@ -161,12 +162,14 @@ class UserController extends Controller
     }
     public function changePassword(Request $request)
     {
-       $password = User::where('email', $request->get('email'))->update([
+      $users = JWTAuth::parseToken()->authenticate();
+     
+     $password = User::where('email', $users->email)->update([
          'password' => bcrypt($request->get('password')),
          'change_pass' => false,
        ]);
-
-
+      
+       
        $logs = Log::create([
          'id_user' => $this->idUser(),
          'action' => 'Change password',

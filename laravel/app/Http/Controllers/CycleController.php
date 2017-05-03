@@ -21,9 +21,124 @@ class CycleController extends Controller
       return $users->id;
     }
 
+
+    public function updateCycle($id, $data)//falta las notificaciones
+    {
+        $dt = date('Y-m-d');
+       //dd($dt);
+        
+        $cycle = Cycle::where('initial_date','>',$dt)
+        ->where('closing_date','<',$dt)
+        ->orWhere('initial_date', '=', $dt)
+        ->orWhere('closing_date', '=', $dt)
+        ->orWhere('initial_date', '>', $dt)
+        ->where('closing_date','>',$dt)
+        ->limit(1)
+        ->get();
+
+        //dd($cycle);
+
+        if(count($cycle)==0)
+        {
+            return 0;
+        }
+
+        $valores = new Cycle();
+
+        foreach($cycle as $key)
+        {
+            $valores->id = $key->id;
+            $valores->initial_date = $key->initial_date;
+            $valores->closing_date = $key->closing_date;
+        }
+
+        if($valores->id < $id)
+        {
+            return 1;
+        }
+
+        $deleteDish = Cycle_dish::where('id_cycle', $id)->orderBy('date_cycle')->get();
+
+        //dd($deleteDish);
+        $collection = collect([]);
+        foreach($deleteDish as $key)
+        {
+            if(!$collection->contains($key->date_cycle))
+            {
+                $collection->push($key->date_cycle);
+                $collection->all();
+            }
+
+            $var = Cycle_dish::find($key->id);
+            $var->delete();
+        }
+        foreach($collection as $key)
+        {
+
+            $orders = Order::where('date_order', '=', $key)->update([
+              'id_dish' => 1,
+            ]);
+        }  
+
+        foreach($data as $val)
+        {
+          foreach($val['id_dishes'] as $key)
+          {
+            $dish =  Cycle_Dish::create([
+              'id_cycle' => $id,
+              'id_dish' => $key,
+              'date_cycle' => $val['date_cycle'],
+            ]);
+          }
+        }
+
+        $listUser = User::select('email')->get();
+        $array = [];
+        foreach($listUser as $key)
+        {
+           $array = array_prepend($array, $key->email);
+        }
+
+          Mail::send('mails.newlunch', ['primero' => $collection->first()], function($message) use($array){
+            $message->to($array)->subject('New Menu');
+        });
+
+        return 2;
+    }
+
    public function registerCycle(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
+
+      $findcycle = Cycle::where('initial_date', '=', $request->get('init'))->where('closing_date', '=', $request->get('close'))->get();
+
+      $data = $request->get('data');
+
+      if(count($findcycle)>0)
+      {
+        $res = 3;
+        foreach($findcycle as $key)
+        {
+            $update = Cycle::where('initial_date', '=', $key->initial_date)->where('closing_date', '=', $key->closing_date)->update([
+                'limit_date' => $request->get('limit'),
+              ]);
+            $res = $this->updateCycle($key->id, $data);
+        }
+
+        if($res == 0)
+        {
+           return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
+        }
+        else if($res == 1)
+        {
+            return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '301']);
+        }
+        else if($res == 2)
+        {
+            return response()->json(['message' => 'Update cycle', 'code' => '200']);
+        }
+      }
+
       $cycle = Cycle::create([
 
         'initial_date' => $request->get('init'),
@@ -39,8 +154,6 @@ class CycleController extends Controller
         'fields' => $field,
         'value' => $value,
       ]);
-
-      $data = $request->get('data');
       $value = '';
       foreach($data as $val)
       {
@@ -71,7 +184,7 @@ class CycleController extends Controller
            $array = array_prepend($array, $key->email);
         }
 
-          Mail::send('mails.welcome', ['data' => $data], function($message) use($array){
+          Mail::send('mails.newlunch', ['data' => $data], function($message) use($array){
             $message->to($array)->subject('New Menu');
         });
       return response()->json(['data'=> $cycle, 'message'=>'cycle created', 'code' => '201']);
@@ -189,91 +302,5 @@ class CycleController extends Controller
 
         return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
     }
-    public function updateCycle(Request $request)//falta las notificaciones
-    {
-        $dt = date('Y-m-d H:i:s');
-
-        $id = $request->get('id');
-        $cycle = Cycle::where('initial_date','>',$dt)
-        ->where('closing_date','<',$dt)
-        ->orWhere('initial_date', '=', $dt)
-        ->orWhere('closing_date', '=', $dt)
-        ->orWhere('initial_date', '>', $dt)
-        ->where('closing_date','>',$dt)
-        ->limit(1)
-        ->get();
-
-        //dd($cycle);
-
-        if(count($cycle)==0)
-        {
-            return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
-        }
-
-        $valores = new Cycle();
-        foreach($cycle as $key)
-        {
-            $valores->id = $key->id;
-            $valores->initial_date = $key->initial_date;
-            $valores->closing_date = $key->closing_date;
-        }
-
-        if($valores->id < $id)
-        {
-            return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '404']);
-        }
-
-        $deleteDish = Cycle_dish::where('id_cycle', $id)->orderBy('date_cycle')->get();
-
-        //dd($deleteDish);
-        $collection = collect([]);
-        foreach($deleteDish as $key)
-        {
-            if(!$collection->contains($key->date_cycle))
-            {
-                $collection->push($key->date_cycle);
-                $collection->all();
-            }
-
-            $var = Cycle_dish::find($key->id);
-            $var->delete();
-        }
-        foreach($collection as $key)
-        {
-
-            $orders = Order::where('date_order', '=', $key)->update([
-              'id_dish' => 1,
-            ]);
-        }
-
-        $data = $request->get('data');
-
-        foreach($data as $val)
-        {
-          foreach($val['id_dishes'] as $key)
-          {
-            $dish =  Cycle_Dish::create([
-              'id_cycle' => $id,
-              'id_dish' => $key,
-              'date_cycle' => $val['date_cycle'],
-            ]);
-          }
-        }
-
-        $listUser = User::select('email')->get();
-        $array = [];
-        foreach($listUser as $key)
-        {
-           $array = array_prepend($array, $key->email);
-        }
-
-          Mail::send('mails.newlunch', ['primero' => $collection->first()], function($message) use($array){
-            $message->to($array)->subject('New Menu');
-        });
-
-
-
-        return response()->json(['message' => 'Update cycle', 'code' => '200']);
-    }
-
+    
 }

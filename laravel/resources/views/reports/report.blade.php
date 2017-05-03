@@ -36,6 +36,7 @@
          right: 110px;
        }
        .p-der{
+
          position: relative;
          left: 57%;
        }
@@ -63,35 +64,45 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>DAY</th>
-            <th>DISH</th>
-            <th>TOTAL</th>
+            <th align="center">DAY</th>
+            <th align="center">DISH</th>
+            <th align="center">TOTAL</th>
           </tr>
         </thead>
         <tbody>
           @foreach($dishes as $key)
               <tr>
-                <td>{{$key->day}} <br> {{$key->date_cycle}}</td>
+                <td align="center">{{$key->day}} <br> {{$key->date_cycle}} </td>
                 <td>
                 @foreach($key->dish as $val)
                 {{$val->title}}<br>
                 @endforeach
                 </td>
-                <td>
+                <td align="center">
                 @foreach($key->dish as $val)
                 {{$val->count}}<br>
                 @endforeach
                 </td>
+                 <tr>
+                  <td colspan="2" align="right"><b>Total dishes: </b></td>
+                  <td align="center"><b>{{$key->daycount}}</b></td>
+                </tr>
               </tr>
           @endforeach
+              <tr style="border:none !important;">
+                  <td colspan="2" align="right"><b>Total week&#39s dishes: </b></td>
+                  <td align="center"><b>{{$sum}}</b></td>
+              </tr>
         </tbody>
       </table>
+
+
+
       <div class="container container-pa">
         <div class="row">
 
       </div>
     </div>
-        <p class="p-der">TOTAL FOOD DISHES:<span style="text-decoration:underline;">{{$sum}}</span></p>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </body>

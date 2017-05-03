@@ -56,9 +56,11 @@ class ReportController extends Controller
      $sum = 0;
      foreach($dishes as $key)
      {
+      $sumDay=0;
        foreach($key->dish as $val)
        {
-            $var = Order::where('id_dish', $val->id_dish)->where('date_order', $key->date_cycle)->count();
+            $var = Order::where('id_dish', $val->id_dish)->where('date_order', $key->date_cycle)->where('id_dish' ,'!=', 1 )->count();
+            $sumDay = $sumDay + $var;
             $sum = $sum + $var;
             $val = array_add($val, 'count', $var);
             $dish = Dish::select('title')->where('id', $val->id_dish)->get();
@@ -67,6 +69,8 @@ class ReportController extends Controller
               $val = array_add($val, 'title', $valor->title);
             }
        }
+       $key = array_add($key, 'daycount', $sumDay);
+       $sumDay = 0;
      }
 
     $logs = Log::create([

@@ -15,7 +15,7 @@
    <!-- Brand and toggle get grouped for better mobile display -->
        <div style="margin-right: 0;margin-left: 0;">
          <a style="float: left;height: 50px;padding: 15px 15px;font-size: 18px;line-height: 20px;padding-top: 0;display: none;position: absolute !important;left: calc(10% - 70px) !important;display: block;bottom: 18px;"href="#">
-           <img style="position: relative;height: 80px;width: 130px;bottom: 9px;left: 10px;" src="https://s12.postimg.org/fq5rxqpfx/logo_horizontal_dark.png" alt="Logo">
+           <img style="position: relative;height: 80px;width: 130px;bottom: 9px;left: 10px;" src="/images/logo_horizontal_dark.png" alt="Logo">
          </a>
        </div>
      </div>
