@@ -104,6 +104,7 @@ $('#calendar').fullCalendar({
       $('#dish-add').off().on('click', function() {
         var dish = {};
         dish = {
+          id: Math.random().toString().substr(4,5),
           title: $('#dish-title').val(),
           description: $('#dish-description').val(),
           start: start.add(1, 'seconds'),
@@ -146,11 +147,12 @@ $('#modalDish').on('shown.bs.modal', function(e) {
 });
 
 
-function dateExists(date) {
+var theDishes;
+function dateExists(obj) {
   var res=false;
 
-  $.each(theCycle.dishes, function(i, v) {
-    if (v.start.format('YYYY-MM-DD') == date) {
+  $.each(theDishes, function(i, o) {
+    if (o.date_cycle == obj.start.format('YYYY-MM-DD')) {
       res = true;
       return false;
     }
@@ -159,36 +161,31 @@ function dateExists(date) {
 }
 
 $('#save-cycle').on('click', function() {
-  var _cycle = {};
+  var cycle = {};
 
-  var theDishes = [];
-  var tmp = [];
-  theDishes.push({date_cycle: theCycle.dishes[0].start.format('YYYY-MM-DD')});
-  for (var i=1; i < theCycle.dishes.length; i++) {
-    console.log(dateExists(theCycle.dishes[i].start.format('YYYY-MM-DD')));
-    // if (dateNotExists(theCycle.dishes[i].start.format('YYYY-MM-DD'))) {
-    //   theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
-    // }
-  }
-    // for (var j=0; j < theDishes.length; j++) {
-    //   if (theDishes[j].date_cycle != theCycle.dishes[i].start.format('YYYY-MM-DD')) {
-    //     theDishes.push({date_cycle: theCycle.dishes[i].start.format('YYYY-MM-DD')});
-    //   }
-    //   break;
-    // }
-  // console.log(theDishes);
-
-  if (theCycle.init) {
-    _cycle = {
-      init: theCycle.start.format('YYYY-MM-DD'),
-      close: theCycle.end.format('YYYY-MM-DD'),
-      limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
+  theDishes = [];
+  $.each(theCycle.dishes, function(i, o) {
+    if (!dateExists(o)) {
+      theDishes.push({
+        date_cycle: o.start.format('YYYY-MM-DD'),
+        id_dishes: []
+      });
     }
+  });
+
+  $.each(theDishes, function(i, o) {
+    $.each(theCycle.dishes, function(_i, _o) {
+      if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
+        o.id_dishes.push(_o.id);
+      }
+    });
+  });
+
+  cycle = {
+    init: theCycle.start.format('YYYY-MM-DD'),
+    close: theCycle.end.format('YYYY-MM-DD'),
+    limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
+    data: theDishes,
   }
-
-  // console.log(theCycle);
+  console.log(cycle);
 });
-
-// $('#limit-time').on('change', function() {
-  // console.log($(this).val());
-// });
