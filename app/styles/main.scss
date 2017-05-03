@@ -391,30 +391,6 @@ button.edit{
     font-size: 20px;
     top: 7px !important;
 }
-
-button.del{
-  padding: 0;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  -webkit-appearance: none;
-}
-
-.del{
-  font-weight: bold;
-  line-height: 1;
-  color: $gray;
-  text-shadow: 0 1px 0 #fff;
-  opacity: 0.2;
-}
-
-.del-modal--admin{
-  position: relative;
-    right: 105px;
-    font-size: 20px;
-    top: 7px !important;
-}
-
 .modal-header--user{
   margin-top: 10px;
   padding-top: 20px;
@@ -550,7 +526,6 @@ button.del{
   color: $dark-primary;
   font-weight: 700;
   padding: 0 0 0 40px;
-  border-bottom: 2px solid #d32f2f;
 }
 
 .loginBox__title--modal > input{
@@ -728,4 +703,25 @@ margin-bottom: 40px;
 
 .hide-btn{
   display: none;
+}
+
+.navbar-right--menu{
+  position: relative;
+  right: 4%;
+}
+.swal2-container{
+  display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: transparent;
+    z-index: 1060;
 }

@@ -1,68 +1,32 @@
-// Load profile
 $.ajax({
-  url: constants().server + constants().profile + '?token=' + $.cookie('token'),
+  url: 'login.json',
   method: 'get',
+  data: {
+    token: $.cookie('token')
+  },
   dataType: 'json',
   success: function(data) {
     switch (data.code) {
-      case '200':
+      case 200:
         $('#fullname').text(data.user.name);
-        $('.sidebar-nav').load('menu_admin.html');
+        $.ajax({
+          url: 'menu_admin.html',
+          method: 'get',
+          dataType: 'text',
+          success: function(data) {
+            $('.sidebar-nav').html(data);
+          }
+        });
         break;
-    }
-  },
-  error: function(error) {
-    console.log(error);
-    switch (error.status) {
-      case 401:
+
+      case 400:
         $(location).attr('href', 'login.html');
         break;
     }
   }
 });
 
-// Cycles
 var theCycle = {};
-$.ajax({
-  url: constants().server + constants().cycleFind + '?token=' + $.cookie('token'),
-  method: 'get',
-  dataType: 'json',
-  success: function(data) {
-    console.log(data);
-    switch (data.code) {
-      case '200':
-        if (data.data.length > 0) {
-          $.each(data.data, function(i, o) {
-            if (o.active == 1) {
-              theCycle = {
-                type: 1,
-                start: moment(o.initial_date).format('YYYY-MM-DD'),
-                end: moment
-              }
-            }
-          });
-          $('#calendar').fullCalendar({
-            eventLimit: true,
-            editable: true,
-            selectable: true,
-            header: {
-              left: '',
-              center: 'title'
-            },
-            events: [],
-            select: function(start, end) {
-
-            }
-          });
-        }
-        break;
-
-      case '404':
-        break;
-    }
-  }
-});
-
 var today = moment();
 
 function hasCycle() {
@@ -101,6 +65,18 @@ $('#calendar').fullCalendar({
     left: '',
     center: 'title'
   },
+  events: [
+    {
+      start: '2017-04-18',
+      end: moment('2017-04-21').add(1, 'days'),
+      allDay: true,
+      title: 'asdasdas',
+      editable: false,
+      type: 1,
+      backgroundColor: '#ff0000',
+      borderColor: '#ff0000'
+    }
+  ],
   select: function(start, end) {
     if (!hasCycle() && today.diff(start) < 0) {
       var cycle = {
@@ -126,7 +102,9 @@ $('#calendar').fullCalendar({
       });
       $('#modalDish').modal('show');
       $('#dish-add').off().on('click', function() {
-        var dish = {
+        var dish = {};
+        dish = {
+          id: Math.random().toString().substr(4,5),
           title: $('#dish-title').val(),
           description: $('#dish-description').val(),
           start: start.add(1, 'seconds'),
@@ -138,7 +116,7 @@ $('#calendar').fullCalendar({
         }
 
         $.ajax({
-          url: constants().server + constants().dishRegister + '?token=' + $.cookie('token'),
+          url: 'http://13.92.198.201/laravel/public/dish/register?token=' + $.cookie('token'),
           method: 'post',
           data: {
             title: $('#dish-title').val(),
@@ -146,14 +124,15 @@ $('#calendar').fullCalendar({
             id_provider: 1
           },
           success: function(data) {
-            dish.id = data.data.id;
-            $('.dish-list').append('<li>' + dish.title + '</li>');
-            $('#calendar').fullCalendar('renderEvent', dish, true);
-            theCycle.dishes.push(dish);
-            $('#dish-title').val('').focus();
-            $('#dish-description').val('');
+            console.log(data);
           }
         });
+
+        $('.dish-list').append('<li>' + dish.title + '</li>');
+        $('#calendar').fullCalendar('renderEvent', dish, true);
+        theCycle.dishes.push(dish);
+        $('#dish-title').val('').focus();
+        $('#dish-description').val('');
       });
     }
   },
@@ -166,6 +145,7 @@ $('#calendar').fullCalendar({
 $('#modalDish').on('shown.bs.modal', function(e) {
   $('#dish-title').focus();
 });
+
 
 var theDishes;
 function dateExists(obj) {
@@ -207,14 +187,5 @@ $('#save-cycle').on('click', function() {
     limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
     data: theDishes,
   }
-
-  $.ajax({
-    url: constants().server + constants().cycleRegister + '?token=' + $.cookie('token'),
-    method: 'post',
-    data: cycle,
-    dataType: 'json',
-    success: function(data) {
-      console.log(data);
-    }
-  });
+  console.log(cycle);
 });

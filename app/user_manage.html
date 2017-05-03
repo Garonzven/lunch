@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8">
@@ -51,15 +51,16 @@
           </a>
         </div>
         <div class="collapse navbar-collapse avatar" id="avatar">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right navbar-right--menu">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <span id="fullname"></span>
                   <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu dropdown-menu--p">
+                  <li><a href="#">Profile</a></li>
                   <li><a href="#">Settings</a></li>
-                  <li><a href="#" class="logout">Log out</a></li>
+                  <li><a href="#">Log out</a></li>
                 </ul>
               </li>
           </ul>
@@ -115,27 +116,27 @@
                       <div class="col-xs-5">
                         <div class="form-group">
                           <label for="" class="label__modal">Name:</label>
-                            <input type="text" class="form-control form-control--input input" name="name" id="name" value="">
+                            <input type="text" class="form-control form-control--input input" name="name" id="name" value="" placeholder="Ex: Juana Avila">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Email:</label>
-                          <input type="text" class="form-control form-control--input input" name="email" id="email" value="">
+                          <input type="text" class="form-control form-control--input input" name="email" id="email" value="" placeholder="Ex: Ejemplo@ejemplo.com">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Phone:</label>
-                          <input type="text" class="form-control form-control--input input" name="phone" id="phone" value="">
+                          <input type="text" class="form-control form-control--input input" name="phone" id="phone" value="" placeholder="Ex: +12-345-312-422">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Job Title:</label>
-                          <input type="text" class="form-control form-control--input input" name="jobtitle" id="jobtitle" value="">
+                          <input type="text" class="form-control form-control--input input" name="jobtitle" id="jobtitle" value="" placeholder="Ex: Programmer">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">City:</label>
-                          <input type="text" class="form-control form-control--input input" name="city" id="city" value="">
+                          <input type="text" class="form-control form-control--input input" name="city" id="city" value="" placeholder="Ex: Maracaibo">
                         </div>
                         <div class="form-group">
                           <label for="" class="label__modal">Country:</label>
-                          <input type="text" class="form-control form-control--input input" name="country" id="country" value="">
+                          <input type="text" class="form-control form-control--input input" name="country" id="country" value="" placeholder="Ex: Venezuela">
                         </div>
                         <div class="form-group">
                         <label for="" class="label__modal">Role:</label>
@@ -207,8 +208,7 @@
     <!-- endbuild -->
 
     <script src="scripts/user.js"></script>
-    <script src="scripts/logout.js"></script>
-
+    <script src="scripts/menu.js"></script>
 
     </div>
   </body>
