@@ -38,7 +38,7 @@
          </div>
          <br>
          <h4><b>Please click link below to log in wit your provisional password</b></h4>
-           <a class="btn btn--extralarge" href="#">Url</a>
+           <a class="btn btn--extralarge" href="http://13.92.198.201/login.html">Url</a>
          <p>If you didn't ask to chage your password don't worry! Your password is still safe</p>
          <p>and you can delete this mail.</p>
        </div>

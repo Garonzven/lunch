@@ -20,7 +20,7 @@
    </nav>
    <div style="padding-right: 15px; padding-left: 15px;margin-right: auto; margin-left: auto;">
      <div style="margin-right: -15px;margin-left: -15px;">
-       <div style="padding-top:20px; text-align: center;">
+       <div style="padding-top:65px; text-align: center;">
          <img style="width: 200px;height: 150px;" src="https://s11.postimg.org/ipd549apv/welcome_dishd.png" alt="logo">
          <br>
          <br>
@@ -57,7 +57,7 @@
    <br>
    <footer style="background-color: #d32f2f;height: 44px;">
      <div style="padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
-       <h4 style="text-align: center; color:#ffffff;">Lunch Time - Garonz 2017</h4>
+       <h3 style="text-align: center; color:#ffffff; padding-top:10px;">Lunch Time - Garonz 2017</h3>
      </div>
    </footer>
       <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

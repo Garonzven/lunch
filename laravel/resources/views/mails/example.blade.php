@@ -25,11 +25,11 @@
        <div style="padding-top:100px; text-align: center;">
          <hr style="background-color:#d32f2f;height: 2px;margin-top: 0px;margin-bottom: -10px;border: 0;border-top: 0px;position: relative;top:-25px;">
          <!--nombre aqui-->
-         <p style="text-align:left;font-size: 36px;color: #d32f2f;font-weight: 700;margin-top: 0px;padding-bottom: 0px;">Hi {{$name}},</p>
+         <p style="text-align:left;font-size: 36px;color: #d32f2f;font-weight: 700;margin-top: 0px;padding-bottom: 0px;">Hi {{$data->name}},</p>
          <h4>We received a request to reset your password for you</h4>
          <h4>Luch Time account.</h4>
          <!--Correo garonz aqui-->
-         <h4 style="color:#d32f2f;"><b>{{$email}}</b></h4>
+         <h4 style="color:#d32f2f;"><b>{{$data->email}}</b></h4>
          <br>
          <h4>Easy! we know you are hungry! so we re here to help!</h4>
          <br>
@@ -58,7 +58,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 500px;color: #ffffff;" href="#">Url</a>
+    border-radius: 4px;background-color:#d32f2f;width: 500px;color: #ffffff;" href="http://13.92.198.201/login.html">Url</a>
          <p>If you didn't ask to chage your password don't worry! Your password is still safe</p>
          <p>and you can delete this mail.</p>
        </div>

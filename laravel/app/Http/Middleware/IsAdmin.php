@@ -32,7 +32,7 @@ class IsAdmin
 
         if($action != 'AUW')
         {
-          return response()->json(['message'=>'Not Authorize', 'code' => '403'],403);
+          return response()->json(['message'=>'Not Authorize Admin', 'code' => '403'],403);
         }
 
         return $next($request);

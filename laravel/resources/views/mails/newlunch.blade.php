@@ -20,7 +20,7 @@
    </nav>
    <div style="padding-right: 15px; padding-left: 15px;margin-right: auto; margin-left: auto;">
      <div style="margin-right: -15px;margin-left: -15px;">
-       <div style="padding-top:20px; text-align: center;">
+       <div style="padding-top:65px; text-align: center;">
          <img style="width: 200px;height: 180px;" src="https://s1.postimg.org/pn691xnkf/new_menu.png" alt="logo">
          <br>
          <br>
@@ -46,7 +46,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 500px;color: #ffffff; border-radius:0px;" href="#"><b>Check menu</b></a>
+    border-radius: 4px;background-color:#d32f2f;width: 500px;color: #ffffff; border-radius:0px;" href="http://13.92.198.201/login.html"><b>Check menu</b></a>
          <h5>Click on the button to check new dishes.</h5>
        </div>
        <br>
@@ -56,7 +56,7 @@
    </div>
    <footer style="background-color: #d32f2f;height: 44px;">
      <div style="padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
-       <h4 style="text-align: center; color:#ffffff;">Lunch Time - Garonz 2017</h4>
+       <h3 style="text-align: center; color:#ffffff;padding-top:10px;">Lunch Time - Garonz 2017</h3>
      </div>
    </footer>
       <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>

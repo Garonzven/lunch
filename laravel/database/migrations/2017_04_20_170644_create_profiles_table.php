@@ -15,7 +15,6 @@ class CreateProfilesTable extends Migration
     {
 
          Schema::create('profiles', function (Blueprint $table) {
-            
             $table->increments('id');
             $table->string('profile_type', 30);
             $table->softDeletes();
