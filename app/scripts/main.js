@@ -43,7 +43,12 @@ $(document).ready(function() {
               $.cookie('token', data.token, { expires: 7 });
               switch (data.user.id_profile) {
                 case 1:
-                  $(location).attr('href', 'welcome.html');
+                  if(data.user.change_pass){
+                    $(location).attr('href','reset_password.html');
+                    $.cookie('id_profile',data.user.id_profile);
+                  }else{
+                    $(location).attr('href', 'welcome.html');
+                  }
                   break;
 
                 case 2:
