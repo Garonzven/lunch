@@ -54,7 +54,11 @@ $(document).ready(function() {
                   break;
               }
             } else {
-              alert('Invalid credentials!');
+              swal({
+              text: data.message,
+              type: 'error',
+              confirmButtonText: 'Ok'
+              });
             }
           },
           error: function(res) {
