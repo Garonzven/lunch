@@ -8,5 +8,11 @@ function constants() {
 		dishUpdate: server + 'dish/update',
     cycleRegister: server + 'cycle/register',
     cycleFind: server + 'cycle/find',
+		cycleReport: server +'reportCycle',
+		cycleList: server + 'cyclelist',
+		userRegister: server+ 'user/register',
+		userUpdate: server+'user/change',
+		userDelete: server+'user/delete',
+		userFindList:server+'user/findlist',
   }
 }
