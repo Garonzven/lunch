@@ -56,24 +56,24 @@ $("#myform").validate({
       dataType:"JSON",
       success: function(data){
         console.log(data);
-        switch (data.code) {
-          case "200":
-            swal({
-            text: data.message+"!",
-            type: 'success',
-            confirmButtonText: 'Ok'
-          }).then(
-            LoadHome();
-          );
-          break;
-          case "400":
-            swal({
-            text: data.message+"!",
-            type: 'success',
-            confirmButtonText: 'Ok'
-            });
-          break;
-        }
+        // switch (data.code) {
+        //   case "200":
+        //     swal({
+        //     text: data.message+"!",
+        //     type: 'success',
+        //     confirmButtonText: 'Ok'
+        //   }).then(
+        //     LoadHome();
+        //   );
+        //   break;
+        //   case "400":
+        //     swal({
+        //     text: data.message+"!",
+        //     type: 'success',
+        //     confirmButtonText: 'Ok'
+        //     });
+        //   break;
+        // }
       }
   });
 }
