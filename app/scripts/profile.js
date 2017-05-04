@@ -1,6 +1,6 @@
 // Load profile
 $.ajax({
-  url: constants().server + constants().profile + '?token=' + $.cookie('token'),
+  url: constants().profile + '?token=' + $.cookie('token'),
   method: 'get',
   dataType: 'json',
   success: function(data) {
