@@ -27,8 +27,8 @@ class CycleController extends Controller
         $dt = date('Y-m-d');
        //dd($dt);
         
-        $cycle = Cycle::where('initial_date','>',$dt)
-        ->where('closing_date','<',$dt)
+        $cycle = Cycle::where('initial_date','<',$dt)
+        ->where('closing_date','>',$dt)
         ->orWhere('initial_date', '=', $dt)
         ->orWhere('closing_date', '=', $dt)
         ->orWhere('initial_date', '>', $dt)
@@ -69,8 +69,8 @@ class CycleController extends Controller
                 $collection->all();
             }
 
-            $var = Cycle_dish::find($key->id);
-            $var->delete();
+            $variable = Cycle_dish::find($key->id);
+            $variable->delete();
         }
         foreach($collection as $key)
         {
@@ -192,17 +192,17 @@ class CycleController extends Controller
     public function searchCycleList()
     {
       $dt = date('Y-m-d H:i:s');
-      //$dt = '2017-05-14 00:00:00';
+      //$dt = '2017-05-06 00:00:00';
 
-      $cycle = Cycle::where('initial_date','>',$dt)
-      ->where('closing_date','<',$dt)
+      $cycle = Cycle::where('initial_date','<',$dt)
+      ->where('closing_date','>',$dt)
       ->orWhere('initial_date', '=', $dt)
       ->orWhere('closing_date', '=', $dt)
       ->orWhere('initial_date', '>', $dt)
       ->where('closing_date','>',$dt)
       ->limit(1)
       ->get();
-
+      //dd($cycle);
       if(count($cycle)==0)
       {
         return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
@@ -253,8 +253,9 @@ class CycleController extends Controller
       {
             $val = \DB::table('dishes')
             ->join('cycle_dishes','dishes.id','=','cycle_dishes.id_dish')
-            ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description')
+            ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description', 'cycle_dishes.deleted_at')
             ->where('cycle_dishes.id_cycle', '=', $key->id)
+            ->whereNull('cycle_dishes.deleted_at')
             ->orderBy('cycle_dishes.date_cycle')
             ->get();
 
@@ -268,8 +269,8 @@ class CycleController extends Controller
       $dt = date('Y-m-d H:i:s');
 
 
-      $cycle = Cycle::where('initial_date','>',$dt)
-      ->where('closing_date','<',$dt)
+      $cycle = Cycle::where('initial_date','<',$dt)
+      ->where('closing_date','>',$dt)
       ->orWhere('initial_date', '=', $dt)
       ->orWhere('closing_date', '=', $dt)
       ->orWhere('initial_date', '>', $dt)
@@ -293,8 +294,9 @@ class CycleController extends Controller
 
     $active = \DB::table('dishes')
             ->join('cycle_dishes','dishes.id','=','cycle_dishes.id_dish')
-            ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description')
+            ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description', 'cycle_dishes.deleted_at')
             ->where('cycle_dishes.id_cycle', '=', $valores->id)
+            ->whereNull('cycle_dishes.deleted_at')
             ->orderBy('cycle_dishes.date_cycle')
             ->get();
 

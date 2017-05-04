@@ -16,18 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('pdf' , function(){
-  $pdf = PDF::loadView('reports.report');
-  return $pdf->download('archivo.pdf');
-});
-Route::get('pdfview' , function(){
-  #$pdf = PDF::loadView('reports.report');
-  return view('reports.report');
-});
-Route::get('wel' , function(){
-  #$pdf = PDF::loadView('reports.report');
-  return view('mailparse_stream_encode(sourcefp, destfp, encoding).welcome');
-});
 Route::get('date', function(){
   $dt = date('Y-m-d');
   return response()->json(['date' => $dt, 'code' => '200']);

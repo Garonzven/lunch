@@ -25,20 +25,21 @@ class ReportController extends Controller
   public function nameDate($fecha)
   {
       $fecha = date("w",strtotime($fecha));
-
       switch ($fecha)
       {
-        case 0: return "Sunday"; break;
-        case 1: return "Monday"; break;
-        case 2: return "Tuesday"; break;
-        case 3: return "Wednesday"; break;
-        case 4: return "Thursday"; break;
-        case 5: return "Friday"; break;
-        case 6: return "Saturday"; break;
+        case 0: return "SUN"; break;
+        case 1: return "MON"; break;
+        case 2: return "TUE"; break;
+        case 3: return "WED"; break;
+        case 4: return "THU"; break;
+        case 5: return "FRI"; break;
+        case 6: return "SAT"; break;
       }
   }
   public function generateReportCycle(Request $request)
    {
+     $init=[];
+     $close=[]; 
      $userToken = JWTAuth::parseToken()->ToUser();
      $id = $request->get('id');
 
@@ -47,7 +48,12 @@ class ReportController extends Controller
      $fechas = collect([]);
      foreach($dishes as $key)
      {
-      $key->date_cycle = date('d-m-Y', strtotime($key->date_cycle));
+      $cicle_date = Cycle::select('initial_date', 'closing_date')->where('id', $id)->get();
+      foreach ($cicle_date as $val) {
+        $init= array_add($key, 'initial',  date('Y/m/d', strtotime($val->initial_date)));
+        $close= array_add($key, 'closing', date('Y/m/d', strtotime($val->closing_date)));
+      }
+      $key->date_cycle = date('Y/m/d', strtotime($key->date_cycle));
       $fecha = $this->nameDate($key->date_cycle);
       $key = array_add($key, 'day', $fecha);
       $dish = Cycle_dish::select('id_dish')->where('date_cycle', $key->date_cycle)->get();
@@ -82,7 +88,7 @@ class ReportController extends Controller
        'value' => 'PDF',
      ]);
 
-     $pdf = \PDF::loadView('reports.report', compact('dishes', 'sum'));
+     $pdf = \PDF::loadView('reports.report', compact('dishes', 'sum', 'init','close'));
       return $pdf->download('archivo.pdf');
    }
 

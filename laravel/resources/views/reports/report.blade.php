@@ -14,16 +14,31 @@
       }
       .loginBox__title--black {
         font-size: 24px;
-        color: #000000;
-        font-weight: 700;
+        /*color: #000000;
+        font-weight: 700;*/
+        text-align: center !important;
       }
        .hr-size-black {
-           background-color: black;
+           background-color: rgba(33, 33, 33, 0.36);;
            height: 2px;
            margin-top: 0px;
            margin-bottom: 30px;
            border: 0;
            border-top: 0px;
+       }
+       .hr-size-tableleft{
+           background-color:rgba(33, 33, 33, 0.36) ;
+           height: 2px;
+           width: 160px;
+           margin-bottom: 3px;
+           
+       }
+       .hr-size-tablerigth{
+           background-color:rgba(33, 33, 33, 0.36) ;
+           height: 2px;
+           width: 160px;
+           margin-bottom: 3px;
+           
        }
        .navbar-pdf{
          width: 100%;
@@ -31,9 +46,13 @@
          background-color:#d32f2f;
        }
        .img-pdf{
-         position: relative;
-         float: right;
-         right: 110px;
+         margin-left: 20px;
+         
+       }
+       .img-logo{
+            width: 23px;
+            height: 22px;
+            margin-top: 4px
        }
        .p-der{
 
@@ -43,6 +62,10 @@
        .container-pa{
          padding-top: 100px;
        }
+       .table>thead>tr>th {
+        vertical-align: bottom;
+        /* border-bottom: 2px solid #ddd; */
+    }
        head:before, thead:after,
     tbody:before, tbody:after,
     tfoot:before, tfoot:after
@@ -56,17 +79,19 @@
         <img class="img-pdf" src="images/logo.png" alt="Logo">
       </nav>
       <div style="margin-bottom:100px;"></div>
-      <i class="glyphicon glyphicon-file" aria-hidden="true"></i><span class="loginBox__title">REPORTS</span>
+      <div style="margin-left: 45%;">
+         <img class="img-logo" src="images/icono_menu.png" alt="Logo">
+          <span class="loginBox__title">REPORTS</span>
+      </div>
+     
       <hr class="hr-size-black">
-      <span class="loginBox__title--black">GARONZ</span>
-      <p>5 de Julio, Edificio Befercom.</p>
-      <p>0412-6459052</p>
+      <p style="font-size: 18px;">Period: {{$init->initial}} To {{$close->closing}} </p>
       <table class="table table-bordered">
         <thead>
-          <tr>
-            <th align="center">DAY</th>
-            <th align="center">DISH</th>
-            <th align="center">TOTAL</th>
+          <tr style="background-color:#fdc113">
+            <th align="center"><p style="text-align: center; color:#ffffff;">DAY</p></th>
+            <th align="center"><p style="text-align: center;color:#ffffff;">DISH</p></th>
+            <th align="center"><p style="text-align: center;color:#ffffff;">TOTAL</p></th>
           </tr>
         </thead>
         <tbody>
@@ -90,11 +115,29 @@
               </tr>
           @endforeach
               <tr style="border:none !important;">
-                  <td colspan="2" align="right"><b>Total week&#39s dishes: </b></td>
+                  <td colspan="2" align="right"><b style="font-size:18px;">Total week&#39s dishes: </b></td>
                   <td align="center"><b>{{$sum}}</b></td>
               </tr>
         </tbody>
       </table>
+     <table class="table" style="margin-bottom:20px !important;">
+       <thead>
+          <tr>
+            <th style="border-bottom:none !important;"><hr class="hr-size-tableleft">
+            <p style="text-align:center;font-size: 20px;color:rgba(33, 33, 33, 0.36);">Send</p></th>
+            <th style="border-bottom:none !important;""><hr class="hr-size-tablerigth">
+            <p  style="text-align:center !important;font-size: 20px;color:rgba(33, 33, 33, 0.36);">Received</p></th>
+          </tr>
+        </thead>
+     </table>
+     
+      <div>
+        <p class="loginBox__title--black">GARONZ</p>
+        <p style="text-align: center;">5 de Julio, Edificio Befercom.</p>
+        <p style="text-align: center;">0412-6459052</p>
+      </div>
+      
+      
 
 
 

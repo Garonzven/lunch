@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Dish;
+use App\Log;
 use JWTAuth;
 use Mail;
 class DishController extends Controller

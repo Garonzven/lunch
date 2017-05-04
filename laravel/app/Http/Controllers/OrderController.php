@@ -77,8 +77,8 @@ class OrderController extends Controller
      $dt = date('Y-m-d H:i:s');
 
 
-     $cycle = Cycle::where('initial_date','>',$dt)
-     ->where('closing_date','<',$dt)
+     $cycle = Cycle::where('initial_date','<',$dt)
+     ->where('closing_date','>',$dt)
      ->orWhere('initial_date', '=', $dt)
      ->orWhere('closing_date', '=', $dt)
      ->orWhere('initial_date', '>', $dt)
@@ -102,8 +102,9 @@ class OrderController extends Controller
 
    $active = \DB::table('dishes')
            ->join('cycle_dishes','dishes.id','=','cycle_dishes.id_dish')
-           ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description')
+           ->select('cycle_dishes.id_dish','cycle_dishes.id_cycle', 'cycle_dishes.date_cycle','dishes.title','dishes.description' ,'cycle_dishes.deleted_at')
            ->where('cycle_dishes.id_cycle', '=', $valores->id)
+           ->whereNull('cycle_dishes.deleted_at')
            ->orderBy('cycle_dishes.date_cycle')
            ->get();
 
