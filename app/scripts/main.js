@@ -46,10 +46,10 @@ $(document).ready(function() {
                 case 1:
                   console.log(data.user);
                   if(data.user.change_pass){
-                      // $(location).attr('href','reset_password.html');
-                      // $.cookie('id_profile',data.user.id_profile);
+                      $(location).attr('href','reset_password.html');
+                      $.cookie('id_profile',data.user.id_profile);
                     }else{
-                      // $(location).attr('href', 'welcome.html');
+                       $(location).attr('href', 'welcome.html');
                     }
                   break;
 

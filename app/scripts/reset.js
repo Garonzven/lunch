@@ -62,7 +62,9 @@ $("#myform").validate({
             text: data.message+"!",
             type: 'success',
             confirmButtonText: 'Ok'
-            });
+          }).then(
+            LoadHome()
+          );
           break;
           case "400":
             swal({
