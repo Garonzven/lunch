@@ -1,11 +1,10 @@
 function constants() {
+	const server = 'http://13.92.198.201/laravel/public/';
   return {
-    server: 'http://13.92.198.201/laravel/public',
-    login: '/login/signin',
-    logout: '/login/signout',
-    profile: '/login/profile',
-    dishRegister: '/dish/register',
-    cycleRegister: '/cycle/register',
-    cycleFind: '/cycle/find',
+    login: server + 'login/signin',
+    logout: server + 'login/signout',
+    profile: server + 'login/profile',
+    dishRegister: server + 'dish/register',
+    cycleRegister: server + 'cycle/register',
+    cycleFind: server + 'cycle/find',
   }
-}
