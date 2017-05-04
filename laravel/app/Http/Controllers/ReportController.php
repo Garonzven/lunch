@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\PDF;
+use App\Http\Controllers\DB;
 use App\Dish;
 use App\Log;
 use App\Order;
@@ -83,5 +84,53 @@ class ReportController extends Controller
 
      $pdf = \PDF::loadView('reports.report', compact('dishes', 'sum'));
       return $pdf->download('archivo.pdf');
+   }
+
+   public function listcycle()
+   {
+      $cycle = Cycle::select('id','initial_date','closing_date')->get();
+      if(count($cycle)==0)
+      {
+          return response()->json(['message' => 'Not found cycle', 'code' => '404']);
+      }
+      foreach($cycle as $key)
+      {
+          $dishes = Cycle_dish::select('date_cycle')->where('id_cycle', $key->id)->distinct()->get();
+          $key = array_add($key, 'dishes', $dishes);
+      }
+      $array =[];
+      foreach ($cycle as $key) {
+          foreach ($key->dishes as $val) {
+               $user = \DB::table('users')
+            ->join('orders','users.id','=','orders.id_user')
+            ->select('users.id')
+            ->where('orders.date_order', '=', $val->date_cycle)
+            ->orderBy('orders.id_user', 'DESC')
+            ->get();
+
+
+            foreach($user as $valor)
+            {
+                $array = array_prepend($array, $valor->id);
+            }
+
+            $users = \DB::table('users')
+                    ->select('id')
+                    ->whereNotIn('id', $array)
+                    ->get();
+
+            if(count($users)>0)
+            {
+              $key = array_add($key, 'remaining', true);
+            }
+            else
+            {
+              $key = array_add($key, 'remaining', false);
+            }
+          }
+      }
+      return response()->json(['data' => $cycle, 'message' => 'Cycle List', 'code' => '200']);
+      
+
    }
 }

@@ -72,4 +72,7 @@ Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],fu
 });
 
 Route::put('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
+
 Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);
+
+Route::get('cyclelist',['uses'=>'ReportController@listCycle', 'middleware'=> ['jwt.auth', 'watcher', 'cors']]);
