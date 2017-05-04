@@ -102,6 +102,7 @@ body {
   &:hover{
     background-color: $dark-primary !important;
     border-bottom:12px solid $dark-primary !important;
+    cursor: pointer;
   }
 }
 

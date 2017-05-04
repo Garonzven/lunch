@@ -1,3 +1,5 @@
+$('.navContainer__logo').addClass('navContainer__logo--center');
+
 // Load profile
 $.ajax({
   url: constants().profile + '?token=' + $.cookie('token'),

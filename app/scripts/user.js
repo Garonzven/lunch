@@ -212,10 +212,9 @@ $('document').ready(function(){
     modal += '<input type="hidden" name="emailold" id="emailold" value="'+email+'"/>';
     modal += '</div>';
     modal += '<div class="col-xs-2">';
-    modal += '<div class="form-group"><label class="label__modal">Picture</label>'
     modal += '<div class="form-group"><label for="" class="label__modal">Picture:</label><img src="images/user-01.png" alt="" class="img-responsive img--form"></div>';
-    modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok">Ok</button>';
-    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--red btn--fs15 btn--modal pull-right radius update" >Save</button>';
+    modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok m-t-70 ">Ok</button>';
+    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--yellow btn--fs15 btn--modal pull-right radius update m-t-70" >Save</button>';
     modal += '</div></div></div></div></div></div></div></form></div>';
     return modal;
    }
