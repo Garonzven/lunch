@@ -10,42 +10,69 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('dish', 'DishController');
-Route::resource('cycle', 'CycleController');
-#Route::post('register',['uses'=>'UserController@registerUser']);
+Route::get('pdf' , function(){
+  $pdf = PDF::loadView('reports.report');
+  return $pdf->download('archivo.pdf');
+});
+Route::get('pdfview' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('reports.report');
+});
+Route::get('wel' , function(){
+  #$pdf = PDF::loadView('reports.report');
+  return view('mailparse_stream_encode(sourcefp, destfp, encoding).welcome');
+});
+Route::get('date', function(){
+  $dt = date('Y-m-d');
+  return response()->json(['date' => $dt, 'code' => '200']);
+})->middleware('cors');
 
-Route::group(['prefix'=>'login'],function(){
+Route::put('recovery',['uses'=>'UserController@recoveryPassword'])->middleware('cors');
+
+Route::group(['prefix'=>'login', 'middleware'=>'cors'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
+  	Route::get('profile', 'Auth\LoginController@sendProfile');
 	Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function ()
         {
-					Route::post('logout', 'Auth\LoginController@logout');
-          #Route::post('getUserInfo', 'api\v2\UserController@getUserInfo');
+			Route::post('signout', 'Auth\LoginController@logout');
         });
 });
-
-Route::group(['prefix'=>'user'],function(){
+Route::group(['prefix'=>'user', 'middleware'=> ['jwt.auth', 'admin','cors']],function(){
 	Route::post('register',['uses'=>'UserController@registerUser']);
-	Route::get('find',['uses'=>'UserController@searchUserlist','middleware'=>'jwt.auth']);
-	Route::get('find/{id}',['uses'=>'UserController@searchUser','middleware'=>'jwt.auth']);
-	Route::get('findname/{name}',['uses'=>'UserController@searchUserName','middleware'=>'jwt.auth']);
-	Route::put('update',['uses'=>'UserController@updateUser','middleware'=>'jwt.auth']);
-	Route::put('restore/{id}',['uses'=>'UserController@restoreUser','middleware'=>'jwt.auth']);
-	Route::put('recovery',['uses'=>'UserController@recoveryPassword','middleware'=>'jwt.auth']);
-	Route::delete('delete/{id}',['uses'=>'UserController@deleteUser','middleware'=>'jwt.auth']);
+	Route::get('findlist',['uses'=>'UserController@searchUserlist']);
+	Route::put('update',['uses'=>'UserController@updateUser']);
+  	Route::put('change',['uses'=>'UserController@changePassword']);
+	Route::delete('delete',['uses'=>'UserController@deleteUser']);
 });
-/*
-Route::group(['prefix' => 'api/v1'], function(){
 
-	Route::get('user/searchId/{id}', 'UserController@searchId');
-	Route::delete('user/delete/{id}', 'UserController@deleteUser');
-	Route::put('user/update/{id}', 'UserController@updateUser');
-	Route::post('user/create', 'UserController@createUser');
-	Route::get('user/searchAll', 'UserController@searchAllUser');
-	Route::put('user/restore/{id}', 'UserController@restoreUser');
-	Route::get('user/searchName/{name}', 'UserController@searchName');
+Route::group(['prefix'=>'dish','middleware'=>['cors', 'jwt.auth', 'admin']],function(){
+	Route::post('register',['uses'=>'DishController@registerDish']);
+	Route::get('find',['uses'=>'DishController@searchDishList']);
+	Route::get('find/{id}',['uses'=>'DishController@searchDish']);
+	Route::put('update/{id}',['uses'=>'DishController@updateDish']);
+	Route::delete('delete/{id}',['uses'=>'DishController@deleteDish']);
+});
 
-});*/
+Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin','cors']],function(){
+	Route::post('register',['uses'=>'CycleController@registerCycle']);
+	Route::get('find',['uses'=>'CycleController@searchCycleList']);
+  	Route::get('active',['uses'=>'CycleController@searchCycleActive']);
+	Route::put('update',['uses'=>'CycleController@updateCycle']);
+});
+
+Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],function(){
+	Route::post('register',['uses'=>'OrderController@registerOrder']);
+  	Route::get('active',['uses'=>'OrderController@searchCycleActive']);
+});
+
+Route::put('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
+
+Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);
+
+Route::get('cyclelist',['uses'=>'ReportController@listCycle', 'middleware'=> ['jwt.auth', 'watcher', 'cors']]);

@@ -88,11 +88,13 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         ),
         'F' => 
         array (
+            'FontLib\\' => 8,
             'Faker\\' => 6,
         ),
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Dompdf\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
@@ -100,6 +102,10 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         array (
             'Cron\\' => 5,
             'Carbon\\' => 7,
+        ),
+        'B' => 
+        array (
+            'Barryvdh\\DomPDF\\' => 16,
         ),
         'A' => 
         array (
@@ -234,6 +240,10 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
@@ -241,6 +251,10 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -258,6 +272,10 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
+        'Barryvdh\\DomPDF\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -270,6 +288,14 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
             'System' => 
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
+            'Svg\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src',
+            ),
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
             ),
         ),
         'P' => 
@@ -340,6 +366,8 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
     );
 
     public static $classMap = array (
+        'AdminSeederTable' => __DIR__ . '/../..' . '/database/seeds/AdminSeederTable.php',
+        'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'CreateCycleDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214845_create_cycle__dishes_table.php',
         'CreateCyclesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214642_create_cycles_table.php',
         'CreateDishesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_214105_create_dishes_table.php',
@@ -348,11 +376,18 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170644_create_profiles_table.php',
         'CreateProvidersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_213822_create_providers_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_171559_create_roles_table.php',
+        'CreateSettingsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_26_153512_create_settings_table.php',
         'CreateUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_170805_create_user_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'DishSeederTable' => __DIR__ . '/../..' . '/database/seeds/DishSeederTable.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'HTML5_Data' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Data.php',
+        'HTML5_InputStream' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/InputStream.php',
+        'HTML5_Parser' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Parser.php',
+        'HTML5_Tokenizer' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Tokenizer.php',
+        'HTML5_TreeBuilder' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/TreeBuilder.php',
         'Hamcrest\\Arrays\\IsArray' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
         'Hamcrest\\Arrays\\IsArrayContaining' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
         'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',
@@ -801,6 +836,8 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'ProfileSeederTable' => __DIR__ . '/../..' . '/database/seeds/ProfileSeederTable.php',
+        'ProviderSeederTable' => __DIR__ . '/../..' . '/database/seeds/ProviderSeederTable.php',
+        'RolesSeederTable' => __DIR__ . '/../..' . '/database/seeds/RolesSeederTable.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -880,6 +917,7 @@ class ComposerStaticInitdf67c6146926e86887eb9b54656f0597
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SettingSeederTable' => __DIR__ . '/../..' . '/database/seeds/SettingSeederTable.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
     );
 

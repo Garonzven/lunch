@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{$data->password}}
+                  HGJHGKBKB
                 </div>
 
                 <div class="links">

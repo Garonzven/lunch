@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'System' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Svg\\' => array($vendorDir . '/phenx/php-svg-lib/src'),
+    'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Net' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),

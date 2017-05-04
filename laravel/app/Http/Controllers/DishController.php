@@ -3,82 +3,85 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use App\Http\Controllers\DB;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Dish;
+use JWTAuth;
+use Mail;
 class DishController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function idUser()
     {
-        return view('welcome');
+      $users = JWTAuth::parseToken()->authenticate();
+      return $users->id;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+   public function registerDish(Request $request)
     {
-        //
-    }
+      $userToken = JWTAuth::parseToken()->ToUser();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+      $dish = Dish::create([
+        'title' => $request->get('title'),
+        'description' => $request->get('description'),
+        'id_provider' => $request->get('id_provider'),
+      ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Create new dish',
+        'table' => 'dishes',
+        'fields' => 'title, descrption, id_provider',
+        'value' => ''.$request->get('title').', '.$request->get('description').', '.$request->get('id_provider'),
+      ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+      return response()->json(['data'=> $dish, 'message'=>'Dish created', 'code'=>'201']);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function searchDishList()
     {
-        //
+        $dish = Dish::all();
+        return response()->json(['data' => $dish, 'message' => 'Dish list', 'code'=>'200']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function searchDish($id)//Puede estar que no creo
     {
-        //
+        $dish = Dish::find($id);
+
+        if(count($dish)>0)
+        {
+            return response()->json(['data' => $dish, 'message' => 'Dish find', 'code'=>'200']);
+        }
+        return response()->json(['message' => 'Dish not find', 'code'=>'404']);
+    }
+    public function updateDish(Request $request, $id)
+    {
+        $dish = Dish::where('id', $id)->update([
+            'title' =>$request->get('title'),
+            'description' => $request->get('description'),
+        ]);
+
+        $logs = Log::create([
+          'id_user' => $this->idUser(),
+          'action' => 'Update dish',
+          'table' => 'dishes',
+          'fields' => 'title, descrption',
+          'value' => ''.$request->get('title').', '.$request->get('description'),
+        ]);
+
+        return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code'=>'200']);
+    }
+    public function deleteDish($id)
+    {
+        $dish = Dish::find($id);
+        $dish->delete();
+
+        $logs = Log::create([
+          'id_user' => $this->idUser(),
+          'action' => 'Delete dish',
+          'table' => 'dishes',
+          'fields' => 'All',
+          'value' => 'All',
+        ]);
+        return response()->json(['message' => 'Dish delete', 'code'=>'200']);
     }
 }

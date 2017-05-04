@@ -11,7 +11,7 @@ class ProfileSeederTable extends Seeder
      */
     public function run()
     {
-        $arrays = ['Admin','User','Invited'];
+        $arrays = ['Admin','User','Watcher'];
         foreach ($arrays as $array) {
         	$profile = new Profile();
         	$profile->profile_type = $array;

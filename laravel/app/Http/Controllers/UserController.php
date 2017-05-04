@@ -7,170 +7,186 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
+use App\Log;
 use JWTAuth;
 use Mail;
 class UserController extends Controller
 {
+    public function idUser()
+    {
+      $users = JWTAuth::parseToken()->authenticate();
+      return $users->id;
+    }
+
     public function registerUser(Request $request)
     {
       $userToken = JWTAuth::parseToken()->ToUser();
-      $user = new User([
-        'name' => $request->get('name'),
-        'last_name' => $request->get('last_name'),
-        'dni' => $request->get('dni'),
-        'country' => $request->get('country'),
-        'city' => $request->get('city'),
-        'phone' => $request->get('phone'),
-        'email' => $request->get('email'),
-        'photo' => $request->get('photo'),
-        'password' => bcrypt($request->get('password')),#str_random(10),
-        'change_pass' => $request->get('change_pass'),
-        'id_profile' => $request->get('id_profile')
+      $find = User::where('email', $request->input('email'))->get();
+      if(count($find)!=0)
+      {
+          return response()->json(['message'=>'email exists','code'=>'404']);
+      }
+      $password = str_random(10);
+      $user = User::create([
+        'name' => $request->input('name'),
+        'jobtitle' =>$request->input('jobtitle'),
+        'country' => $request->input('country'),
+        'city' => $request->input('city'),
+        'phone' => $request->input('phone'),
+        'email' => $request->input('email'),
+        'photo' => $request->input('photo'),
+        'password' => bcrypt($password),
+        'change_pass' => true,
+        'id_profile' => $request->input('id_profile'),
       ]);
-      $user->save();
-      Mail::send('welcome', ['data' => $user], function($message) use($user){
-        $message->to($user->email, 'To:'. $user->name)->subject('Verify account');});
-      #return response()->json(['message'=>'user has created'],201);
-      return response()->json(['message'=>'user has created', 'data'=>$user],201);
+      $values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('email').', '.$request->input('id_profile').'';
+      $fields = 'name, jobtitle, country, city, phone, email, id_profile';
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Create new user',
+        'table' => 'users',
+        'fields' => $fields,
+        'value' => $values,
+      ]);
+
+      Mail::send('mails.welcome', ['data' => $user, 'password' => $password], function($message) use($user){
+        $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
+      });
+
+      return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201']);
 
     }
     public function searchUserlist()
     {
         $user = User::all();
-        return response()->json(['data' => $user, 'message' => 'User List'],200);
+        return response()->json(['data' => $user, 'message' => 'User List','code'=>'200']);
     }
-    public function searchUser($id)
+    public function updateUser(Request $request)
     {
-        $user = User::find($id);
-        if(!count($user)==0)
-        {
-            return response()->json(['data' => $user, 'message' => 'User find'],200);
-        }
-        return response()->json(['message' => 'User not find'],404);
-    }
-    public function updateUser(Request $request, $id)
-    {
-        $user = User::find($id);
-        if(!$user){
-          return response()->json(['message'=>'not found the user'],404);
-        }
-        $user->country = $request->input('country');
-        $user->city = $request->input('city');
-        $user->phone = $request->input('phone');
-        $user->country = $request->input('photo');
-        $user->save();
-        return response()->json(['data'=>$user,'message'=>'user has modificade'],200);
+        $bandera = false;
 
-        /*$user = \DB::table('users')->where('id', $id)->update(['name' => $request->get('name'), 'photo' => $request->get('photo')]);//Falta definir que campos pueden ser actualizados
-        return response()->json(['user' => $user, 'message' => 'User update'],200);*/
+        if($request->input('emailold') == $request->input('emailnew'))
+        {
+            $bandera = true;
+        }
+        $find = User::where('email', $request->input('emailold'))->get();
+        if(count($find)==0)
+        {
+            return response()->json(['message'=>'user not found','code'=>'404']);
+        }
+        $findnew = User::where('email', $request->input('emailnew'))->get();
+
+        if(count($findnew)>0 && $bandera == false)
+        {
+          return response()->json(['message'=>'The email entered is already used','code'=>'304']);
+        }
+
+        $user = User::where('email', $request->get('emailold'))
+        ->update(['name' =>$request->input('name'),
+        'jobtitle' => $request->input('jobtitle'),
+        'country' => $request->input('country'),
+        'city' => $request->input('city'),
+        'phone' => $request->input('phone'),
+        'email' => $request->input('emailnew'),
+        'photo' => $request->input('photo'),
+        'id_profile' => $request->input('id_profile'),
+      ]);
+
+      /*$values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('emailnew').', '.$request->input('id_profile').'';
+      $fields = 'name, jobtitle, country, city, phone, email, id_profile';
+      $logs = Log::create([
+        'id_user' => $this->idUser(),
+        'action' => 'Update user',
+        'table' => 'users',
+        'fields' => $fields,
+        'value' => $values,
+      ]);*/
+
+        return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200']);
     }
     public function recoveryPassword(Request $request)
    {
-       $users = \DB::table('users')->select('name', 'email')->where('email', $request->get('email'))->get();
+      $users = User::select('id', 'name', 'email')->where('email', $request->get('email'))->get();
+      if(count($users)==0)
+       {
+          return response()->json(['message' => 'email not exists','code'=>'404']);
+       }
+
        $vals = new User();
+
        foreach($users as $user)
        {
-           $vals->name = $user->name;
-           $vals->email = $user->email;
+          $vals->id = $user->id;
+          $vals->name = $user->name;
+          $vals->email = $user->email;
        }
        $vals->password = str_random(10);
-       if(!count($user)==0)
-           {
-               $change = \DB::table('users')->where('email', $vals->email)->update(['password' => $vals->password, 'change_pass' => true]);
-               Mail::send('welcome', ['data' => $vals], function($message) use($vals){
-               $message->to($vals->email, 'To:'. $vals->name)->subject('Change password');
+
+       $user = User::where('email', $vals->email)->update([
+                'password' => bcrypt($vals->password),
+                'change_pass' => true,
+                ]);
+
+      $logs = Log::create([
+        'id_user' => $vals->id,
+                  'action' => 'Recovery password',
+                  'table' => 'users',
+                  'fields' => 'password, change_pass',
+                  'value' => 'true'.'secret',
+                ]);
+
+      Mail::send('mails.example', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
+               $message->to($vals->email, 'To:'. $vals->name)->subject('Recovery password');
                });
-               return response()->json(['user' => $vals, 'message' => 'Send new password'],200);
-           }
-           return response()->json(['message' => 'email not exists'],404);
+
+      return response()->json([
+                 'user' => $vals,
+                 'message' => 'Please check your email for a message with your provisional password',
+                 'code'=>'200']);
    }
-    public function deleteUser($id)
+    public function deleteUser(Request $request)
     {
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'User delete'],200);
+        $find = User::where('email', $request->get('email'));
+
+        $find->delete();
+
+        $logs = Log::create([
+          'id_user' => $this->idUser(),
+          'action' => 'Delete user',
+          'table' => 'users',
+          'fields' => 'All',
+          'value' => 'All',
+        ]);
+
+        return response()->json(['message' => 'User delete','code'=>'200']);
     }
-    public function restoreUser($id)
+    public function changePassword(Request $request)
     {
-        $user = User::withTrashed()->where('id', $id)->first();
+      $users = JWTAuth::parseToken()->authenticate();
+     
+     $password = User::where('email', $users->email)->update([
+         'password' => bcrypt($request->get('password')),
+         'change_pass' => false,
+       ]);
+      
+       
+       $logs = Log::create([
+         'id_user' => $this->idUser(),
+         'action' => 'Change password',
+         'table' => 'users',
+         'fields' => 'password',
+         'value' => 'secret',
+       ]);
+       return response()->json(['message' => 'Your password has been successfully changed','code'=>'200']);
+    }
+
+  /*  public function restoreUser(Request $request)
+    {
+        $user = User::withTrashed()->where('email', $request->get('email'))->first();
         $user->restore();
         return response()->json(['user' => $user, 'message' => 'User restore'], 200);
-    }
-    public function searchUserName($name)
-    {
-            $user = User::name($name)->get();
-            if(!count($user)==0)
-            {
-                return response()->json(['user' => $user, 'message' => 'Search for name'],200);
-            }
-            return response()->json(['message' => 'Search fail'],400);
-    }
-    /*public function searchId($id)
-    {
-        $user = User::find($id);
-        if(!count($user)==0)
-        {
-            return response()->json(['data' => $user, 'message' => 'User find'],200);
-        }
-        return response()->json(['message' => 'User not find'],404);
-    }
-    public function deleteUser($id)
-    {
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'User delete'],200);
-    }
-    public function updateUser(Request $request, $id)
-    {
-
-        $user = \DB::table('users')->where('id', $id)->update(['name' => $request->get('name'), 'photo' => $request->get('photo')]);//Falta definir que campos pueden ser actualizados
-
-          return response()->json(['user' => $user, 'message' => 'User update'],200);
-    }
-    public function createUser(Request $request)
-    {
-        $exists = \DB::table('users')->select('dni', 'email')->where('dni',$request->get('dni'))->orWhere('email', $request->get('email'))->get();
-
-         $field = new User();
-          if(count($exists)==0)
-          {
-            $field->name = $request->get('name');
-            $field->last_name = $request->get('last_name');
-            $field->dni= $request->get('dni');
-            $field->country = $request->get('country');
-            $field->city = $request->get('city');
-            $field->phone = $request->get('phone');
-            $field->email = $request->get('email');
-            $field->photo = $request->get('photo');
-            $field->password = bcrypt($request->get('password'));
-            $field->change_pass = $request->get('change_pass');
-            $field->id_profile = $request->get('id_profile');
-            $field->save();
-
-            return response()->json(['message' => 'User created'],201);
-          }
-          return response()->json(['message' => 'user repeated', 'user' => $exists],400);
-    }
-    public function searchAllUser()
-    {
-        $user = User::all();
-
-        return response()->json(['data' => $user, 'message' => 'User List'],200);
-    }
-    public function restoreUser($id)
-    {
-        $user = User::withTrashed()->where('id', $id)->first();
-        $user->restore();
-        return response()->json(['user' => $user, 'message' => 'User restore'], 200);
-    }
-
-    public function searchName($name)
-    {
-            $user = User::name($name)->get();
-            if(!count($user)==0)
-            {
-                return response()->json(['user' => $user, 'message' => 'Search for name'],200);
-            }
-            return response()->json(['message' => 'Search fail'],400);
     }*/
+
+
+
 }
