@@ -1,3 +1,4 @@
+
 jQuery.validator.setDefaults({
   debug: true,
   success: 'valid'
@@ -44,11 +45,12 @@ $(document).ready(function() {
               switch (data.user.id_profile) {
                 case 1:
                   console.log(data.user);
-                  // if(data.user.change_pass == "true"){
-                  //   $(location).attr('href', 'reset_password.html')
-                  // }else{
-                  //   $(location).attr('href', 'welcome.html')
-                  // }
+                  if(data.user.change_pass){
+                      // $(location).attr('href','reset_password.html');
+                      // $.cookie('id_profile',data.user.id_profile);
+                    }else{
+                      // $(location).attr('href', 'welcome.html');
+                    }
                   break;
 
                 case 2:
@@ -74,5 +76,51 @@ $(document).ready(function() {
         });
       }
     });
+
+});
+
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+$("#resetForm").validate({
+  rules: {
+    resetemail: {
+      required:true,
+      email: true
+    }
+  },
+  submitHandler: function(form) {
+    $.ajax({
+      url:"http://13.92.198.201/laravel/public/recovery",
+      method: "PUT",
+      data:{
+        email:$("#resetemail").val()
+      },
+      dataType:"JSON",
+      success: function(data){
+        console.log(data);
+        switch (data.code) {
+          case "200":
+            swal({
+            text: data.message,
+            type: 'success',
+            confirmButtonText: 'Ok'
+            });
+          break;
+
+          case "404":
+          swal({
+          text: data.message,
+          type: 'error',
+          confirmButtonText: 'Ok'
+          });
+          break;
+        }
+      }
+
+    });
+
+  }
 
 });
