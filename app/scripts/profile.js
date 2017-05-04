@@ -39,5 +39,72 @@ $.ajax({
 
 
 $('#change_pass').on('click', function(){
-  $('#p-password').html()
+  $('#p-password').addClass('hide-btn').removeClass('show-btn');
+  $('#change-true').addClass('show-btn').removeClass('hide-btn');
+});
+
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid",
+  highlight: function(element) {
+
+        $(element).closest('.form-group').addClass('has-error');
+
+    },
+    unhighlight: function(element) {
+
+        $(element).closest('.form-group').removeClass('has-error');
+
+    },
+    errorElement: 'span',
+    errorClass: 'help-block',
+    errorPlacement: function(error, element) {
+        if(element.parent('.input-group').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
+
+$("#myform").validate({
+  rules: {
+    passwordp: {
+      required: true,
+      minlength: 6
+    },
+    confirmpasswordp: {
+      equalTo: "passwordp"
+    }
+  },
+  submitHandler: function(form) {
+    $.ajax({
+      url:"http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token'),
+      method: "put",
+      data:{
+        passwordp:$("#passwordp").val()
+      },
+      dataType:"JSON",
+      success: function(data){
+        console.log(data);
+        switch (data.code) {
+          case "200":
+            swal({
+            text: data.message+"!",
+            type: 'success',
+            confirmButtonText: 'Ok'
+            });
+          break;
+          case "400":
+            swal({
+            text: data.message+"!",
+            type: 'success',
+            confirmButtonText: 'Ok'
+            });
+          break;
+
+        }
+      }
+  });
+}
 });
