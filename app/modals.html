@@ -1,0 +1,256 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lunch</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.css" />
+    <link rel="stylesheet" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/dropzone/dist/min/dropzone.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <!--onload="javascript:window.location.href='login.html'"-->
+  <body >
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="/images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse avatar" id="menu"></div>
+      </div>
+    </nav>
+    <!-- Button trigger modal -->
+    <div style="margin-top:100px;"></div>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal modal--top fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-dialog--size" role="document">
+    <div class="modal-content modal-content--radius">
+      <div class="modal-header--user">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal" aria-hidden="true">&times;</span></button>
+        <!--<h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+        </div class="container">
+          <div class="modal-body modal-body--pad">
+            <div>
+              <p>Comment</p>
+              <textarea name="name" class="text-area" placeholder="   Please write your comment here"></textarea>
+              <button type="button" class="btn btn--yellow btn--fs15 btn--modal pull-right radius">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:50px;"></div>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">
+Launch demo modal2
+</button>
+
+<!-- Modal -->
+<div class="modal modal--top fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-dialog--admin" role="document">
+  <div class="modal-content modal-content--admin">
+    <div class="modal-header modal-header--admin">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>
+      </div class="container">
+        <div class="modal-body modal-body--pad">
+          <div class="container">
+            <div class="row">
+              <div class="form-group">
+                <form action="" class="col-xs-12" enctype="multipart/form-data">
+                  <div class="col-xs-7">
+                    <label class="label--size">Profile Picture</label>
+
+                    <div class="form-group">
+                      <label for="" class="label__modal">Name:</label>
+                        <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Email:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Tel:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Job Title:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">City:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Country:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                    <label for="" class="label__modal">Profile</label>
+                    <select class="form-control form-control--select">
+                      <option>Admin</option>
+                      <option>User</option>
+                      <option>Wacher</option>
+                    </select>
+                    </div>
+                    <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
+                </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div style="margin-top:50px;"></div>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal3">
+Launch demo modal3
+</button>
+
+<!-- Modal -->
+<div class="modal modal--top fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-dialog--admin" role="document">
+  <div class="modal-content modal-content--admin">
+    <div class="modal-header modal-header--admin">
+      <form action="" class="col-xs-12" enctype="multipart/form-data">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
+      <!--<h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>-->
+      <input type="text" class="modal-title loginBox__title--modal form-control form-control--input input" name="" value="">
+      </div class="container">
+        <div class="modal-body modal-body--pad">
+          <div class="container">
+            <div class="row">
+              <div class="form-group">
+                  <div class="col-xs-7">
+                    <label class="label--size">Profile Picture</label>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Email:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Tel:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Job Title:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">City:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="label__modal">Country:</label>
+                      <input type="text" class="form-control form-control--input input" name="" value="">
+                    </div>
+                    <div class="form-group">
+                    <label for="" class="label__modal">Profile</label>
+                    <select class="form-control form-control--select">
+                      <option>Admin</option>
+                      <option>User</option>
+                      <option>Wacher</option>
+                    </select>
+                    </div>
+                    <button type="button" name="create" class="btn btn--yellow btn--fs15 btn--modal pull-right radius" >Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top:50px;"></div>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal4">
+Launch demo modal4
+</button>
+
+<!-- Modal -->
+<div class="modal modal--top fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-dialog--admin" role="document">
+<div class="modal-content modal-content--admin">
+  <div class="modal-header modal-header--admin">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title loginBox__title--modal" id="myModalLabel">Create New User</h4>
+    </div class="container">
+      <div class="modal-body modal-body--pad">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </body>
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/modernizr/modernizr.js"></script>
+  <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
+  <script src="/bower_components/jquery-validation/dist/jquery.validate.js"></script>
+  <script src="/bower_components/moment/moment.js"></script>
+  <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
+  <script src="/bower_components/sweetalert2/dist/sweetalert2.js"></script>
+  <script src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>
+  <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+  <script src="/bower_components/datatables.net-responsive/js/dataTables.responsive.js"></script>
+  <script src="/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+  <script src="/bower_components/pg-calendar/dist/js/pignose.calendar.js"></script>
+  <script src="/bower_components/dropzone/dist/min/dropzone.min.js"></script>
+  <script src="/bower_components/lodash/lodash.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/plugins.js -->
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+  <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+  <!-- <script src="/bower_components/moment/moment.js"></script> -->
+  <!-- <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script> -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/main.js -->
+  <script src="scripts/main.js"></script>
+</html>

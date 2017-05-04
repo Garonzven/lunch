@@ -21,18 +21,67 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/menu.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
   </head>
-  <body onload="javascript:window.location.href='login.html'">
+  <body>
     <!--[if IE]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            </ul>
+        </div>
+    </div>
 
-     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="menu-toggle">
+              <span class="hamb-top"></span>
+              <span class="hamb-middle"></span>
+              <span class="hamb-bottom"></span>
+          </button>
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse avatar" id="avatar">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="fullname"></span>
+                  <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="profile.html">Profile</a></li>
+                  <li><a href="#" class="logout">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <div class="container">
+    <div class="row">
+        <div class="jumbotron box welcomeBox col-md-8 col-md-offset-2 center">
+            <div class="container">
+                <h2 class="loginBox__title--welcome">Welcome!</h2>
+                <span class="text-body--welcome"><b>Hi!</b>, We are glad you are here, so would you like to do?</span>
+                <img src="/images/ilustracion-home.png" alt="welcome" class="imgBox">
+                <a href="menus_manage.html" class="btn btn--size btn--red btn--fs15 btn--large pull-right radius">Create Menu</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
       function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -74,10 +123,15 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- <script src="/bower_components/moment/moment.js"></script> -->
+    <!-- <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script> -->
     <!-- endbuild -->
 
-    <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
+
+    <script src="scripts/constants.js"></script>
+    <!-- build:js scripts/welcome.js -->
+    <script src="scripts/welcome.js"></script>
+    <script src="scripts/menu.js"></script>
     <!-- endbuild -->
 
   </body>

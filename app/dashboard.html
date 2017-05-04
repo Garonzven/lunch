@@ -20,6 +20,7 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/menu.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
@@ -27,20 +28,51 @@
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
   </head>
-  <body onload="javascript:window.location.href='login.html'">
+  <body>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    </div>
+
     <!--[if IE]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="menu-toggle">
+              <span class="hamb-top"></span>
+              <span class="hamb-middle"></span>
+              <span class="hamb-bottom"></span>
+          </button>
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse avatar" id="avatar">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="fullname"></span>
+                  <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="#">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+   <div class="container">
+   </div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -76,9 +108,19 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
+    <!-- build:js scripts/dashboard.js -->
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/menu.js"></script>
     <!-- endbuild -->
-
+    
+      <script type="text/javascript">
+      $('document').ready(function(){
+        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        var d = new Date();
+        var n = monthNames[d.getMonth()]+", "+d.getDate();
+        $('.fecha').html(n);
+      });
+      </script>
+    </div>
   </body>
 </html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lunch</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.css" />
+    <link rel="stylesheet" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/dropzone/dist/min/dropzone.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+
+  </head>
+  <body>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            </ul>
+        </div>
+    </div>
+
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="menu-toggle">
+              <span class="hamb-top"></span>
+              <span class="hamb-middle"></span>
+              <span class="hamb-bottom"></span>
+          </button>
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse avatar" id="avatar">
+          <ul class="nav navbar-nav navbar-right navbar-right--menu">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="fullname"></span>
+                  <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="profile.html">Profile</a></li>
+                  <li><a href="#" class="logout">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row m-t-70">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="col-md-9 pull-left p-t-30 m-b-30">
+            <p class="titles titles-primary m-b-50">Welcome <span id="fullname"></span>
+          </p>
+
+          </div>
+          <div class="col-md-3 pull-right p-t-30 m-b-30">
+            <p class="titles fecha"></p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" data-toggle="modal" data-target="#createuser" id="create" name="button" class="btn btn--yellow btn--create m-b-20" >Create new user</button>
+            </div>
+          </div>
+          <table id="example" class="table table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Creation date</th>
+                <th class="text-center">Role</th>
+              </tr>
+            </thead>
+            <tbody id="user-detail">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal--top fade" id="createuser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog--admin" role="document">
+      <div class="modal-content modal-content--admin">
+        <div class="modal-header modal-header--admin">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title loginBox__title--modal" style="width:50%" id="myModalLabel">Create New User</h4>
+          </div class="container">
+            <div class="modal-body modal-body--pad">
+              <div class="container">
+                <div class="row">
+                  <div class="form-group">
+                    <form class="col-xs-12" name="createForm" id="createForm">
+                      <div class="col-xs-5">
+                        <div class="form-group">
+                          <label for="" class="label__modal">Name:</label>
+                            <input type="text" class="form-control form-control--input input" name="name" id="name" value="" placeholder="Ex: Juana Avila">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Email:</label>
+                          <input type="text" class="form-control form-control--input input" name="email" id="email" value="" placeholder="Ex: Ejemplo@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Phone:</label>
+                          <input type="text" class="form-control form-control--input input" name="phone" id="phone" value="" placeholder="Ex: +12-345-312-422">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Job Title:</label>
+                          <input type="text" class="form-control form-control--input input" name="jobtitle" id="jobtitle" value="" placeholder="Ex: Programmer">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">City:</label>
+                          <input type="text" class="form-control form-control--input input" name="city" id="city" value="" placeholder="Ex: Maracaibo">
+                        </div>
+                        <div class="form-group">
+                          <label for="" class="label__modal">Country:</label>
+                          <input type="text" class="form-control form-control--input input" name="country" id="country" value="" placeholder="Ex: Venezuela">
+                        </div>
+                        <div class="form-group">
+                        <label for="" class="label__modal">Role:</label>
+                        <select name="id_profile" id="id_profile" class="form-control form-control--select">
+                          <option value="">Select role</option>
+                          <option value="1">Admin</option>
+                          <option value="2">User</option>
+                          <option value="3">Wacher</option>
+                        </select>
+                        </div>
+                        <button type="submit" id="Create" name="submit" class="btn btn--yellow btn--fs15 btn--modal pull-right radius">Create</button>
+                      </div>
+                    <div class="col-xs-2">
+                      <!-- <div class="form-group">
+                        <label for="" class="label__modal">Picture</label>
+                        <div id="dZUpload" class="dropzone">
+                             <div class="dz-default dz-message"></div>
+                       </div>
+
+                      </div> -->
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modales">
+
+
+    </div>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
+    <script src="/bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="/bower_components/sweetalert2/dist/sweetalert2.js"></script>
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-responsive/js/dataTables.responsive.js"></script>
+    <script src="/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/bower_components/pg-calendar/dist/js/pignose.calendar.js"></script>
+    <script src="/bower_components/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/plugins.js -->
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- endbuild -->
+
+    <script src="scripts/user.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/logout.js"></script>
+
+
+    </div>
+  </body>
+</html>

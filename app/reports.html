@@ -21,18 +21,104 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/menu.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
+
     <!-- endbuild -->
   </head>
-  <body onload="javascript:window.location.href='login.html'">
+  <body>
     <!--[if IE]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            </ul>
+        </div>
+    </div>
 
-     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <nav class="nav navbar-default navbar-fixed-top navContainer">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="hamburger is-closed" data-toggle="offcanvas" id="menu-toggle">
+              <span class="hamb-top"></span>
+              <span class="hamb-middle"></span>
+              <span class="hamb-bottom"></span>
+          </button>
+          <a class="navbar-brand navContainer__logo" href="#">
+            <img src="images/logo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse avatar" id="avatar">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="fullname"></span>
+                  <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="profile.html">Profile</a></li>
+                  <li><a href="#" class="logout">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="position">
+          <div class="col-md-6 col-md-offset-1 m-t-70">
+            <h1 class="loginBox__title">Report</h1>
+            <p class="text-report">Choose the period of the report to print</p>
+            <div class="container">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3 pull-right p-t-30 m-b-10">
+                      <p class="titles fecha"></p>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                      </div>
+                    </div>
+                    <table id="example" class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th class="text-center">Initial Date</th>
+                          <th class="text-center">Closing Date</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="user-detail">
+                          <tr>
+                            <td class="text-center">25-05-2017</td>
+                            <td class="text-center">30-05-2017</td>
+                            <td class="text-center"><button type="button" class="btn btn--yellow print" name=""  id="print"><i class="glyphicon glyphicon-download-alt"></i></button></td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">25-05-2017</td>
+                            <td class="text-center">30-05-2017</td>
+                            <td class="text-center"><button type="button" class="btn btn--yellow print" name="" id="print" ><i class="glyphicon glyphicon-download-alt"></i></button></td>
+                          </tr>
+                          <tr>
+                            <td class="text-center">25-05-2017</td>
+                            <td class="text-center">30-05-2017</td>
+                            <td class="text-center"><button type="button" class="btn btn--yellow print" name="" id="print" ><i class="glyphicon glyphicon-download-alt"></i></button></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
       function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -41,7 +127,6 @@
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
-
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -76,9 +161,13 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
+    <!-- build:js scripts/menus_manage.js -->
+
+    <script src="scripts/constants.js"></script>
+    <script src="scripts/logout.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/reports.js"></script>
     <!-- endbuild -->
 
-  </body>
-</html>
+    </body>
+    </html>

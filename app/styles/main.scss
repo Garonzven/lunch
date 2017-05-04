@@ -1,6 +1,7 @@
 $icon-font-path: '../fonts/';
 // bower:scss
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bower_components/sweetalert2/src/sweetalert2.scss";
 // endbower
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
@@ -9,13 +10,14 @@ $red: #d32f2f !default;
 $gray: #bdbdbd !default;
 $gray-light: #212121;
 $yellow: #fdc113 !default;
+$green: 	#75bd7e !default;
 
 // Color palette
 $white: #ffffff !default;
 $primary: #f44336 !default;
 $dark-primary: #d32f2f !default;
 $light-primary: #ffcdd2 !default;
-$accent: #ffc107 !default;
+$accent: #ff9800 !default;
 $primary-text: #212121 !default;
 $secondary-text: #757575 !default;
 $divider: #bdbdbd !default;
@@ -23,6 +25,112 @@ $divider: #bdbdbd !default;
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+.titles {
+  font-size: 30px;
+  color: $gray;
+}
+
+.titles-primary{
+  font-size: 30px;
+  color: $primary !important;
+  font-weight: bold;
+}
+
+.title-menu{
+  color: $primary;
+  font-size: 15px;
+  font-variant: small-caps;
+}
+
+.thumbnail-menu{
+  border-radius: 0px;
+  border-style: solid;
+  height: 250px;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  border: 1px solid $boxBg;
+
+}
+.thumbnail-button{
+  vertical-align: bottom;
+}
+.thumbnail-desc{
+  font-size: 14px;
+  color: $primary-text;
+  font-weight: 300;
+}
+
+.ciclo-day > a{
+  color:#fff;
+  text-decoration: none;
+}
+.menus > div {
+  display: none;
+}
+
+.menus > .current{
+  display: block !important;
+}
+.ciclo{
+  background-color: $primary;
+  color: $white;
+  font-size: 20px;
+  font-weight: bold;
+  list-style: none;
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-bottom: 40px;
+  padding: 0;
+}
+
+.ciclo > .current{
+  border-bottom: 12px solid $yellow;
+}
+
+.ciclo > .selected{
+  border-bottom: 12px solid $green;
+}
+
+
+.ciclo-day{
+  float: left;
+  list-style: none;
+  margin: 0px;
+  padding: 10px 50px;
+  &:hover{
+    background-color: $dark-primary !important;
+    border-bottom:12px solid $dark-primary !important;
+  }
+}
+
+
+.swal2-title {
+  color: $dark-primary !important;
+}
+
+.swal2-buttonswrapper > button:first-child{
+  background-color: $accent !important;
+  border-color: $accent !important;
+  font-weight: 300 !important;
+  color: $white !important;
+  border: 0px !important;
+  border-radius: 0px !important;
+  outline: none;
+  &:hover {
+    background-color: darken($yellow, 5%) !important;
+    border-color: darken($yellow,5%) !important;
+    color: darken($white,5%) !important;
+  }
+  &:active {
+    background-color: darken($accent, 15%) !important;
+    border-color: darken($accent, 15%) !important;
+    color: darken($white,15%) !important;
+  }
+}
+
+.p-t-30{padding-top: 30px;}
 
 .box{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -53,6 +161,19 @@ body {
     color: $dark-primary;
     font-weight: 700;
 }
+.loginBox__title--modal{
+  font-size: 30px;
+  color: $dark-primary;
+  font-weight: 700;
+  padding: 0 0 0 40px;
+}
+.loginBox__title--welcome{
+  font-size: 36px;
+  color: $dark-primary;
+  font-weight: 700;
+  margin-top: -3px;
+}
+
 
 .input {
     font-family: 'Roboto', sans-serif;
@@ -72,25 +193,41 @@ body {
   outline: none !important;
   text-decoration: none !important;
 }
+.btn--size{
+  padding: 10px 12px;
+}
 
 .btn--fs20 {
     font-size: 20px;
+}
+.btn--fs15 {
+    font-size: 15px;
 }
 
 .btn--medium {
   width: 195px;
 }
+.btn--large{
+  width: 250px;
+}
+
 
 .btn--link {
     font-size: 15px;
     color: $secondary-text;
     font-weight: 300;
 }
+.btn--linkprofile {
+    font-size: 15px;
+    color:$dark-primary;
+    font-weight: 300;
+    text-decoration: underline !important;
+}
 
 .btn--yellow {
     background-color: $accent;
     font-weight: 700;
-    color: $white;
+    color: $white !important;
     &:hover {
       background-color: darken($yellow, 5%);
       color: darken($white,5%);
@@ -104,6 +241,9 @@ body {
       color: darken($white,15%);
     }
 }
+.radius{
+  border-radius: 0px;
+}
 
 .navContainer {
   background-color: $dark-primary;
@@ -111,6 +251,12 @@ body {
 }
 .navContainer__logo {
   padding-top: 0;
+  display: none;
+}
+.navContainer__logo--center {
+  position: absolute !important;
+  left: calc(50% - 70px) !important;
+  display: block;
 }
 
 .modal {
@@ -142,7 +288,165 @@ body {
   border-color: $boxBg;
   padding: 35px 80px;
 }
+.modal-dialog--admin {
+    width: 725px;
+    margin: 30px auto;
+}
+.modal-content--radius{
+  border-radius: 0px;
+  border-color: $boxBg;
+  padding: 15px;
+}
+.modal-content--admin{
+  border-radius: 0px;
+  border-color: $boxBg;
+}
+.label__modal{
+  text-align:left;
+  width:90px;
+  display:block;
+  float:left;
+  font-size: 12px;
+  font-weight: 400;
+  //clear:right;
+}
+.label--size{
+  position: relative;
+  float: right;
+  top:4px;
+  right:60px;
+  bottom: 10px;
 
+}
+.form-control--select{
+  width: 29%;
+}
+.form-control--input{
+  height: 25px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid $divider;
+  background-color: transparent;
+  color: $gray;
+  font-weight: 300;
+  outline: none;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  &:focus {
+    border-bottom: 2px solid $dark-primary;
+
+  }
+
+}
+
+.form-profile{
+  width: 40%;
+  height: 25px;
+  margin-bottom: 10px;
+  border-radius: 0px;
+}
+
+.input-reset{
+  margin-left: 90px;
+  width: 40%;
+  border-radius: 0px;
+}
+
+.text-body{
+  font-weight: bold;
+  font-size: 14px;
+}
+.text-area{
+  overflow: auto;
+  resize: none;
+  height: 16em;
+  width: 38em;
+  margin-bottom: 20px;
+  border: 2px solid #f2f2f2;
+}
+.close-modal{
+  position: relative;
+  top:-35px;
+  right: 17px;
+  font-size: 35px;
+
+}
+.close-modal--admin{
+  position: relative;
+  right: 7px;
+  font-size: 35px;
+  color: $gray;
+}
+
+button.edit{
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.edit{
+  font-weight: bold;
+  line-height: 1;
+  color: $gray;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.2;
+}
+
+.edit-modal--admin{
+  position: relative;
+    right: 55px;
+    font-size: 20px;
+    top: 7px !important;
+}
+
+button.del{
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.del{
+  font-weight: bold;
+  line-height: 1;
+  color: $gray;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.2;
+}
+
+.del-modal--admin{
+  position: relative;
+    right: 105px;
+    font-size: 20px;
+    top: 7px !important;
+}
+
+.modal-header--user{
+  margin-top: 10px;
+  padding-top: 20px;
+}
+.modal-header--admin{
+  background: #f2f2f2;
+}
+.btn--modal{
+  font-size: 15px;
+  width: 200px;
+  right: 5px;
+  position: relative;
+  padding-bottom: initial;
+}
+.modal-body--pad{
+  padding-bottom: 55px;
+}
+
+.m-b-20{
+  margin-bottom: 20px;
+}
 
 .m-b-30{
   margin-bottom: 30px;
@@ -152,6 +456,308 @@ body {
   margin-bottom: 40px;
 }
 
+.m-b-30{
+  margin-bottom: 30px;
+}
+
 .m-t-70 {
   margin-top: 70px;
+}
+
+.m-b-70 {
+  margin-bottom: 70px;
+}
+
+.form-group--error {
+  position: relative;
+}
+
+.or {
+  border-top: 2px solid #000;
+  text-align: center;
+  &:after {
+    content: 'OR';
+  	display: inline-block;
+  	position: relative;
+  	top: -15px;
+  	padding: 0 10px;
+  	background: #f0f0f0;
+  	color: #8c8b8b;
+  	font-size: 18px;
+  }
+}
+
+#email-error,
+#password-error,#confirmpassword-error,#resetemail-error{
+  display: inline-table;
+  position: absolute;
+  left: 0px;
+  font-weight: 400;
+  color: $dark-primary;
+}
+
+#createForm > #email-error, #name-error,#email-error,#jobtitle-error,#phone-error,#country-error,#city-error,#id_profile-error{
+  position: absolute;
+  color: $dark-primary;
+  font-size: 12px;
+  font-weight: 300;
+  padding-top: 1%;
+  left: 22%;
+  display: inline-table;
+}
+
+.form-control--select {
+  width: 50%;
+  height: 25px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid $divider;
+  color: $gray;
+  font-weight: 300;
+  background-color: transparent;
+  outline: none;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  &:focus {
+    border-bottom: 2px solid $dark-primary;
+
+  }
+}
+
+.form-control--select > option {
+    color: $gray-light
+}
+
+.welcome,
+.welcomeBox{
+  margin-top:110px;
+  }
+.text-body--welcome{
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.img,
+.imgBox{
+    display: block;
+    margin: auto;
+    width: 60%;
+    padding-bottom: 20px;
+    padding-top: 30px;
+}
+.container .jumbotron, .container-fluid .jumbotron {
+    border-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 35px;
+    background-color: #f2f2f2;
+    box-shadow: 4px 3px 5px 0 rgba(0, 0, 0, 0.1), 4px 1px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.loginBox__title--modal{
+  font-size: 30px;
+  color: $dark-primary;
+  font-weight: 700;
+  padding: 0 0 0 40px;
+  border-bottom: 2px solid #d32f2f;
+}
+
+.loginBox__title--modal > input{
+ border-bottom: 2px solid #d32f2f;
+}
+
+.img-circle--avatar {
+  height: 40px;
+}
+
+#fullname {
+  margin-right: 10px;
+}
+
+.navbar-default {
+  .navbar-nav {
+    > li {
+      > a {
+        color: $white;
+        font-size: 16px;
+        transition: all .35s ease;
+        &:hover {
+          background-color: darken($dark-primary, 10%);
+          color: darken($white, 10%);
+        }
+        &:focus {
+          color: $white;
+        }
+        &:hover:focus {
+          color: darken($white, 10%);
+        }
+      }
+    }
+    > .open {
+      > a,
+      > a:hover,
+      > a:focus {
+        background-color: darken($dark-primary, 10%);
+        color: darken($white, 10%);
+      }
+    }
+  }
+}
+
+table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting{
+  background-color: $primary;
+  height: 25px !important ;
+  padding: 10px 10px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+  color:$white !important;
+  opacity: 1 !important;
+}
+
+// .dataTables_length label{
+//   display: none;
+// }
+
+
+.table.dataTable tbody > tr >td {
+  color: $gray;
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+div.dataTables_wrapper div.dataTables_filter label{
+  color:$gray;
+  font-weight: lighter;
+}
+
+div.dataTables_wrapper div.dataTables_filter input{
+  border-radius: 0px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+  color: $gray;
+  font-weight: lighter;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus{
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.btn--create{
+  width: 35%;
+  border-radius: 0px;
+}
+
+#example_length select{
+  border-radius: 0px !important;
+}
+
+#example_length label, div.dataTables_wrapper div.dataTables_info {
+  color: $gray !important;
+  font-weight: lighter !important;
+}
+
+.disable-input, .disable-select {
+  position: relative;
+}
+.position--name{
+margin-top: 60px;
+margin-bottom: 40px;
+}
+.img-posi{
+  float: right;
+  position: relative;
+  right: 20%;
+  top: 120px;
+}
+.text-report{
+  font-size: 16px !important;
+  color:$gray-light !important;
+  margin-top: 40px;
+}
+.text-profile{
+  font-size: 16px !important;
+  color:$secondary-text !important;
+}
+
+
+.input--modal, .select--modal{
+  font-size: 12px !important;
+  padding-top: 0px !important;
+}
+
+.form-control[disabled]{
+  background-color: transparent;
+  border-bottom: 0px;
+  outline: none;
+}
+
+.btn--green{
+  background-color: $green;
+  color: $white !important;
+  &:hover {
+    background-color: darken($green, 5%);
+    color: darken($white,5%);
+  }
+  &:active {
+    background-color: darken($green, 15%);
+    color: darken($white,15%);
+  }
+  &:hover {
+    background-color: darken($green, 25%);
+    color: darken($white,15%);
+  }
+}
+
+.btn--red{
+  background-color: $primary;
+  color: $white !important;
+  &:hover {
+    background-color: darken($primary, 5%);
+    color: darken($white,5%);
+  }
+  &:active {
+    background-color: darken($primary, 15%);
+    color: darken($white,15%);
+  }
+  &:hover {
+    background-color: darken($primary, 25%);
+    color: darken($white,15%);
+  }
+}
+
+.show-btn{
+  display: block;
+}
+
+.hide-btn{
+  display: none;
+}
+
+.navbar-right--menu{
+  position: relative;
+  right: 4%;
+}
+.swal2-container{
+  display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: transparent;
+    z-index: 1060;
 }

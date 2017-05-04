@@ -1,0 +1,127 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "initial_date": "2017-04-25 00:00:00",
+      "closing_date": "2017-04-27 00:00:00",
+      "active": 0,
+      "dishes": [
+        {
+          "id_dish": 7,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-25 00:00:00",
+          "title": "Annalise Predovic II",
+          "description": "LzSTRLfxoY"
+        },
+        {
+          "id_dish": 3,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-25 00:00:00",
+          "title": "Emmitt Dooley",
+          "description": "0usIwOWQsT"
+        },
+        {
+          "id_dish": 2,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-25 00:00:00",
+          "title": "Mr. Ignatius Rau",
+          "description": "VPL60542xh"
+        },
+        {
+          "id_dish": 3,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-26 00:00:00",
+          "title": "Emmitt Dooley",
+          "description": "0usIwOWQsT"
+        },
+        {
+          "id_dish": 2,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-26 00:00:00",
+          "title": "Mr. Ignatius Rau",
+          "description": "VPL60542xh"
+        },
+        {
+          "id_dish": 7,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-26 00:00:00",
+          "title": "Annalise Predovic II",
+          "description": "LzSTRLfxoY"
+        },
+        {
+          "id_dish": 7,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-27 00:00:00",
+          "title": "Annalise Predovic II",
+          "description": "LzSTRLfxoY"
+        },
+        {
+          "id_dish": 3,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-27 00:00:00",
+          "title": "Emmitt Dooley",
+          "description": "0usIwOWQsT"
+        },
+        {
+          "id_dish": 2,
+          "id_cycle": 1,
+          "date_cycle": "2017-04-27 00:00:00",
+          "title": "Mr. Ignatius Rau",
+          "description": "VPL60542xh"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "initial_date": "2017-04-29 00:00:00",
+      "closing_date": "2017-05-01 00:00:00",
+      "active": 1,
+      "dishes": [
+        {
+          "id_dish": 1,
+          "id_cycle": 2,
+          "date_cycle": "2017-04-29 00:00:00",
+          "title": "Ms. Sophia Considine",
+          "description": "HIL2akwaQu"
+        },
+        {
+          "id_dish": 3,
+          "id_cycle": 2,
+          "date_cycle": "2017-04-29 00:00:00",
+          "title": "Emmitt Dooley",
+          "description": "0usIwOWQsT"
+        },
+        {
+          "id_dish": 1,
+          "id_cycle": 2,
+          "date_cycle": "2017-04-30 00:00:00",
+          "title": "Ms. Sophia Considine",
+          "description": "HIL2akwaQu"
+        },
+        {
+          "id_dish": 2,
+          "id_cycle": 2,
+          "date_cycle": "2017-04-30 00:00:00",
+          "title": "Mr. Ignatius Rau",
+          "description": "VPL60542xh"
+        },
+        {
+          "id_dish": 5,
+          "id_cycle": 2,
+          "date_cycle": "2017-05-01 00:00:00",
+          "title": "Melissa Swaniawski",
+          "description": "Byoz0mGe9e"
+        },
+        {
+          "id_dish": 6,
+          "id_cycle": 2,
+          "date_cycle": "2017-05-01 00:00:00",
+          "title": "Prof. Tony Blanda MD",
+          "description": "3aHdKSaNCZ"
+        }
+      ]
+    }
+  ],
+  "message": "Cycle List",
+  "code": "200"
+}

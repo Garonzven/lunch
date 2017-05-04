@@ -1,0 +1,36 @@
+{
+  "data":[
+      {
+        "id":1,
+        "name":"Elis Walter",
+        "jobtitle":"DY9MbVys2B",
+        "country":"2njqupnPia",
+        "city":"2iFqC93eze",
+        "phone":"U778JTo",
+        "email":"carlos@gmail.com",
+        "photo":"GpLuJGSVDbdIr1qxQ67B2IKHp",
+        "change_pass":true,
+        "id_profile":2,
+        "deleted_at":null,
+        "created_at":"2017-04-26 14:31:20",
+        "updated_at":"2017-04-26 14:31:20"
+      },
+      {
+        "id":2,
+        "name":"Ms. Brandyn Beer MD",
+        "jobtitle":"qgTY8Omdtu",
+        "country":"090k5DHpEv",
+        "city":"o0vjbsR404",
+        "phone":"JJKzrpw",
+        "email":"jeremyfys25@gmail.com",
+        "photo":"1LkhWldTdZ2dlagFeWJ1AUtTt",
+        "change_pass":true,
+        "id_profile":1,
+        "deleted_at":null,
+        "created_at":"2017-04-26 16:34:14",
+        "updated_at":"2017-04-26 16:34:14"
+        }
+      ],
+      "message":"User List",
+      "code":"200"
+  }
