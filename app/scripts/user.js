@@ -197,7 +197,7 @@ $('document').ready(function(){
     modal += '<div class="modal-header modal-header--admin">';
     modal += '<button type="button" id="'+email+'" class="del close pull-right del-modal--admin" aria-label="edit" onclick="deleteFom(this)"><span class=" glyphicon glyphicon-trash" aria-hidde"true"></span></button>'
     modal += '<button type="button" id="edit'+id+'" class="edit close pull-right edit-modal--admin" aria-label="edit" onclick="editForm(this)"><span class=" glyphicon glyphicon-pencil" aria-hidde"true"></span></button>'
-    modal += '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
+    modal += '<button type="button" class="close" onclick="" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
     modal += '<input type="text" class="modal-title loginBox__title--modal form-control form-control--input input disable-input" id="name" name="name" value="'+name+'" disabled="">';
     modal += '</div>'
     modal += '<div class="modal-body modal-body--pad">';
