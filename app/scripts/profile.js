@@ -36,3 +36,8 @@ $.ajax({
     }
   }
 });
+
+
+$('#change_pass').on('click', function(){
+  $('#p-password').html()
+});

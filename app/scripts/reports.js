@@ -7,6 +7,19 @@ $.ajax({
   }
 });
 
+$.ajax({
+  url: 'http://13.92.198.201/laravel/public/report/Cycle?token='+$.cookie('token'),
+  method: 'GET',
+  dataType: 'JSON',
+  success: function(data){
+    console.log(data);
+    $.each(data.data, function (key, data) {
+
+    });
+  $('#example').dataTable();
+  }
+});
+
 $(document).ready(function(){
   $('#example').dataTable();
 
