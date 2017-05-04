@@ -1,6 +1,6 @@
 function LoadHome(){
   $.ajax({
-    url: constants().server + constants().profile + '?token=' + $.cookie('token'),
+    url: constants().profile + '?token=' + $.cookie('token'),
     method: 'get',
     dataType: 'json',
     success: function(data) {
@@ -63,7 +63,7 @@ $("#myform").validate({
             type: 'success',
             confirmButtonText: 'Ok'
           }).then(
-            LoadHome()
+            LoadHome();
           );
           break;
           case "400":

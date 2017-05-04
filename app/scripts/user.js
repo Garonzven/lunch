@@ -1,6 +1,6 @@
 // Load profile
 $.ajax({
-  url: constants().server + constants().profile + '?token=' + $.cookie('token'),
+  url: constants().profile + '?token=' + $.cookie('token'),
   method: 'get',
   data: {
     token: $.cookie('token')
@@ -49,7 +49,11 @@ function deleteFom(button){
           text: data.message,
           type: 'success',
           confirmButtonText: 'Ok'
-          });
+        }).then(
+          function(){
+             setTimeout(function () { location.reload(true); }, 5000);
+          }
+        )
         break;
 
         case "404":
@@ -282,7 +286,7 @@ $('document').ready(function(){
                   type: 'success',
                   confirmButtonText: 'Ok'
                   });
-
+                  setTimeout(function () { location.reload(true); }, 5000);
                 break;
 
                 case "404":
