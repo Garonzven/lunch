@@ -1,5 +1,6 @@
+// Load profile
 $.ajax({
-  url: 'login.json',
+  url: constants().profile + '?token=' + $.cookie('token'),
   method: 'get',
   data: {
     token: $.cookie('token')
@@ -7,13 +8,17 @@ $.ajax({
   dataType: 'json',
   success: function(data) {
     switch (data.code) {
-      case 200:
+      case '200':
+        console.log(data.user);
+        $('#fullname').text(data.user.name);
+        $('.full-name').text(data.user.name);
+
         $.ajax({
           url: 'menu_admin.html',
           method: 'get',
           dataType: 'text',
           success: function(data) {
-            $('.sidebar-nav').html(data);
+        $('.sidebar-nav').load('menu_admin.html');
           }
         });
         break;
@@ -24,6 +29,7 @@ $.ajax({
     }
   }
 });
+
 
 function deleteFom(button){
   var email = $(button).attr('id');
@@ -43,7 +49,11 @@ function deleteFom(button){
           text: data.message,
           type: 'success',
           confirmButtonText: 'Ok'
-          });
+        }).then(
+          function(){
+             setTimeout(function () { location.reload(true); }, 5000);
+          }
+        )
         break;
 
         case "404":
@@ -62,6 +72,10 @@ function deleteFom(button){
     }
   });
 }
+
+$('.modal').on('hidden.bs.modal', function (e) {
+  console.log("hola");
+})
 
 function submitForm(button){
   var formid = $(button).closest('form').attr('id');
@@ -161,7 +175,7 @@ $('document').ready(function(){
   function viewRole(id){
     switch (id) {
       case 1:
-      return 'Admin';
+      return 'Administrator';
       break;
       case 2:
       return 'User';
@@ -183,7 +197,7 @@ $('document').ready(function(){
     modal += '<div class="modal-header modal-header--admin">';
     modal += '<button type="button" id="'+email+'" class="del close pull-right del-modal--admin" aria-label="edit" onclick="deleteFom(this)"><span class=" glyphicon glyphicon-trash" aria-hidde"true"></span></button>'
     modal += '<button type="button" id="edit'+id+'" class="edit close pull-right edit-modal--admin" aria-label="edit" onclick="editForm(this)"><span class=" glyphicon glyphicon-pencil" aria-hidde"true"></span></button>'
-    modal += '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
+    modal += '<button type="button" class="close" onclick="" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
     modal += '<input type="text" class="modal-title loginBox__title--modal form-control form-control--input input disable-input" id="name" name="name" value="'+name+'" disabled="">';
     modal += '</div>'
     modal += '<div class="modal-body modal-body--pad">';
@@ -202,10 +216,9 @@ $('document').ready(function(){
     modal += '<input type="hidden" name="emailold" id="emailold" value="'+email+'"/>';
     modal += '</div>';
     modal += '<div class="col-xs-2">';
-    modal += '<div class="form-group"><label class="label__modal">Picture</label>'
-    modal += '<div style="height:180px"></div></div>'
-    modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok">Ok</button>';
-    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--red btn--fs15 btn--modal pull-right radius update" >Save</button>';
+    modal += '<div class="form-group"><label for="" class="label__modal">Picture:</label><img src="images/user-01.png" alt="" class="img-responsive img--form"></div>';
+    modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok m-t-70 ">Ok</button>';
+    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--yellow btn--fs15 btn--modal pull-right radius update m-t-70" >Save</button>';
     modal += '</div></div></div></div></div></div></div></form></div>';
     return modal;
    }
@@ -276,7 +289,7 @@ $('document').ready(function(){
                   type: 'success',
                   confirmButtonText: 'Ok'
                   });
-
+                  setTimeout(function () { location.reload(true); }, 5000);
                 break;
 
                 case "404":
@@ -285,6 +298,7 @@ $('document').ready(function(){
                 type: 'error',
                 confirmButtonText: 'Ok'
                 });
+                setTimeout(function () { location.reload(true); }, 5000);
                 break;
               }
             }

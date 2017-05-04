@@ -102,6 +102,7 @@ body {
   &:hover{
     background-color: $dark-primary !important;
     border-bottom:12px solid $dark-primary !important;
+    cursor: pointer;
   }
 }
 
@@ -380,6 +381,10 @@ body {
   color: $gray;
 }
 
+.no-bottom{
+  border-bottom: 0px !important;
+}
+
 button.edit{
   padding: 0;
   cursor: pointer;
@@ -560,7 +565,8 @@ button.del{
   font-size: 30px;
   color: $dark-primary;
   font-weight: 700;
-  padding: 0 0 0 40px;
+  margin-left: 30px;
+  padding: 0 0 0 5px;
   border-bottom: 2px solid #d32f2f;
 }
 
@@ -611,7 +617,7 @@ table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sor
   height: 25px !important ;
   padding: 10px 10px;
   color: #fff;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 20px;
 }
 
@@ -733,6 +739,10 @@ margin-bottom: 40px;
   }
 }
 
+
+.img--form{
+  border: 3px dashed $primary;
+}
 .show-btn{
   display: block;
 }

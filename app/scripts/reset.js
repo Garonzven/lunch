@@ -1,6 +1,6 @@
 function LoadHome(){
   $.ajax({
-    url: constants().server + constants().profile + '?token=' + $.cookie('token'),
+    url: constants().profile + '?token=' + $.cookie('token'),
     method: 'get',
     dataType: 'json',
     success: function(data) {
@@ -51,7 +51,7 @@ $("#myform").validate({
       url:"http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token'),
       method: "put",
       data:{
-        password:$("password").val()
+        password:$("#password").val()
       },
       dataType:"JSON",
       success: function(data){
@@ -62,9 +62,8 @@ $("#myform").validate({
             text: data.message+"!",
             type: 'success',
             confirmButtonText: 'Ok'
-          }).then(
-            LoadHome()
-          );
+          });
+          LoadHome();
           break;
           case "400":
             swal({
