@@ -295,6 +295,7 @@ $('document').ready(function(){
                 type: 'error',
                 confirmButtonText: 'Ok'
                 });
+                setTimeout(function () { location.reload(true); }, 5000);
                 break;
               }
             }

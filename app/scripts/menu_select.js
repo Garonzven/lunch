@@ -28,16 +28,21 @@ $('document').ready(function(){
     dataType:'JSON',
     success: function(data){
     console.log(data);
-      $.each(data.data.dishes,function(key,data){
-        console.log(data);
-        if(date != data.date_cycle){
-          day = formatDate(data.date_cycle);
-          cid = formatId(data.date_cycle);
-          $('.ciclo').append('<li id="'+cid+'" class="ciclo-day" onClick=" addActive(this)"><a>'+formatDate(data.date_cycle)+'</a></li>');
-        }
-         $('.menus').append('<div class="menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><input type="hidden" id="dish" value="'+data.id_dish+'"></input><p class="title-menu">'+data.title+'</p><p class="text-justify thumbnail-desc">'+data.description+' </p><p class="put-bottom"><a href="#" class="btn btn--yellow pull-right" role="button">Select</a> </p></div></div></div>');
-        date = data.date_cycle;
+    date="";
+      $.each(data.data,function(key,val){
+        $.each(val.dishes,function(k,data){
+          if(!data.deleted_at){
+            if(date != data.date_cycle){
+              day = formatDate(data.date_cycle);
+              cid = formatId(data.date_cycle);
+              $('.ciclo').append('<li id="'+cid+'" class="ciclo-day" onClick=" addActive(this)"><a>'+formatDate(data.date_cycle)+'</a></li>');
+            }
+             $('.menus').append('<div class="menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><input type="hidden" id="dish" value="'+data.id_dish+'"></input><p class="title-menu">'+data.title+'</p><p class="text-justify thumbnail-desc">'+data.description+' </p><p class="put-bottom"><a href="#" class="btn btn--yellow pull-right" role="button">Select</a> </p></div></div></div>');
+            date = data.date_cycle;
+          }
       });
+    });
+
     $('.ciclo').children().first().addClass('current');
     id_active = $('.ciclo').children().first().attr('id');
     console.log(id_active);
