@@ -84,7 +84,7 @@ $("#myform").validate({
       url:"http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token'),
       method: "put",
       data:{
-        passwordp:$("#passwordp").val()
+        password:$("#passwordp").val()
       },
       dataType:"JSON",
       success: function(data){
