@@ -213,7 +213,7 @@ $('document').ready(function(){
     modal += '</div>';
     modal += '<div class="col-xs-2">';
     modal += '<div class="form-group"><label class="label__modal">Picture</label>'
-    modal += '<div style="height:180px"></div></div>'
+    modal += '<div class="form-group"><label for="" class="label__modal">Picture:</label><img src="images/user-01.png" alt="" class="img-responsive img--form"></div>';
     modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok">Ok</button>';
     modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--red btn--fs15 btn--modal pull-right radius update" >Save</button>';
     modal += '</div></div></div></div></div></div></div></form></div>';
