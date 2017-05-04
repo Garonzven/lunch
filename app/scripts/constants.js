@@ -8,3 +8,4 @@ function constants() {
     cycleRegister: server + 'cycle/register',
     cycleFind: server + 'cycle/find',
   }
+}
