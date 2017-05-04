@@ -5,6 +5,7 @@ function constants() {
     logout: server + 'login/signout',
     profile: server + 'login/profile',
     dishRegister: server + 'dish/register',
+		dishUpdate: server + 'dish/update',
     cycleRegister: server + 'cycle/register',
     cycleFind: server + 'cycle/find',
   }
