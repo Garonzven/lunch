@@ -73,6 +73,10 @@ function deleteFom(button){
   });
 }
 
+$('.modal').on('hidden.bs.modal', function (e) {
+  console.log("hola");
+})
+
 function submitForm(button){
   var formid = $(button).closest('form').attr('id');
   var datos = $('#'+formid).serializeArray();
