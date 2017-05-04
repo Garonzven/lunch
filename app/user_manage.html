@@ -54,7 +54,7 @@
           <ul class="nav navbar-nav navbar-right navbar-right--menu">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span id="fullname"></span>
+                  <span class="fullname"></span>
                   <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
                 </a>
                 <ul class="dropdown-menu">
@@ -67,11 +67,13 @@
       </div>
     </nav>
 
+    
+
     <div class="container">
       <div class="row m-t-70">
         <div class="col-md-10 col-md-offset-1">
           <div class="col-md-9 pull-left p-t-30 m-b-30">
-            <p class="titles titles-primary m-b-50">Welcome <span id="fullname"></span>
+            <p class="titles titles-primary m-b-50">Welcome <span class="full-name"></span>
           </p>
 
           </div>
@@ -105,7 +107,7 @@
       <div class="modal-content modal-content--admin">
         <div class="modal-header modal-header--admin">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title loginBox__title--modal" style="width:50%" id="myModalLabel">Create New User</h4>
+          <h4 class="modal-title loginBox__title--modal no-bottom" style="width:50%" id="myModalLabel">Create New User</h4>
           </div class="container">
             <div class="modal-body modal-body--pad">
               <div class="container">
@@ -205,7 +207,7 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
-
+    <script src="scripts/constants.js"></script>
     <script src="scripts/user.js"></script>
     <script src="scripts/menu.js"></script>
     <script src="scripts/logout.js"></script>
