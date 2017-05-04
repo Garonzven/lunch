@@ -28,10 +28,10 @@ $(document).ready(function() {
         }
 
       },
-
+      //'http://13.92.198.201/laravel/public/login/signin'
       submitHandler: function(form){
         $.ajax({
-          url: 'http://13.92.198.201/laravel/public/login/signin',
+          url: 'http://127.0.0.1:8000/login/signin',
           method: 'post',
           data: {
             email: $('#email').val(),
@@ -91,8 +91,9 @@ $("#resetForm").validate({
     }
   },
   submitHandler: function(form) {
+    //http://13.92.198.201/laravel/public/recovery
     $.ajax({
-      url:"http://13.92.198.201/laravel/public/recovery",
+      url:"http://127.0.0.1:8000/recovery",
       method: "PUT",
       data:{
         email:$("#resetemail").val()

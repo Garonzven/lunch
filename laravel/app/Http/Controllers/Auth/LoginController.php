@@ -52,7 +52,7 @@ class LoginController extends Controller
            #dd($token);
            // attempt to verify the credentials and create a token for the user
            if (! $token) {
-               return response()->json(['message' => 'invalid_credentials','code'=>'401']);
+               return response()->json(['message' => 'Email and/or password has incorrect','code'=>'401']);
            }
        } catch (JWTException $e) {
            // something went wrong whilst attempting to encode the token

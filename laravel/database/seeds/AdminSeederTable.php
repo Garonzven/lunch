@@ -27,7 +27,7 @@ class AdminSeederTable extends Seeder
         'email' => $key.'@gmail.com',
         'photo' => 'fuyctydtyluififiyfufkctdtydjdyj',
         'password' => bcrypt('12345'),
-        'change_pass' => true,
+        'change_pass' => false,
         'id_profile' => $count,
       ]);
       $count++;

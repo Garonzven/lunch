@@ -8,7 +8,8 @@ $.ajax({
 });
 
 $.ajax({
-  url: 'http://13.92.198.201/laravel/public/cyclelist?token='+$.cookie('token'),
+  //'http://13.92.198.201/laravel/public/cyclelist?token='+$.cookie('token'),
+  url: 'http://127.0.0.1:8000/cyclelist?token='+$.cookie('token'),
   method: 'GET',
   dataType: 'JSON',
   success: function(data){

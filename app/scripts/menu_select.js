@@ -59,7 +59,8 @@ function addActive(li){
 
 $('document').ready(function(){
   $.ajax({
-    url:'http://13.92.198.201/laravel/public/cycle/find?token='+$.cookie('token'),
+    //'http://13.92.198.201/laravel/public/cycle/find?token='+$.cookie('token'),
+    url:'http://127.0.0.1:8000/cycle/find?token='+$.cookie('token'),
     type:'get',
     dataType:'JSON',
     success: function(data){

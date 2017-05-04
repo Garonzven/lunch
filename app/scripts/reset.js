@@ -47,8 +47,9 @@ $("#myform").validate({
     }
   },
   submitHandler: function(form) {
+    //http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token')
     $.ajax({
-      url:"http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token'),
+      url:"http://127.0.0.1:8000/user/change?token="+$.cookie('token'),
       method: "put",
       data:{
         password:$("#password").val()

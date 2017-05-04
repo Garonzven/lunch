@@ -15,7 +15,7 @@
    <!-- Brand and toggle get grouped for better mobile display -->
        <div style="margin-right: 0;margin-left: 0;">
          <a style="float: left;height: 50px;padding: 15px 15px;font-size: 18px;line-height: 20px;padding-top: 0;display: none;position: absolute !important;left: calc(10% - 70px) !important;display: block;bottom: 18px;"href="#">
-           <img style="position: relative;height: 80px;width: 130px;bottom: 9px;left: 10px;" src="/images/logo_horizontal_dark.png" alt="Logo">
+           <img style="position: relative;height: 80px;width: 130px;bottom: 9px;left: 10px;" src="http://13.92.198.201/laravel/public/images/logo_horizontal_dark.png" alt="Logo">
          </a>
        </div>
      </div>
@@ -34,7 +34,7 @@
          <h4>Easy! we know you are hungry! so we re here to help!</h4>
          <br>
          <h4><b>So, here is your provisional password:</b></h4>
-         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:235px;">
+         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:219px;">
            <!--passwor aqui-->
            <h4><b>{{$password}}</b></h4>
          </div>

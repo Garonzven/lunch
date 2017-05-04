@@ -24,7 +24,7 @@ class UserController extends Controller
       $find = User::where('email', $request->input('email'))->get();
       if(count($find)!=0)
       {
-          return response()->json(['message'=>'email exists','code'=>'404']);
+          return response()->json(['message'=>'email not exists','code'=>'404']);
       }
       $password = str_random(10);
       $user = User::create([
@@ -53,7 +53,7 @@ class UserController extends Controller
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
       });
 
-      return response()->json(['message'=>'user has created', 'data'=>$user,'code'=>'201']);
+      return response()->json(['message'=>'user has been created', 'data'=>$user,'code'=>'201']);
 
     }
     public function searchUserlist()
@@ -102,7 +102,7 @@ class UserController extends Controller
         'value' => $values,
       ]);*/
 
-        return response()->json(['data'=>$user,'message'=>'user has modificade','code'=>'200']);
+        return response()->json(['data'=>$user,'message'=>'User has been updated','code'=>'200']);
     }
     public function recoveryPassword(Request $request)
    {
@@ -158,7 +158,7 @@ class UserController extends Controller
           'value' => 'All',
         ]);
 
-        return response()->json(['message' => 'User delete','code'=>'200']);
+        return response()->json(['message' => 'User has been deleted','code'=>'200']);
     }
     public function changePassword(Request $request)
     {

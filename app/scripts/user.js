@@ -34,7 +34,8 @@ $.ajax({
 function deleteFom(button){
   var email = $(button).attr('id');
   console.log(email);
-  var url = 'http://13.92.198.201/laravel/public/user/delete?token='+$.cookie('token');
+  //'http://13.92.198.201/laravel/public/user/delete?token='+$.cookie('token');
+  var url = 'http://127.0.0.1:8000/user/delete?token='+$.cookie('token');
   $.ajax({
     url: url,
     method: 'DELETE',
@@ -109,7 +110,8 @@ function submitForm(button){
       break;
     }
   });
-  var url = 'http://13.92.198.201/laravel/public/user/update?token='+$.cookie('token');
+  //'http://13.92.198.201/laravel/public/user/update?token='+$.cookie('token');
+  var url = 'http://127.0.0.1:8000/update?token='+$.cookie('token');
   $.ajax({
     url: url,
     method: 'PUT',
@@ -224,7 +226,8 @@ $('document').ready(function(){
    }
 
   $.ajax({
-    url: 'http://13.92.198.201/laravel/public/user/findlist?token='+$.cookie('token'),
+    //'http://13.92.198.201/laravel/public/user/findlist?token='+$.cookie('token'),
+    url: 'http://127.0.0.1:8000/user/findlist?token='+$.cookie('token'),
     method: 'GET',
     dataType: 'JSON',
     success: function(data){
@@ -267,7 +270,8 @@ $('document').ready(function(){
         submitHandler: function(form){
 
           $.ajax({
-            url: 'http://13.92.198.201/laravel/public/user/register?token='+$.cookie('token'),
+            //'http://13.92.198.201/laravel/public/user/register?token='+$.cookie('token'),
+            url: 'http://127.0.0.1:8000/user/register?token='+$.cookie('token'),
             method: 'POST',
             data: {
               name: $('#name').val(),
