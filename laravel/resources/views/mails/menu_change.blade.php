@@ -21,13 +21,13 @@
    <div style="padding-right: 15px; padding-left: 15px;margin-right: auto; margin-left: auto;">
      <div style="margin-right: -15px;margin-left: -15px;">
        <div style="padding-top:65px; text-align: center;">
-         <img style="width: 200px;height: 180px;" src="http://13.92.198.201/laravel/public/images/new_menu.png" alt="logo">
+         <img style="width: 200px;height: 180px;" src="http://13.92.198.201/laravel/public/images/pollo.png" alt="logo">
          <br>
          <br>
-         <h1 style="color:#d32f2f;"><b>Good News!</b></h1>
-         <h3>We have delicious new menu just for you</h3>
-         <h3>so, what are you waiting for? you can now choose the</h3>
-         <h3>dishes of you preference</h3>
+         <h1 style="color:#d32f2f;"><b>Oops!</b></h1>
+         <h3>We are sorry, some of our dishes have change, please</h3>
+         <h3>accept our invitation to choose another dish by clicking</h3>
+         <h3>in the link below, hope you have great day!</h3>
            <a style="display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;

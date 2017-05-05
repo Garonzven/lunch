@@ -26,7 +26,7 @@ class CycleController extends Controller
     {
         $dt = date('Y-m-d');
        //dd($dt);
-        
+
         $cycle = Cycle::where('initial_date','<',$dt)
         ->where('closing_date','>',$dt)
         ->orWhere('initial_date', '=', $dt)
@@ -78,7 +78,7 @@ class CycleController extends Controller
             $orders = Order::where('date_order', '=', $key)->update([
               'id_dish' => 1,
             ]);
-        }  
+        }
 
         foreach($data as $val)
         {
@@ -99,7 +99,7 @@ class CycleController extends Controller
            $array = array_prepend($array, $key->email);
         }
 
-          Mail::send('mails.newlunch', ['primero' => $collection->first()], function($message) use($array){
+          Mail::send('mails.menu_change', ['primero' => $collection->first()], function($message) use($array){
             $message->to($array)->subject('New Menu');
         });
 
@@ -304,5 +304,5 @@ class CycleController extends Controller
 
         return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
     }
-    
+
 }

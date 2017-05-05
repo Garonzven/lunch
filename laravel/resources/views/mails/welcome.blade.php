@@ -31,7 +31,7 @@
            <a style="display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
@@ -46,7 +46,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 250px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none" href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
+    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none" href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
          <h4>Click on the button to check new dishes.</h4>
        </div>
        <h3 style="text-align: center;"">So, here is your provisional password:</h3>
