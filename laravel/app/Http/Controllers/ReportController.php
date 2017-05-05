@@ -36,12 +36,12 @@ class ReportController extends Controller
         case 6: return "SAT"; break;
       }
   }
-  public function generateReportCycle(Request $request)
+  public function generateReportCycle($idCycle)
    {
      $init=[];
      $close=[]; 
      $userToken = JWTAuth::parseToken()->ToUser();
-     $id = $request->get('id');
+     $id = $idCycle;
 
      $dishes = Cycle_dish::select('date_cycle')->where('id_cycle', $id)->distinct()->orderBy('date_cycle')->get();
 
@@ -89,7 +89,7 @@ class ReportController extends Controller
      ]);
 
      $pdf = \PDF::loadView('reports.report', compact('dishes', 'sum', 'init','close'));
-      return $pdf->download('archivo.pdf');
+      return $pdf->download('response.pdf');
    }
 
    public function listcycle()

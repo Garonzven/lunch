@@ -37,7 +37,7 @@ class DishController extends Controller
         'value' => ''.$request->get('title').', '.$request->get('description').', '.$request->get('id_provider'),
       ]);
 
-      return response()->json(['data'=> $dish, 'message'=>'Dish created', 'code'=>'201']);
+      return response()->json(['data'=> $dish, 'message'=>'Dish has been Created', 'code'=>'201']);
     }
     public function searchDishList()
     {
@@ -69,7 +69,7 @@ class DishController extends Controller
           'value' => ''.$request->get('title').', '.$request->get('description'),
         ]);
 
-        return response()->json(['data'=>$dish,'message'=>'dish has modificade', 'code'=>'200']);
+        return response()->json(['data'=>$dish,'message'=>'Dish has been Updated', 'code'=>'200']);
     }
     public function deleteDish($id)
     {
@@ -83,6 +83,6 @@ class DishController extends Controller
           'fields' => 'All',
           'value' => 'All',
         ]);
-        return response()->json(['message' => 'Dish delete', 'code'=>'200']);
+        return response()->json(['message' => 'Dish has been Delete', 'code'=>'200']);
     }
 }

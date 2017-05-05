@@ -42,7 +42,7 @@ class OrderController extends Controller
      
      if($collections->isNotEmpty())
      {
-       return response()->json(['data'=> $collections, 'message'=>'order update', 'code' => '200']);
+       return response()->json(['data'=> $collections, 'message'=>'Order has been Update', 'code' => '200']);
      }
 
      $collection = collect([]);
@@ -69,7 +69,7 @@ class OrderController extends Controller
        'value' => $value,
      ]);
 
-     return response()->json(['data'=> $collection, 'message'=>'order created', 'code' => '201']);
+     return response()->json(['data'=> $collection, 'message'=>'Order has been Created', 'code' => '201']);
    }
 
    public function searchCycleActive()
