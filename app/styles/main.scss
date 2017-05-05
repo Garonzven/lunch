@@ -93,7 +93,9 @@ body {
   right: 13%;
 }
 
-.pignose-calendar .pignose-calendar-header {
+.pignose-calendar {
+  width: 100%;
+  .pignose-calendar-header {
     padding: 0 1.2em;
     margin-top: 1.2em;
     font-weight: 300;
@@ -101,6 +103,7 @@ body {
     background-color: $primary;
     color: $white;
     font-size: smaller;
+  }
 }
 
 .thumbnail-button{
@@ -571,6 +574,10 @@ button.del{
 
 .m-t-70 {
   margin-top: 70px;
+}
+
+.m-t-30 {
+  margin-top: 30px;
 }
 
 .m-b-70 {

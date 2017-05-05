@@ -92,7 +92,7 @@ function deleteFom(button){
 
 
 $('.modal').on('hidden.bs.modal', function (e) {
-  console.log("hola");
+  console.log('hola');
 })
 
 function submitForm(button){
@@ -145,7 +145,7 @@ function submitForm(button){
     dataType: 'JSON',
     success: function(data){
       switch (data.code) {
-        case "200":
+        case '200':
           swal({
           text: data.message,
           type: 'success',
@@ -158,7 +158,7 @@ function submitForm(button){
         );
         break;
 
-        case "404":
+        case '404':
         swal({
         text: data.message,
         type: 'error',
@@ -336,7 +336,7 @@ $('document').ready(function(){
             success: function(data) {
               console.log(data);
               switch (data.code) {
-                case "201":
+                case '201':
                   swal({
                   text: data.message,
                   type: 'success',
@@ -346,7 +346,7 @@ $('document').ready(function(){
                 });
                 break;
 
-                case "404":
+                case '404':
                 swal({
                 text: data.message,
                 type: 'error',

@@ -28,9 +28,10 @@ $(document).ready(function() {
         }
 
       },
+
       submitHandler: function(form){
         $.ajax({
-          url: 'http://13.92.198.201/login/signin',
+          url: 'http://13.92.198.201/laravel/public/login/signin',
           method: 'post',
           data: {
             email: $('#email').val(),
@@ -94,11 +95,11 @@ $(document).ready(function() {
 
 jQuery.validator.setDefaults({
   debug: true,
-  success: "valid"
+  success: 'valid'
 });
-$("#resetForm").validate({
+$('#resetForm').validate({
+  rules: {
     resetemail: {
-      rules: {
       required:true,
       email: true
     }
@@ -106,16 +107,16 @@ $("#resetForm").validate({
   submitHandler: function(form) {
     //http://13.92.198.201/laravel/public/recovery
     $.ajax({
-      url:"http://127.0.0.1:8000/recovery",
-      method: "PUT",
+      url:'http://13.92.198.201/laravel/public/recovery',
+      method: 'PUT',
       data:{
-        email:$("#resetemail").val()
+        email:$('#resetemail').val()
       },
-      dataType:"JSON",
+      dataType:'JSON',
       success: function(data){
         console.log(data);
         switch (data.code) {
-          case "200":
+          case '200':
             swal({
             text: data.message,
             type: 'success',
@@ -123,7 +124,7 @@ $("#resetForm").validate({
             });
           break;
 
-          case "404":
+          case '404':
           swal({
           text: data.message,
           type: 'error',

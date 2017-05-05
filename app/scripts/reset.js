@@ -34,41 +34,41 @@ function LoadHome(){
 
 jQuery.validator.setDefaults({
   debug: true,
-  success: "valid"
+  success: 'valid'
 });
-$("#myform").validate({
+$('#myform').validate({
   rules: {
     password: {
       required: true,
       minlength: 6
     },
     confirmpassword: {
-      equalTo: "#password"
+      equalTo: '#password'
     }
   },
   submitHandler: function(form) {
     //http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token')
     $.ajax({
-      url:"http://127.0.0.1:8000/user/change?token="+$.cookie('token'),
-      method: "put",
+      url:'http://13.92.198.201/laravel/public/user/change?token='+$.cookie('token'),
+      method: 'put',
       data:{
-        password:$("#password").val()
+        password:$('#password').val()
       },
-      dataType:"JSON",
+      dataType:'JSON',
       success: function(data){
         console.log(data);
         switch (data.code) {
-          case "200":
+          case '200':
             swal({
-            text: data.message+"!",
+            text: data.message+'!',
             type: 'success',
             confirmButtonText: 'Ok'
           });
           LoadHome();
           break;
-          case "400":
+          case '400':
             swal({
-            text: data.message+"!",
+            text: data.message+'!',
             type: 'success',
             confirmButtonText: 'Ok'
             });

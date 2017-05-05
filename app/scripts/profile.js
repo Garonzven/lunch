@@ -23,7 +23,7 @@ $.ajax({
           dataType: 'text',
           success: function(data) {
             $('.sidebar-nav').html(data);
-            console.log("hola");
+            console.log('hola');
           }
         });
         break;
@@ -47,7 +47,7 @@ $('#change_pass').on('click', function(){
 
 jQuery.validator.setDefaults({
   debug: true,
-  success: "valid",
+  success: 'valid',
   highlight: function(element) {
 
         $(element).closest('.form-group').addClass('has-error');
@@ -69,39 +69,39 @@ jQuery.validator.setDefaults({
     }
 });
 
-$("#myform").validate({
+$('#myform').validate({
   rules: {
     passwordp: {
       required: true,
       minlength: 6
     },
     confirmpasswordp: {
-      equalTo: "passwordp"
+      equalTo: 'passwordp'
     }
   },
   submitHandler: function(form) {
     console.log($("#passwordp").val());
 
     $.ajax({
-      url:"http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token'),
-      method: "put",
+      url:'http://13.92.198.201/laravel/public/user/change?token='+$.cookie('token'),
+      method: 'put',
       data:{
-        password:$("#passwordp").val()
+        password:$('#passwordp').val()
       },
-      dataType:"JSON",
+      dataType:'JSON',
       success: function(data){
         console.log(data);
         switch (data.code) {
-          case "200":
+          case '200':
             swal({
-            text: data.message+"!",
+            text: data.message+'!',
             type: 'success',
             confirmButtonText: 'Ok'
             });
           break;
-          case "400":
+          case '400':
             swal({
-            text: data.message+"!",
+            text: data.message+'!',
             type: 'success',
             confirmButtonText: 'Ok'
             });
