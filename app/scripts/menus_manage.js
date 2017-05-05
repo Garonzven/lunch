@@ -83,7 +83,7 @@ $('#calendar').fullCalendar({
           },
           success: function(data) {
             dish.id = data.data.id;
-            $('.dish-list').append('<li>' + dish.title + '</li>');
+            $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a></li>');
             $('#calendar').fullCalendar('renderEvent', dish, true);
             currentCycle.dishes.push(dish);
             $('#dish-title').val('').focus();
@@ -135,7 +135,6 @@ $.ajax({
   method: 'get',
   dataType: 'json',
   success: function(data) {
-    console.log(data);
     switch (data.code) {
       case '200':
         if (data.data.length > 0) {
@@ -164,6 +163,8 @@ $.ajax({
                   type: 1,
                   overlap: false,
                   editable: false,
+                  backgroundColor: '#d32f2f',
+                  borderColor: '#d32f2f',
                   dishes: function() {
                     var dishArr = [];
                     $.each(o.dishes, function(_i, _o) {
@@ -176,8 +177,8 @@ $.ajax({
                           type: 9,
                           overlap: false,
                           editable: false,
-                          backgroundColor: '#254154',
-                          borderColor: '#254154',
+                          backgroundColor: '#ff9800',
+                          borderColor: '#ff9800',
                         };
                         dishArr.push(dish);
                         events.push(dish);
@@ -214,7 +215,6 @@ $('body').on('click', 'a.dish-title', function() {
   $('#dish-description').val($(this).data('description'));
 });
 $('#dish-update').on('click', function() {
-  console.log(dishUpdateId);
   $.ajax({
     url: constants().dishUpdate + '/' + dishUpdateId + '?token=' + $.cookie('token'),
     method: 'put',
@@ -224,7 +224,10 @@ $('#dish-update').on('click', function() {
       description: $('#dish-description').val()
     },
     success: function(data) {
-      console.log(data);
+      $('#dish-update').hide();
+      $('#dish-add').show();
+      $('#dish-title').val('').focus();
+      $('#dish-description').val('');
     }
   });
 });
