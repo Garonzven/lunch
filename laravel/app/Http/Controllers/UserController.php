@@ -53,7 +53,8 @@ class UserController extends Controller
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
       });
 
-      return response()->json(['message'=>'user has been created', 'data'=>$user,'code'=>'201']);
+      return response()->json(['message'=>'User has been created', 'data'=>$user,'code'=>'201']);
+
 
     }
     public function searchUserlist()
@@ -72,7 +73,7 @@ class UserController extends Controller
         $find = User::where('email', $request->input('emailold'))->get();
         if(count($find)==0)
         {
-            return response()->json(['message'=>'user not found','code'=>'404']);
+            return response()->json(['message'=>'User not found','code'=>'404']);
         }
         $findnew = User::where('email', $request->input('emailnew'))->get();
 
@@ -103,6 +104,9 @@ class UserController extends Controller
       ]);*/
 
         return response()->json(['data'=>$user,'message'=>'User has been updated','code'=>'200']);
+
+
+
     }
     public function recoveryPassword(Request $request)
    {
@@ -158,18 +162,19 @@ class UserController extends Controller
           'value' => 'All',
         ]);
 
+
         return response()->json(['message' => 'User has been deleted','code'=>'200']);
     }
     public function changePassword(Request $request)
     {
       $users = JWTAuth::parseToken()->authenticate();
-     
+
      $password = User::where('email', $users->email)->update([
          'password' => bcrypt($request->get('password')),
          'change_pass' => false,
        ]);
-      
-       
+
+
        $logs = Log::create([
          'id_user' => $this->idUser(),
          'action' => 'Change password',

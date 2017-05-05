@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="application/pdf; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css">
@@ -125,13 +125,18 @@
           <tr>
             <th style="border-bottom:none !important;"><hr class="hr-size-tableleft">
             <p style="text-align:center;font-size: 20px;color:rgba(33, 33, 33, 0.36);">Send</p></th>
-            <th style="border-bottom:none !important;""><hr class="hr-size-tablerigth">
+            <th style="border-bottom:none !important;"><hr class="hr-size-tablerigth">
             <p  style="text-align:center !important;font-size: 20px;color:rgba(33, 33, 33, 0.36);">Received</p></th>
           </tr>
         </thead>
      </table>
-     
-      <div>
+     <footer style="background-color: #d32f2f;height: 44px;">
+       <div style="padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
+         <h4 style="text-align: center; color:#ffffff;">GARONZ -5 de Julio Edificio Befercom.</h4>
+       </div>
+     </footer>
+
+     <!--<div>
         <p class="loginBox__title--black">GARONZ</p>
         <p style="text-align: center;">5 de Julio, Edificio Befercom.</p>
         <p style="text-align: center;">0412-6459052</p>
@@ -145,7 +150,7 @@
         <div class="row">
 
       </div>
-    </div>
+    </div>-->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   </body>

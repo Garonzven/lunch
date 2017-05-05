@@ -19,7 +19,7 @@ Route::get('/', function () {
 Route::get('date', function(){
   $dt = date('Y-m-d');
   return response()->json(['date' => $dt, 'code' => '200']);
-})->middleware('cors');
+});
 
 Route::put('recovery',['uses'=>'UserController@recoveryPassword'])->middleware('cors');
 
@@ -59,7 +59,7 @@ Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],fu
   	Route::get('active',['uses'=>'OrderController@searchCycleActive']);
 });
 
-Route::put('reportCycle',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
+Route::get('reportCycle/{id}',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
 
 Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);
 

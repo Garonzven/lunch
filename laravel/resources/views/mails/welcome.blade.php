@@ -50,7 +50,7 @@
          <h4>Click on the button to check new dishes.</h4>
        </div>
        <h3 style="text-align: center;"">So, here is your provisional password:</h3>
-         <div style="border: 1px solid #9e9e9e;width: 373px;margin-left:220px; text-align: center;">
+         <div style="border: 1px solid #9e9e9e;width: 373px;margin-left:169px; text-align: center;">
            <!--passwor aqui-->
            <h3><b>{{$password}}</b></h3>
          </div>

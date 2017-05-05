@@ -131,11 +131,11 @@ class CycleController extends Controller
         }
         else if($res == 1)
         {
-            return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '301']);
+            return response()->json([ 'message' => 'You can not change an inactive cycle', 'code' => '304']);
         }
         else if($res == 2)
         {
-            return response()->json(['message' => 'Update cycle', 'code' => '200']);
+            return response()->json(['message' => 'Cycle has been Updated', 'code' => '200']);
         }
       }
 
@@ -187,7 +187,7 @@ class CycleController extends Controller
           Mail::send('mails.newlunch', ['data' => $data], function($message) use($array){
             $message->to($array)->subject('New Menu');
         });
-      return response()->json(['data'=> $cycle, 'message'=>'cycle created', 'code' => '201']);
+      return response()->json(['data'=> $cycle, 'message'=>'Cycle has been Created', 'code' => '201']);
     }
     public function searchCycleList()
     {

@@ -34,7 +34,8 @@
          <h4>Easy! we know you are hungry! so we re here to help!</h4>
          <br>
          <h4><b>So, here is your provisional password:</b></h4>
-         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:219px;">
+
+         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:214px;">
            <!--passwor aqui-->
            <h4><b>{{$password}}</b></h4>
          </div>
