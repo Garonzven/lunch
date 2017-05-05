@@ -30,6 +30,25 @@ body {
   border-radius: 0px !important;
 }
 
+.input--date{
+  color: $gray;
+  font-size: 16px;
+}
+
+#limit-time{
+  color: $gray;
+  font-weight: 300;
+}
+
+.m-t-20{
+  margin-top: 20px;
+}
+
+.btn-right{
+  position: absolute;
+  right: 27%;
+}
+
 .titles {
   font-size: 30px;
   color: $gray;
@@ -45,6 +64,13 @@ body {
   color: $primary;
   font-size: 15px;
   font-variant: small-caps;
+}
+
+
+.input--modal--menu{
+  font-size: 12px !important;
+  padding-top: 4px !important;
+  border-radius: 0px !important;
 }
 
 .thumbnail-menu{
@@ -608,13 +634,55 @@ button.del{
 
 .jumbotron--dish-list {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 0px;
   margin-bottom: 0px;
   height: 200px;
   overflow-y: scroll;
+  background-color: lighten($accent, 35%);
+  margin-bottom: 50px;
+
 }
 .jumbotron__title {
   margin-top: 0px;
+  color: $primary;
+  font-weight: bold;
+  font-size: 20px;
+  font-variant: small-caps;
+}
+
+
+.fc-header-toolbar{
+  background-color: $primary;
+  color:$white;
+  padding: 9px;
+}
+
+.fc-head-container .fc-widget-header{
+  background-color: $accent;
+  color:$white;
+}
+
+.fc-h-event{
+  border-radius: 0px !important;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+ul.dish-list li{
+  text-decoration: none;
+  list-style: none;
+  color: $gray;
+}
+
+ul.dish-list li a{
+  color: $gray;
+}
+
+.modaldishes{
+  border-radius: 0px !important;
+  width: 100%;
+  align-items: center;
+  width: 60%;
 }
 
 .loginBox__title--modal{

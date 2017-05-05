@@ -30,6 +30,11 @@ $.ajax({
   }
 });
 
+function close(e){
+  console.log(e);
+  console.log($(e).closest('modal').attr('id'));
+}
+
 
 function deleteFom(button){
   var email = $(button).attr('id');
@@ -72,6 +77,7 @@ function deleteFom(button){
     }
   });
 }
+
 
 $('.modal').on('hidden.bs.modal', function (e) {
   console.log("hola");
@@ -152,6 +158,19 @@ function submitForm(button){
   });
 }
 
+function cancelEdit(button){
+  var formid = $(button).closest('form').attr('id');
+  $('#'+formid+' input').each(function(){
+      $(this).attr('disabled', true);
+  });
+  $('#'+formid+' select').each(function(){
+      $(this).attr('disabled', true);
+  });
+  $('#'+formid+' .ok').addClass('show-btn').removeClass('hide-btn');
+  $('#'+formid+' .update').addClass('hide-btn').removeClass('show-btn');
+  $(button).addClass('hide-btn');
+}
+
 function editForm(button){
   var formid = $(button).closest('form').attr('id');
   $('#'+formid+' input').each(function(){
@@ -160,9 +179,10 @@ function editForm(button){
   $('#'+formid+' select').each(function(){
       $(this).attr('disabled', false);
   });
+
   $('#'+formid+' .ok').removeClass('show-btn').addClass('hide-btn');
   $('#'+formid+' .update').removeClass('hide-btn').addClass('show-btn');
-  $(button).addClass('hide-btn');
+  $('#'+formid+' .cancel').removeClass('hide-btn').addClass('show-btn');
 }
 
 $('document').ready(function(){
@@ -197,7 +217,7 @@ $('document').ready(function(){
     modal += '<div class="modal-header modal-header--admin">';
     modal += '<button type="button" id="'+email+'" class="del close pull-right del-modal--admin" aria-label="edit" onclick="deleteFom(this)"><span class=" glyphicon glyphicon-trash" aria-hidde"true"></span></button>'
     modal += '<button type="button" id="edit'+id+'" class="edit close pull-right edit-modal--admin" aria-label="edit" onclick="editForm(this)"><span class=" glyphicon glyphicon-pencil" aria-hidde"true"></span></button>'
-    modal += '<button type="button" class="close" onclick="" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
+    modal += '<button type="button" class="close" onclick="close(this)" data-dismiss="modal" aria-label="Close"><span class="close-modal--admin" aria-hidden="true">&times;</span></button>';
     modal += '<input type="text" class="modal-title loginBox__title--modal form-control form-control--input input disable-input" id="name" name="name" value="'+name+'" disabled="">';
     modal += '</div>'
     modal += '<div class="modal-body modal-body--pad">';
@@ -209,16 +229,32 @@ $('document').ready(function(){
     modal += '<div class="form-group"><label for="" class="label__modal">Country:</label><input type="text" class="form-control form-control--input input input--modal disable-input" name="country" id="country" value="'+country+'"  disabled=""></div>';
     modal += '<div class="form-group"><label for="" class="label__modal">Role</label>';
     modal += '<select class="form-control form-control--select select--modal disable-select" disabled="" id="id_profile" name="id_profile">'
-    modal += ' <option value="1">Admin</option>';
-    modal += ' <option value="2">User</option>';
-    modal += '<option value="3">Wacher</option>';
+    switch (id_profile) {
+      case 1:
+        modal += ' <option selected value="1">Admin</option>';
+        modal += ' <option value="2">User</option>';
+        modal += '<option value="3">Wacher</option>';
+      break;
+      case 2:
+        modal += ' <option value="1">Admin</option>';
+        modal += ' <option selected value="2">User</option>';
+        modal += '<option value="3">Wacher</option>';
+      break;
+      case 3:
+      modal += ' <option value="1">Admin</option>';
+      modal += ' <option value="2">User</option>';
+      modal += '<option selected value="3">Wacher</option>';
+      break;
+    }
+
     modal+= '</select></div>';
     modal += '<input type="hidden" name="emailold" id="emailold" value="'+email+'"/>';
     modal += '</div>';
     modal += '<div class="col-xs-2">';
     modal += '<div class="form-group"><label for="" class="label__modal">Picture:</label><img src="images/user-01.png" alt="" class="img-responsive img--form"></div>';
+    modal += '<button type="button" onclick="cancelEdit(this)" id="cancel'+id+'" class="hide-btn btn btn--red btn--modal pull-right radius cancel m-t-70">Cancel</button>';
     modal += '<button type="button" onclick="close('+id+')" id="ok'+id+'" class="show-btn btn btn--green btn--modal pull-right radius ok m-t-70 ">Ok</button>';
-    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--yellow btn--fs15 btn--modal pull-right radius update m-t-70" >Save</button>';
+    modal += '<button type="button" onclick="submitForm(this);" id="update'+id+'" name="update" class="hide-btn btn btn--yellow btn--fs15 btn--modal pull-right radius update" style="margin-top:10px;" >Save</button>';
     modal += '</div></div></div></div></div></div></div></form></div>';
     return modal;
    }
