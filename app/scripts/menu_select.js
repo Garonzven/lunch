@@ -34,18 +34,42 @@ $.ajax({
 
 function Select(id){
   $('#'+id).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
+  $('#'+id).attr("onclick","Unselect(this.id)");
   var formid = $('#'+id).closest('div .menu').attr('id');
   $('.current button').each(function(){
-      console.log($(this).attr('id'));
       $(this).attr('disabled', true);
   });
+  $('.checkboxes .current input').each(function(){
+      $(this).attr('disabled', true);
+  });
+
   $('#'+id).attr('disabled',false);
   $('#'+formid+' input').each(function(){
-      // console.log($(this).attr('value')+":"+$(this).attr('id'));
       $(this).attr('disabled', false);
   });
 
+  $('.ciclo .current').addClass('selected');
 }
+
+function Unselect(id){
+  $('#'+id).addClass('btn--yellow').removeClass('btn--red unselect').text('Select');
+  $('#'+id).attr("onclick","Select(this.id)");
+  var formid = $('#'+id).closest('div .menu').attr('id');
+  $('.current button').each(function(){
+      $(this).attr('disabled', false);
+  });
+
+  $('.checkboxes .current input').each(function(){
+      $(this).attr('disabled', false);
+  });
+
+  $('#'+formid+' input').each(function(){
+      $(this).attr('disabled', true);
+  });
+$('.ciclo >li.selected').removeClass('selected');
+
+}
+
 
 function addOrder(){
   $('div .menu input').each(function(){
@@ -75,9 +99,9 @@ function formatDate(date) {
 }
 
 function formatId(date){
-  var d = moment(date);
-  var n = d.format('YYYY-MM-DD');
-  // var n = d.getFullYear()+'-'+d.getElementsByClassName('className')Month()+'-'+d.getDay();
+  var d = new Date(date);
+  // var n = d.format('YYYY-MM-DD');
+  var n = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
   return n;
 }
 
