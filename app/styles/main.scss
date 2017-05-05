@@ -345,6 +345,39 @@ body {
   }
 }
 
+
+.pignose-calendar .pignose-calendar-top {
+    display: none !important;
+    padding: 2.6em 0;
+    background-color: #fafafa;
+    border-bottom: 1px solid #e2e2e2;
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .125);
+    -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .125);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .125);
+    position: relative;
+    overflow: hidden;
+}
+
+.pignose-calendar-unit.pignose-calendar-unit-active a {
+    background-color: #3f347f;
+    color: #ffffff;
+    font-weight: lighter;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+.pignose-calendar .pignose-calendar-header {
+    margin-top: 1.2em;
+    font-weight: 300;
+    background-color: rgb(244, 67, 54);
+    color: rgb(255, 255, 255);
+    font-size: smaller;
+    padding: 0px 1.2em;
+    overflow: hidden;
+}
+
+
 .modal-dialog--pass{
     width: 560px;
 }
