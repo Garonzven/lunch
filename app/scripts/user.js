@@ -36,46 +36,58 @@ function close(e){
 }
 
 
+
+
 function deleteFom(button){
-  var email = $(button).attr('id');
-  console.log(email);
-  var url = constants().userDelete + '?token='+$.cookie('token');
-  $.ajax({
-    url: url,
-    method: 'DELETE',
-    data:{
-      email:email
-    },
-    dataType: 'JSON',
-    success: function(data){
-      switch (data.code) {
-        case "200":
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(function () {
+    var email = $(button).attr('id');
+    console.log(email);
+    var url = constants().userDelete + '?token='+$.cookie('token');
+    $.ajax({
+      url: url,
+      method: 'DELETE',
+      data:{
+        email:email
+      },
+      dataType: 'JSON',
+      success: function(data){
+        switch (data.code) {
+          case "200":
+            swal({
+            text: data.message,
+            type: 'success',
+            confirmButtonText: 'Ok'
+          }).then(
+            function(){
+               setTimeout(function () { location.reload(true); }, 100);
+            }
+          )
+          break;
+
+          case "404":
           swal({
           text: data.message,
-          type: 'success',
+          type: 'error',
           confirmButtonText: 'Ok'
-        }).then(
-          function(){
-             setTimeout(function () { location.reload(true); }, 5000);
-          }
-        )
-        break;
+          });
+          break;
 
-        case "404":
-        swal({
-        text: data.message,
-        type: 'error',
-        confirmButtonText: 'Ok'
-        });
-        break;
+        }
+      },
+      error: function(res) {
 
+        console.log(res);
       }
-    },
-    error: function(res) {
-
-      console.log(res);
-    }
-  });
+    });
+  })
 }
 
 
@@ -138,7 +150,12 @@ function submitForm(button){
           text: data.message,
           type: 'success',
           confirmButtonText: 'Ok'
-          });
+          }).then(
+            function(){
+            console.log("hola");
+            setTimeout(function () { location.reload(true); }, 500);
+          }
+        );
         break;
 
         case "404":
@@ -324,8 +341,9 @@ $('document').ready(function(){
                   text: data.message,
                   type: 'success',
                   confirmButtonText: 'Ok'
-                  });
-                  setTimeout(function () { location.reload(true); }, 5000);
+                }).then( function(){
+                  setTimeout(function () { location.reload(true); }, 10000);
+                });
                 break;
 
                 case "404":

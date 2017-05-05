@@ -28,10 +28,9 @@ $(document).ready(function() {
         }
 
       },
-      //'http://13.92.198.201/laravel/public/login/signin'
       submitHandler: function(form){
         $.ajax({
-          url: 'http://127.0.0.1:8000/login/signin',
+          url: 'http://13.92.198.201/login/signin',
           method: 'post',
           data: {
             email: $('#email').val(),
@@ -54,11 +53,25 @@ $(document).ready(function() {
                   break;
 
                 case 2:
-
-                  break;
+                  console.log(data.user);
+                  if(data.user.change_pass){
+                      $(location).attr('href','reset_password.html');
+                      $.cookie('id_profile',data.user.id_profile);
+                    }else{
+                       $(location).attr('href', 'menu_select.html');
+                    }
+                break;
 
                 case 3:
-                  break;
+                console.log(data.user);
+                if(data.user.change_pass){
+                    $(location).attr('href','reset_password.html');
+                    $.cookie('id_profile',data.user.id_profile);
+                  }else{
+                     $(location).attr('href', 'menu_select.html');
+                  }
+                break;
+                break;
               }
             } else {
 
@@ -84,8 +97,8 @@ jQuery.validator.setDefaults({
   success: "valid"
 });
 $("#resetForm").validate({
-  rules: {
     resetemail: {
+      rules: {
       required:true,
       email: true
     }

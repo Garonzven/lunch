@@ -1,5 +1,5 @@
 function constants() {
-	const server = 'http://127.0.0.1:8000/';
+	const server = 'http://13.92.198.201/laravel/public/';
   return {
     login: server + 'login/signin',
     logout: server + 'login/signout',
@@ -11,7 +11,7 @@ function constants() {
 		cycleReport: server +'reportCycle',
 		cycleList: server + 'cyclelist',
 		userRegister: server+ 'user/register',
-		userUpdate: server+'user/change',
+		userUpdate: server+'user/update',
 		userDelete: server+'user/delete',
 		userFindList: server+'user/findlist',
 		orderRegister: server+'order/register',
