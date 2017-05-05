@@ -13,6 +13,6 @@ function constants() {
 		userRegister: server+ 'user/register',
 		userUpdate: server+'user/change',
 		userDelete: server+'user/delete',
-		userFindList:server+'user/findlist',
+		userFindList: server+'user/findlist',
   }
 }

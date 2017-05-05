@@ -2,36 +2,36 @@
 $('.navContainer__logo').addClass('navContainer__logo--center');
 
 // Load profile
-$.ajax({
-  url: constants().profile + '?token=' + $.cookie('token'),
-  method: 'get',
-  data: {
-    token: $.cookie('token')
-  },
-  dataType: 'json',
-  success: function(data) {
-    switch (data.code) {
-      case '200':
-        console.log(data.user);
-        $('#fullname').text(data.user.name);
-        $('.full-name').text(data.user.name);
-
-        $.ajax({
-          url: 'menu_admin.html',
-          method: 'get',
-          dataType: 'text',
-          success: function(data) {
-        $('.sidebar-nav').load('menu_admin.html');
-          }
-        });
-        break;
-
-      case 400:
-        $(location).attr('href', 'login.html');
-        break;
-    }
-  }
-});
+// $.ajax({
+//   url: constants().profile + '?token=' + $.cookie('token'),
+//   method: 'get',
+//   data: {
+//     token: $.cookie('token')
+//   },
+//   dataType: 'json',
+//   success: function(data) {
+//     switch (data.code) {
+//       case '200':
+//         console.log(data.user);
+//         $('#fullname').text(data.user.name);
+//         $('.full-name').text(data.user.name);
+//
+//         $.ajax({
+//           url: 'menu_admin.html',
+//           method: 'get',
+//           dataType: 'text',
+//           success: function(data) {
+//         $('.sidebar-nav').load('menu_admin.html');
+//           }
+//         });
+//         break;
+//
+//       case 400:
+//         $(location).attr('href', 'login.html');
+//         break;
+//     }
+//   }
+// });
 
 
 function formatDate(date) {
@@ -42,8 +42,9 @@ function formatDate(date) {
 }
 
 function formatId(date){
-  var d = new Date(date);
-  var n = d.getMonth()+'-'+d.getDate()+'-'+d.getFullYear();
+  var d = moment(date);
+  var n = d.format('YYYY-MM-DD');
+  // var n = d.getFullYear()+'-'+d.getElementsByClassName('className')Month()+'-'+d.getDay();
   return n;
 }
 
@@ -59,13 +60,14 @@ function addActive(li){
 
 $('document').ready(function(){
   $.ajax({
-    url: constants().cycleFind + '?token='+$.cookie('token'),
+    // url: constants().cycleFind + '?token='+$.cookie('token'),
+    url: 'cycleactive.json',
     type:'get',
     dataType:'JSON',
     success: function(data){
     console.log(data);
     date="";
-      $.each(data.data,function(key,val){
+      $.each(data,function(key,val){
         $.each(val.dishes,function(k,data){
           if(!data.deleted_at){
             if(date != data.date_cycle){
@@ -85,8 +87,21 @@ $('document').ready(function(){
     $('.menu_'+id_active).addClass('current');
     }
   });
+});
 
 
-
-
+$('.mini_calendar').pignoseCalendar({
+  initialized:'false',
+  scheduleOptions:{
+    colors: {
+      today: '#ff0080',
+      SelectedMenu: '#75bd7e',
+      CurrentMenu: '#ff9800',
+      PendingMenu:  '#ffcdd2'
+    }
+  },
+  schedules:[
+    {name:'PendingMenu',
+     date: '2017-05-09'}
+  ]
 });

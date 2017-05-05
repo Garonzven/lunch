@@ -52,6 +52,21 @@ body {
   border: 1px solid $boxBg;
 
 }
+
+.m-t-80{
+  margin-top: 80px;
+}
+
+.pignose-calendar .pignose-calendar-header {
+    padding: 0 1.2em;
+    margin-top: 1.2em;
+    font-weight: 300;
+    overflow: hidden;
+    background-color: $primary;
+    color: $white;
+    font-size: smaller;
+}
+
 .thumbnail-button{
   vertical-align: bottom;
 }
