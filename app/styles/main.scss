@@ -606,6 +606,17 @@ button.del{
     box-shadow: 4px 3px 5px 0 rgba(0, 0, 0, 0.1), 4px 1px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
+.jumbotron--dish-list {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 0px;
+  height: 200px;
+  overflow-y: scroll;
+}
+.jumbotron__title {
+  margin-top: 0px;
+}
+
 .loginBox__title--modal{
   font-size: 30px;
   color: $dark-primary;
