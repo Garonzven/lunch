@@ -18,6 +18,7 @@ $.ajax({
   }
 });
 
+var mySelection = [];
 $.ajax({
   url: constants().cycleFind + '?token='+$.cookie('token'),
   type:'get',
@@ -25,40 +26,37 @@ $.ajax({
   success: function(response){
     var date='';
     if (response.data.length > 0) {
+      // Cycle
       $.each(response.data,function(key,val){
+        // Dishes
         $.each(val.dishes,function(k,data){
           if(!data.deleted_at){
             if(date != data.date_cycle){
+
+              mySelection.push({
+                date_order: data.date_cycle,
+                id_dish: 1
+              });
+
               day = formatDate(data.date_cycle);
               cid = formatId(data.date_cycle);
               $('.ciclo').append('<li id="'+cid+'" class="ciclo-day" onClick=" addActive(this)"><a>'+formatDate(data.date_cycle)+'</a></li>');
-              $('.checkboxes').append('<div class="form-group menu_'+cid+'"><label><input type="checkbox" value="1" name="noThanks[]">  No, thanks.</label><br></div>');
+              $('.checkboxes').append('<div class="form-group menu_'+cid+'"><label><input type="checkbox" name="noThanks[]" class="no-thanks" data-date="' + data.date_cycle + '" onclick="addOrderCheckbox(\'' + data.date_cycle + '\', this)" checked="checked">  No, thanks.</label><br></div>');
             }
-            $('.menus').append('<div id="'+data.id_dish+'_'+formatId(data.date_cycle)+'" class="menu menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><p class="text-justify thumbnail-desc">'+data.title+' </p><p class="put-bottom"><button type="button" onClick="Select(this.id)"  id="dish_'+data.id_dish+'"_"'+data.date_cyle+'" class="btn btn--menu btn--yellow pull-right" role="button">Select</button> </p><input type="hidden" id="date_order[]" value="'+data.date_cycle+'" disabled=""></input><input type="hidden" id="id_dish[]" value="'+data.id_dish+'" disabled=""></input><p class="title-menu">'+data.description+'</p></div></div></div>');
+            $('.menus').append('<div id="'+data.id_dish+'_'+formatId(data.date_cycle)+'" class="menu menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><p class="text-justify thumbnail-desc">'+data.title+' </p><p class="put-bottom"><button type="button" onClick="Select(this.id, \'' + data.date_cycle + '\', ' + data.id_dish + ')"  id="dish_'+data.id_dish+'"_"'+data.date_cyle+'" class="btn btn--menu btn--yellow pull-right" role="button">Select</button> </p><input type="hidden" id="date_order[]" value="'+data.date_cycle+'" disabled=""></input><input type="hidden" id="id_dish[]" value="'+data.id_dish+'" disabled=""></input><p class="title-menu">'+data.description+'</p></div></div></div>');
             date = data.date_cycle;
           }
         });
       });
     }
-    // $('.bottom-menu').append('<button type="button" onClick="addOrder()" class="btn btn--green pull-right" role="button">Save menu</button>');
     $('.ciclo').children().first().addClass('current');
     id_active = $('.ciclo').children().first().attr('id');
-    console.log(id_active);
     $('.menu_'+id_active).addClass('current');
   }
 });
 
-
-
-
-
-
-
-
-
-
 $('.navContainer__logo').addClass('navContainer__logo--center');
-function Select(id){
+function Select(id, date, id_dish){
   $('#'+id).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
   $('#'+id).attr('onclick','Unselect(this.id)');
   var formid = $('#'+id).closest('div .menu').attr('id');
@@ -73,8 +71,13 @@ function Select(id){
   $('#'+formid+' input').each(function(){
       $(this).attr('disabled', false);
   });
-
   $('.ciclo .current').addClass('selected');
+
+  $.map(mySelection, function(o, i) {
+    if (o.date_order == date) {
+      o.id_dish = id_dish;
+    }
+  });
 }
 
 function Unselect(id){
@@ -92,17 +95,46 @@ function Unselect(id){
   $('#'+formid+' input').each(function(){
       $(this).attr('disabled', true);
   });
-$('.ciclo >li.selected').removeClass('selected');
-
+  $('.ciclo >li.selected').removeClass('selected');
 }
 
-
-function addOrder(){
-  var val=[];
-  $(':checkbox:checked').each(function(i) {
-    val[i] = $(this).val();
+function addOrderCheckbox(date, e) {
+  $.map(mySelection, function(o, i) {
+    if (o.date_order == date) {
+      if ($(this).attr('checked')) {
+        o.id_dish = 1;
+      }
+    }
   });
-  console.log(val);
+}
+
+function addOrder(date, id){
+  console.log(mySelection);
+  $.ajax({
+    url: constants().orderRegister + '?token=' + $.cookie('token'),
+    method: 'post',
+    data: {
+      dishes: mySelection
+    },
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+      swal({
+        text: data.message,
+        type: 'success',
+        confirmButtonText: 'Ok'
+      });
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+  // $.each(mySelection, function(i, o) {
+  //   if (o.date_order == date) {
+  //     o.id_dish = id;
+  //   }
+  // });
+}
   // $('div .menu input').each(function(){
   //   if(!$(this).prop('disabled')){
   //     console.log($(this).attr('id')+":"+$(this).attr('value'));
@@ -120,7 +152,6 @@ function addOrder(){
   //     console.log(data)
   //   }
   // });
-}
 
 function formatDate(date) {
   var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -147,9 +178,6 @@ function addActive(li){
   $('.menu_'+id_active).addClass('current');
 
 }
-
-
-
 $('.mini_calendar').pignoseCalendar({
   initialized:'false',
   scheduleOptions:{
