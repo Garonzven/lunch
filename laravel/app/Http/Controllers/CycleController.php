@@ -20,8 +20,6 @@ class CycleController extends Controller
       $users = JWTAuth::parseToken()->authenticate();
       return $users->id;
     }
-
-
     public function updateCycle($id, $data)//falta las notificaciones
     {
         $dt = date('Y-m-d');
@@ -303,6 +301,38 @@ class CycleController extends Controller
             $valores = array_add($valores, 'dishes', $active);
 
         return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
+    }
+
+    public function deleteCycle($id)
+    {
+        $dates = Cycle_dish::where('id_cycle', $id)->distinct()->orderBy('date_cycle', 'ASC')->get();
+        //dd($dates);
+
+        foreach($dates as $key)
+        {
+            $orders = Order::where('date_order', '=', $key->date_cycle)->get();
+            $dishes = Cycle_dish::where('date_cycle', '=', $key->date_cycle)->get();
+            if(count($dishes)>0)
+            {
+              foreach($dishes as $val)
+              {
+                $val->delete();
+              }
+              
+            }
+            if(count($orders)>0)
+            {
+              foreach($orders as $val)
+              {
+                $val->delete();
+              }
+            }
+        }
+
+        $cycle = Cycle::find($id);
+        $cycle->delete();
+
+        return response()->json(['message' => 'Cycle has been deleted', 'code' => '200']);
     }
 
 }

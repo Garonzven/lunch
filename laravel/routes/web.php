@@ -52,15 +52,15 @@ Route::group(['prefix'=>'cycle', 'middleware'=> ['jwt.auth', 'admin','cors']],fu
 	Route::get('find',['uses'=>'CycleController@searchCycleList']);
   	Route::get('active',['uses'=>'CycleController@searchCycleActive']);
 	Route::put('update',['uses'=>'CycleController@updateCycle']);
+	Route::delete('delete/{id}',['uses'=>'CycleController@deleteCycle']);
 });
 
 Route::group(['prefix'=>'order', 'middleware'=> ['jwt.auth', 'user', 'cors']],function(){
 	Route::post('register',['uses'=>'OrderController@registerOrder']);
   	Route::get('active',['uses'=>'OrderController@searchCycleActive']);
+  	Route::get('listorder',['uses'=>'OrderController@selectOrder']);
 });
 
 Route::get('reportCycle/{id}',['uses'=>'ReportController@generateReportCycle','middleware'=> ['jwt.auth', 'watcher', 'cors']]);
-
-Route::get('reportLog',['uses'=>'ReportController@generateReportLog', 'middleware'=> ['jwt.auth', 'admin', 'cors']]);
 
 Route::get('cyclelist',['uses'=>'ReportController@listCycle', 'middleware'=> ['jwt.auth', 'watcher', 'cors']]);

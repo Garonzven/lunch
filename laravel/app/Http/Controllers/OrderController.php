@@ -112,4 +112,51 @@ class OrderController extends Controller
 
        return response()->json(['data' => $valores, 'message' => 'Cycle List', 'code' => '200']);
    }
+
+   public function selectOrder()
+   {
+     $dt = date('Y-m-d');
+
+     $cycle = Cycle::where('initial_date','<',$dt)
+     ->where('closing_date','>',$dt)
+     ->orWhere('initial_date', '=', $dt)
+     ->orWhere('closing_date', '=', $dt)
+     ->orWhere('initial_date', '>', $dt)
+     ->where('closing_date','>',$dt)
+     ->limit(1)
+     ->get();
+
+     if(count($cycle)==0)
+     {
+       return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
+     }
+
+     $valores = new Cycle();
+
+     foreach($cycle as $key)
+     {
+       $valores->id = $key->id;
+       $valores->initial_date = $key->initial_date;
+       $valores->closing_date = $key->closing_date;
+     }
+     //dd($valores->id);
+
+       $dishes = Cycle_dish::select('date_cycle')->where('id_cycle', $valores->id)->distinct()->orderBy('date_cycle', 'ASC')->get();
+
+
+       $array = [];
+       foreach ($dishes as $val) {
+         $collection = Order::select('id_dish')->where('id_user', $this->idUser())->where('date_order', $val->date_cycle)->get();
+         //dd($collection);
+         foreach($collection as $key)
+         {
+           $val = array_add($val, 'id_dish', $key->id_dish);
+         }
+
+     }
+
+
+     return response()->json(['data' => $dishes, 'message' => 'Order List', 'code' => '200']);
+
+   }
 }
