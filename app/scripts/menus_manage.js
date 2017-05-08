@@ -25,6 +25,7 @@ var currentCycle = {};
 var today = moment();
 var theDishes;
 var dishDay;
+var dishForm = $('#dish-form');
 
 // Calendar
 $('#calendar').fullCalendar({
@@ -45,6 +46,8 @@ $('#calendar').fullCalendar({
         type: 1,
         overlap: false,
         editable: false,
+        backgroundColor: '#d32f2f',
+        borderColor: '#d32f2f',
       }, true);
     }
   },
@@ -62,45 +65,87 @@ $('#calendar').fullCalendar({
         return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
       });
       $.each(dayDishes, function(i, o) {
-        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
+        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
       });
       $('#modalDish').modal('show');
       $('#dish-add').off().on('click', function() {
-        var dish = {
-          title: $('#dish-title').val(),
-          description: $('#dish-description').val(),
-          start: start.add(1, 'seconds'),
-          type: 9,
-          overlap: false,
-          editable: false,
-          backgroundColor: '#ff9800',
-          borderColor: '#ff9800',
-        }
-        $.ajax({
-          url: constants().dishRegister + '?token=' + $.cookie('token'),
-          method: 'post',
-          data: {
-            title: dish.title,
-            description: dish.description,
-            id_provider: 1
-          },
-          success: function(data) {
-            dish.id = data.data.id;
-            $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
-            $('#calendar').fullCalendar('renderEvent', dish, true);
-            currentCycle.dishes.push(dish);
-            $('#dish-title').val('').focus();
-            $('#dish-description').val('');
-          },
-          error: function(error) {
-            console.log(error);
+        dishForm.validate();
+        if (dishForm.valid()) {
+          var dish = {
+            title: $('#dish-title').val(),
+            description: $('#dish-description').val(),
+            start: start.add(1, 'seconds'),
+            type: 9,
+            overlap: false,
+            editable: false,
+            backgroundColor: '#ff9800',
+            borderColor: '#ff9800',
           }
-        });
+          $.ajax({
+            url: constants().dishRegister + '?token=' + $.cookie('token'),
+            method: 'post',
+            data: {
+              title: dish.title,
+              description: dish.description,
+              id_provider: 1
+            },
+            success: function(data) {
+              dish.id = data.data.id;
+              $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+              $('#calendar').fullCalendar('renderEvent', dish, true);
+              currentCycle.dishes.push(dish);
+              console.log('pushed');
+              $('#dish-title').val('').focus();
+              $('#dish-description').val('');
+            },
+            error: function(error) {
+              console.log(error);
+            }
+          });
+        }
       });
     }
   },
-  eventClick: function() {
+  eventClick: function(event) {
+    console.log(event);
+    if (event.type == 1) {
+      swal({
+        html: '<span class="delete-dish">You are about to delete the current period.<br>Are you sure?</span>',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+      }).then(function () {
+        $.ajax({
+          url: constants().cycleDelete + '/' + event.id + '?token=' + $.cookie('token'),
+          method: 'delete',
+          dataType: 'json',
+          success: function(data) {
+            swal({
+              title: 'The period was deleted.',
+              type: 'success'
+            }).then(function() {
+              location.reload();
+            });
+          }
+        });
+      }, function(){});
+    }
+  }
+});
 
+dishForm.validate({
+  onblur: false,
+  onfocus: false,
+  rules: {
+    'dish-title': {required: true},
+    'dish-description': {required: true}
+  },
+  messages: {
+    'dish-title': {required: 'Title must have a value.'},
+    'dish-description': {required: 'Description must have a value'}
   }
 });
 
@@ -160,6 +205,7 @@ $.ajax({
 
               case 1:
                 currentCycle = {
+                  id: o.id,
                   title: title,
                   start: start,
                   end: end,
@@ -220,87 +266,122 @@ $('body').on('click', 'a.dish-title', function() {
   $('#dish-description').val($(this).data('description'));
 });
 $('#dish-update').on('click', function() {
-  $.ajax({
-    url: constants().dishUpdate + '/' + dishUpdateId + '?token=' + $.cookie('token'),
-    method: 'put',
-    data: {
-      id: dishUpdateId,
-      title: $('#dish-title').val(),
-      description: $('#dish-description').val()
-    },
-    success: function(data) {
+  dishForm.validate();
+  if (dishForm.valid()) {
+    $.ajax({
+        url: constants().dishUpdate + '/' + dishUpdateId + '?token=' + $.cookie('token'),
+        method: 'put',
+        data: {
+          id: dishUpdateId,
+          title: $('#dish-title').val(),
+          description: $('#dish-description').val()
+        },
+        success: function(data) {
 
-      $('.dish-list').empty();
+          $('.dish-list').empty();
 
-      $.map(currentCycle.dishes, function(o, i) {
-        if (o.id == dishUpdateId) {
-          o.title = $('#dish-title').val();
-          o.description = $('#dish-description').val();
+          $.map(currentCycle.dishes, function(o) {
+            if (o.id == dishUpdateId) {
+              o.title = $('#dish-title').val();
+              o.description = $('#dish-description').val();
+            }
+          });
+
+          dayDishes = $.grep(currentCycle.dishes, function(o) {
+            return o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
+          });
+          $.each(dayDishes, function(i, o) {
+            $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+          });
+
+          $('#dish-update').hide();
+          $('#dish-cancel-update').hide();
+          $('#dish-add').show();
+          $('#dish-title').val('').focus();
+          $('#dish-description').val('');
         }
       });
-
-      dayDishes = $.grep(currentCycle.dishes, function(o) {
-        return o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
-      });
-      $.each(dayDishes, function(i, o) {
-        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
-      });
-
-      $('#dish-update').hide();
-      $('#dish-cancel-update').hide();
-      $('#dish-add').show();
-      $('#dish-title').val('').focus();
-      $('#dish-description').val('');
-    }
-  });
+  }
 });
 $('#dish-cancel-update').on('click', function() {
-    $('#dish-title').val('').focus();
-    $('#dish-description').val('');
-    $('#dish-update').hide();
-    $('#dish-add').show();
-    $(this).hide();
+  $('#dish-title').val('').focus();
+  $('#dish-description').val('');
+  $('#dish-update').hide();
+  $('#dish-add').show();
+  $(this).hide();
 });
 $('#modalDish').on('shown.bs.modal', function(e) {
   $('#dish-title').focus();
 });
 $('#save-cycle').on('click', function() {
-  var cycle = {};
-
-  theDishes = [];
-  $.each(currentCycle.dishes, function(i, o) {
-    if (!dateExists(o)) {
-      theDishes.push({
-        date_cycle: o.start.format('YYYY-MM-DD'),
-        id_dishes: []
+  console.log(currentCycle);
+  if (currentCycle.dishes) {
+    if ($('#limit-time').val() != '') {
+      var cycle = {};
+      theDishes = [];
+      $.each(currentCycle.dishes, function(i, o) {
+        if (!dateExists(o)) {
+          theDishes.push({
+            date_cycle: o.start.format('YYYY-MM-DD'),
+            id_dishes: []
+          });
+        }
       });
-    }
-  });
 
-  $.each(theDishes, function(i, o) {
-    $.each(currentCycle.dishes, function(_i, _o) {
-      if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
-        o.id_dishes.push(_o.id);
+      // Validate if cycle is complete
+      if (currentCycle.end.diff(currentCycle.start, 'days')+1 > theDishes.length) {
+        swal({
+          html: '<span class="delete-dish">There are some days without dishes.<br>Are you sure you want to continue?</span>',
+          imageUrl:"assets/warning_1.png",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No'
+        }).then(function () {
+          $.each(theDishes, function(i, o) {
+            $.each(currentCycle.dishes, function(_i, _o) {
+              if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
+                o.id_dishes.push(_o.id);
+              }
+            });
+          });
+
+          cycle = {
+            init: currentCycle.start.format('YYYY-MM-DD'),
+            close: currentCycle.end.format('YYYY-MM-DD'),
+            limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss a'),
+            data: theDishes,
+          }
+
+          $.ajax({
+            url: constants().cycleRegister + '?token=' + $.cookie('token'),
+            method: 'post',
+            data: cycle,
+            dataType: 'json',
+            success: function(data) {
+              swal(
+                'Saved!',
+                'The changes you made to your cycle has been saved successfully.',
+                'success');
+            }
+          });
+        }, function(){});
       }
-    });
-  });
-
-  cycle = {
-    init: currentCycle.start.format('YYYY-MM-DD'),
-    close: currentCycle.end.format('YYYY-MM-DD'),
-    limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss'),
-    data: theDishes,
-  }
-
-  $.ajax({
-    url: constants().cycleRegister + '?token=' + $.cookie('token'),
-    method: 'post',
-    data: cycle,
-    dataType: 'json',
-    success: function(data) {
-      console.log(data);
+    } else {
+      swal(
+        'Error',
+        'You have not set the limit time of the period.',
+        'error'
+      );
     }
-  });
+  } else {
+    swal({
+      title: 'Error',
+      text: 'You have not set any period',
+      type: 'error'
+    });
+  }
 });
 $('#dish-ok').on('click', function() {
   var del = $('#calendar').fullCalendar('clientEvents', function(e) {
@@ -319,6 +400,7 @@ $('#dish-ok').on('click', function() {
   $('#calendar').fullCalendar('renderEvents', a, true);
 });
 $('body').on('click', 'a.dish-delete', function() {
+  var idDel = $(this).data('id');
   swal({
     html: '<span class="delete-dish">You are about to remove a dish from the menu<br><br>Are you sure?</span>',
     imageUrl:"assets/warning_1.png",
@@ -328,7 +410,22 @@ $('body').on('click', 'a.dish-delete', function() {
     confirmButtonText: 'Yes',
     cancelButtonText: 'No'
   }).then(function () {
-    console.log('true');
+    $.each(currentCycle.dishes, function(i, o) {
+      if (o.id == idDel && o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD')) {
+        currentCycle.dishes.splice(i, 1);
+        return false;
+      }
+    });
+
+    $('.dish-list').empty();
+
+    dayDishes = $.grep(currentCycle.dishes, function(o) {
+      return o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
+    });
+
+    $.each(dayDishes, function(i, o) {
+      $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+    });
   }, function() {});
 });
 

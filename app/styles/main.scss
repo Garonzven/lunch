@@ -607,16 +607,26 @@ button.del{
   }
 }
 
-#email-error,
-#password-error,#confirmpassword-error,#resetemail-error{
+.loginBox #email-error,
+#password-error,
+#confirmpassword-error,
+#resetemail-error,
+#dish-title-error,
+#dish-description-error {
   display: inline-table;
   position: absolute;
   left: 0px;
   font-weight: 400;
   color: $dark-primary;
+  font-size: 14px;
+}
+#dish-title-error,
+#dish-description-error {
+  left: 16px;
 }
 
-#createForm > #email-error, #name-error,#email-error,#jobtitle-error,#phone-error,#country-error,#city-error,#id_profile-error{
+// #createForm > #email-error,
+#name-error,#email-error,#jobtitle-error,#phone-error,#country-error,#city-error,#id_profile-error{
   position: absolute;
   color: $dark-primary;
   font-size: 12px;
