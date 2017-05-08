@@ -26,6 +26,7 @@ $.ajax({
   success: function(response){
     var date='';
     if (response.data.length > 0) {
+      $('.fecha').text(moment(response.data[0].limit_date).format('YYYY/MM/DD hh:mm:ss a'));
       // Cycle
       $.each(response.data,function(key,val){
         // Dishes
@@ -54,7 +55,6 @@ $.ajax({
     $('.menu_'+id_active).addClass('current');
   }
 });
-
 $('.navContainer__logo').addClass('navContainer__logo--center');
 function Select(id, date, id_dish){
   $('#'+id).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');

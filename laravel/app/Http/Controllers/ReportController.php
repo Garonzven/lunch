@@ -39,7 +39,7 @@ class ReportController extends Controller
   public function generateReportCycle($idCycle)
    {
      $init=[];
-     $close=[]; 
+     $close=[];
      $userToken = JWTAuth::parseToken()->ToUser();
      $id = $idCycle;
 
@@ -94,7 +94,7 @@ class ReportController extends Controller
 
    public function listcycle()
    {
-      $cycle = Cycle::select('id','initial_date','closing_date')->get();
+      $cycle = Cycle::select('id','initial_date','closing_date','limit_date')->get();
       if(count($cycle)==0)
       {
           return response()->json(['message' => 'Not found cycle', 'code' => '404']);
@@ -136,7 +136,7 @@ class ReportController extends Controller
           }
       }
       return response()->json(['data' => $cycle, 'message' => 'Cycle List', 'code' => '200']);
-      
+
 
    }
 }

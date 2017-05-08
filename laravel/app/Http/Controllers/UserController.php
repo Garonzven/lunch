@@ -36,7 +36,7 @@ class UserController extends Controller
         'email' => $request->input('email'),
         'photo' => $request->input('photo'),
         'password' => bcrypt($password),
-        'change_pass' => true,
+        'change_pass' => false,
         'id_profile' => $request->input('id_profile'),
       ]);
       $values = ''.$request->input('name').', '.$request->input('jobtitle').', '.$request->input('country').', '.$request->input('city').', '.$request->input('phone').', '.$request->input('email').', '.$request->input('id_profile').'';
@@ -51,6 +51,7 @@ class UserController extends Controller
 
       Mail::send('mails.welcome', ['data' => $user, 'password' => $password], function($message) use($user){
         $message->to($user->email, 'To:'. $user->name)->subject('Verify account');
+        $message->from('system@garonz.com','garonz');
       });
 
       return response()->json(['message'=>'User has been created', 'data'=>$user,'code'=>'201']);
@@ -141,6 +142,7 @@ class UserController extends Controller
 
       Mail::send('mails.example', ['data' => $vals, 'password' => $vals->password], function($message) use($vals){
                $message->to($vals->email, 'To:'. $vals->name)->subject('Recovery password');
+               $message->from('system@garonz.com','garonz');
                });
 
       return response()->json([

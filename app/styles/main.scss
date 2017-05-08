@@ -956,3 +956,18 @@ margin-bottom: 40px;
     background-color: transparent;
     z-index: 1060;
 }
+.color-label{
+  color:$dark-primary;
+  font-weight: bold;
+}
+.text-time{
+    font-size: 20px;
+    position: relative;
+    top: 50px;
+}
+.titles-time {
+  font-size: 16px;
+  color: $primary-text;
+  position: relative;
+  top: 10px;
+}

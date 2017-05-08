@@ -31,14 +31,14 @@
            height: 2px;
            width: 160px;
            margin-bottom: 3px;
-           
+
        }
        .hr-size-tablerigth{
            background-color:rgba(33, 33, 33, 0.36) ;
            height: 2px;
            width: 160px;
            margin-bottom: 3px;
-           
+
        }
        .navbar-pdf{
          width: 100%;
@@ -47,7 +47,7 @@
        }
        .img-pdf{
          margin-left: 20px;
-         
+
        }
        .img-logo{
             width: 23px;
@@ -83,7 +83,7 @@
          <img class="img-logo" src="images/icono_menu.png" alt="Logo">
           <span class="loginBox__title">REPORTS</span>
       </div>
-     
+
       <hr class="hr-size-black">
       <p style="font-size: 18px;">Period: {{$init->initial}} To {{$close->closing}} </p>
       <table class="table table-bordered">
@@ -130,9 +130,9 @@
           </tr>
         </thead>
      </table>
-     <footer style="background-color: #d32f2f;height: 44px;">
+     <footer style="height: 44px;">
        <div style="padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
-         <h4 style="text-align: center; color:#ffffff;">GARONZ -5 de Julio Edificio Befercom.</h4>
+         <h4 style="text-align: center;">GARONZ -5 de Julio Edificio Befercom.</h4>
        </div>
      </footer>
 
@@ -141,8 +141,8 @@
         <p style="text-align: center;">5 de Julio, Edificio Befercom.</p>
         <p style="text-align: center;">0412-6459052</p>
       </div>
-      
-      
+
+
 
 
 

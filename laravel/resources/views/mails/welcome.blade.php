@@ -25,9 +25,18 @@
          <br>
          <br>
          <h1><b>WELCOME</b></h1>
-         <h4>Hi!, nice to meet you</h4>
-         <h4>Welcome to lunch time, here you can be able to choose your</h4>
-         <h4>dishes for your entire menu offered by us</h4>
+         <h3>Hi!, nice to meet you</h3>
+         <h3>Welcome to lunch time, here you can be able to choose your</h3>
+         <h3>dishes for your entire menu offered by us</h3>
+         <h3>Here is your user name:</h3>
+         <h3 style="color:#d32f2f;">{{$data->email}}</h3>
+       </div>
+       <h3 style="text-align: center;">And this your provisional password:</h3>
+         <div style="border: 1px solid #9e9e9e;width: 373px;margin-left:93px; text-align: center;">
+           <!--passwor aqui-->
+           <h3><b>{{$password}}</b></h3>
+         </div>
+         <br>
            <a style="display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -46,17 +55,12 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none" href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
-         <h4>Click on the button to check new dishes.</h4>
-       </div>
-       <h3 style="text-align: center;"">So, here is your provisional password:</h3>
-         <div style="border: 1px solid #9e9e9e;width: 373px;margin-left:169px; text-align: center;">
-           <!--passwor aqui-->
-           <h3><b>{{$password}}</b></h3>
-         </div>
+    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none; margin-left:148px;"  href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
+         <h4 style="text-align:center !important;">Click on the button to check new dishes.</h4>
+
        <br>
-       <h4><b>Bon Appetite!</b></h4>
-       <h4><b>The Lunch Time Team</b></h4>
+       <p style="font-size:25px; margin-bottom:-30px !important;"><b>Bon Appetite!</b></p>
+       <p style="font-size:25px;"><b>The Lunch Time Team</b></p>
      </div>
    </div>
    <br>

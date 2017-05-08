@@ -15,6 +15,6 @@ function constants() {
 		userDelete: server+'user/delete',
 		userFindList: server+'user/findlist',
 		orderRegister: server+'order/register',
-
+		dateserver: server+'date',
   }
 }

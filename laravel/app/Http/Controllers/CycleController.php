@@ -48,6 +48,7 @@ class CycleController extends Controller
             $valores->id = $key->id;
             $valores->initial_date = $key->initial_date;
             $valores->closing_date = $key->closing_date;
+
         }
 
         if($valores->id < $id)
@@ -99,6 +100,7 @@ class CycleController extends Controller
 
           Mail::send('mails.menu_change', ['primero' => $collection->first()], function($message) use($array){
             $message->to($array)->subject('New Menu');
+            $message->from('system@garonz.com','garonz');
         });
 
         return 2;
@@ -184,6 +186,7 @@ class CycleController extends Controller
 
           Mail::send('mails.newlunch', ['data' => $data], function($message) use($array){
             $message->to($array)->subject('New Menu');
+            $message->from('system@garonz.com','garonz');
         });
       return response()->json(['data'=> $cycle, 'message'=>'Cycle has been Created', 'code' => '201']);
     }
@@ -318,7 +321,7 @@ class CycleController extends Controller
               {
                 $val->delete();
               }
-              
+
             }
             if(count($orders)>0)
             {

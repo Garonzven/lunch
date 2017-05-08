@@ -26,21 +26,21 @@
          <hr style="background-color:#d32f2f;height: 2px;margin-top: 0px;margin-bottom: -10px;border: 0;border-top: 0px;position: relative;top:-25px;">
          <!--nombre aqui-->
          <p style="text-align:left;font-size: 36px;color: #d32f2f;font-weight: 700;margin-top: 0px;padding-bottom: 0px;">Hi {{$data->name}},</p>
-         <h4>We received a request to reset your password for you</h4>
-         <h4>Luch Time account.</h4>
+         <h3>We received a request to reset your password for you</h3>
+         <h3>Luch Time account.</h3>
          <!--Correo garonz aqui-->
-         <h4 style="color:#d32f2f;"><b>{{$data->email}}</b></h4>
+         <h3 style="color:#d32f2f;"><b>{{$data->email}}</b></h3>
          <br>
-         <h4>Easy! we know you are hungry! so we re here to help!</h4>
+         <h3>Easy! we know you are hungry! so we re here to help!</h3>
          <br>
-         <h4><b>So, here is your provisional password:</b></h4>
+         <h3><b>So, here is your provisional password:</b></h3>
 
-         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:214px;">
+         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:127px;">
            <!--passwor aqui-->
-           <h4><b>{{$password}}</b></h4>
+           <h3><b>{{$password}}</b></h3>
          </div>
          <br>
-         <h4><b>Please click link below to log in wit your provisional password</b></h4>
+         <h3><b>Please click link below to log in wit your provisional password</b></h3>
            <a style="display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -63,8 +63,8 @@
          <p>If you didn't ask to chage your password don't worry! Your password is still safe</p>
          <p>and you can delete this mail.</p>
        </div>
-       <h4><b>Bon Appetite!</b></h4>
-       <h4><b>The Lunch Time Team</b></h4>
+       <h4 style="font-size:25px; margin-bottom:-30px;"><b>Bon Appetite!</b></h4>
+       <h4  style="font-size:25px;"><b>The Lunch Time Team</b></h4>
      </div>
    </div>
    <footer style="background-color: #d32f2f;height: 44px;">

@@ -1,5 +1,17 @@
 $('.navContainer__logo').addClass('navContainer__logo--center');
-
+//var today;
+function GetDate() {
+  $.ajax({
+    url:constants().dateserver,
+    method: 'GET',
+    async: false,
+    dataType: 'json',
+    success: function(data){
+        date = data.date;
+    }
+  });
+  return date;
+}
 // Load profile
 $.ajax({
   url: constants().profile + '?token=' + $.cookie('token'),
@@ -63,13 +75,22 @@ $.ajax({
   success: function(data){
     console.log(data);
     print="";
+    var dateserver = GetDate();
+    console.log(dateserver);
+    var server =  moment(dateserver);
+    var limit =  moment(data.limit_date);
+    var disable;
     $.each(data.data, function (key, data) {
-      if(data.remaining){
-        print = "onClick=printAlert(this)";
-      }else{
-        print = 'href="'+constants().cycleReport +'/'+data.id+'?token=' + $.cookie('token')+'"';
+      /*if(data.remaining){
+        print = "onClick=printAlert";
+      }else{*/
+      disable = 'disabled';
+      if (server.diff(limit)<0) {
+        disable = '';
       }
-      $('#report-detail').append('<tr><td align="center">'+formatday(data.initial_date)+'</td><td align="center">'+formatday(data.closing_date)+'</td><td align="center"><a class="btn btn--yellow print" '+print+' name="print" id="'+data.id+'"><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
+        print = 'href="'+constants().cycleReport +'/'+data.id+'?token=' + $.cookie('token')+'"';
+      //}
+      $('#report-detail').append('<tr><td align="center">'+formatday(data.initial_date)+'</td><td align="center">'+formatday(data.closing_date)+'</td><td align="center"><a class="btn btn--yellow print" '+print+' name="print" id="'+data.id+'" '+disable+'><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
     });
   $('#example').dataTable();
   }

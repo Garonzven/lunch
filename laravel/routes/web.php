@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('date', function(){
-  $dt = date('Y-m-d');
+  $dt = date('Y-m-d h:m:s');
   return response()->json(['date' => $dt, 'code' => '200']);
 });
 

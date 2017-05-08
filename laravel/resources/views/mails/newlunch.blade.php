@@ -50,8 +50,8 @@
          <h4>Click on the button to check new dishes.</h4>
        </div>
        <br>
-       <h4><b>Bon Appetite!</b></h4>
-       <h4><b>The Lunch Time Team</b></h4>
+       <h4 style="font-size:25px; margin-bottom:-30px;"><b>Bon Appetite!</b></h4>
+       <h4  style="font-size:25px;"><b>The Lunch Time Team</b></h4>
      </div>
    </div>
    <footer style="background-color: #d32f2f;height: 44px;">
