@@ -24,6 +24,7 @@ $.ajax({
 var currentCycle = {};
 var today = moment();
 var theDishes;
+var dishDay;
 
 // Calendar
 $('#calendar').fullCalendar({
@@ -49,9 +50,11 @@ $('#calendar').fullCalendar({
   },
   dayClick: function(start) {
     if (canCreate(start)) {
+      dishDay = start;
       $('.dish-list').empty();
       $('#dish-add').show();
       $('#dish-update').hide();
+      $('#dish-cancel-update').hide();
       $('#dish-title').val('');
       $('#dish-description').val('');
       var dayDishes = [];
@@ -59,7 +62,7 @@ $('#calendar').fullCalendar({
         return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
       });
       $.each(dayDishes, function(i, o) {
-        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a></li>');
+        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
       });
       $('#modalDish').modal('show');
       $('#dish-add').off().on('click', function() {
@@ -70,8 +73,8 @@ $('#calendar').fullCalendar({
           type: 9,
           overlap: false,
           editable: false,
-          backgroundColor: '#254154',
-          borderColor: '#254154',
+          backgroundColor: '#ff9800',
+          borderColor: '#ff9800',
         }
         $.ajax({
           url: constants().dishRegister + '?token=' + $.cookie('token'),
@@ -83,7 +86,7 @@ $('#calendar').fullCalendar({
           },
           success: function(data) {
             dish.id = data.data.id;
-            $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a></li>');
+            $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
             $('#calendar').fullCalendar('renderEvent', dish, true);
             currentCycle.dishes.push(dish);
             $('#dish-title').val('').focus();
@@ -207,11 +210,13 @@ $.ajax({
 
 // Events
 var dishUpdateId;
+var dayDishes = [];
 $('body').on('click', 'a.dish-title', function() {
   dishUpdateId = $(this).data('id');
   $('#dish-update').show();
+  $('#dish-cancel-update').show();
   $('#dish-add').hide();
-  $('#dish-title').val($(this).data('title'));
+  $('#dish-title').val($(this).data('title')).focus();
   $('#dish-description').val($(this).data('description'));
 });
 $('#dish-update').on('click', function() {
@@ -224,12 +229,37 @@ $('#dish-update').on('click', function() {
       description: $('#dish-description').val()
     },
     success: function(data) {
+
+      $('.dish-list').empty();
+
+      $.map(currentCycle.dishes, function(o, i) {
+        if (o.id == dishUpdateId) {
+          o.title = $('#dish-title').val();
+          o.description = $('#dish-description').val();
+        }
+      });
+
+      dayDishes = $.grep(currentCycle.dishes, function(o) {
+        return o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
+      });
+      $.each(dayDishes, function(i, o) {
+        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete"><span class="glyphicon glyphicon-trash"></span></a></li>');
+      });
+
       $('#dish-update').hide();
+      $('#dish-cancel-update').hide();
       $('#dish-add').show();
       $('#dish-title').val('').focus();
       $('#dish-description').val('');
     }
   });
+});
+$('#dish-cancel-update').on('click', function() {
+    $('#dish-title').val('').focus();
+    $('#dish-description').val('');
+    $('#dish-update').hide();
+    $('#dish-add').show();
+    $(this).hide();
 });
 $('#modalDish').on('shown.bs.modal', function(e) {
   $('#dish-title').focus();
@@ -272,7 +302,37 @@ $('#save-cycle').on('click', function() {
     }
   });
 });
+$('#dish-ok').on('click', function() {
+  var del = $('#calendar').fullCalendar('clientEvents', function(e) {
+    return e.type == 9 && e.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
+  });
+  var x=[];
+  $.map(del, function(o, i) {
+    x.push({id:o._id});
+  });
+  $.each(x, function(i, o) {
+    $('#calendar').fullCalendar('removeEvents', o.id);
+  });
+  var a = $.grep(currentCycle.dishes, function(o, i) {
+    return o.type == 9 && o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD');
+  });
+  $('#calendar').fullCalendar('renderEvents', a, true);
+});
+$('body').on('click', 'a.dish-delete', function() {
+  swal({
+    html: '<span class="delete-dish">You are about to remove a dish from the menu<br><br>Are you sure?</span>',
+    imageUrl:"assets/warning_1.png",
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No'
+  }).then(function () {
+    console.log('true');
+  }, function() {});
+});
 
 // Defaults
 $('.navContainer__logo').addClass('navContainer__logo--center');
 $('#dish-update').hide();
+$('#dish-cancel-update').hide();
