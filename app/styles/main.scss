@@ -54,6 +54,10 @@ body {
   color: $gray;
 }
 
+.delete-dish {
+  color: $primary-text;
+}
+
 .titles-primary{
   font-size: 30px;
   color: $primary !important;
@@ -708,14 +712,31 @@ button.del{
   font-size: 10px;
 }
 
-ul.dish-list li{
-  text-decoration: none;
-  list-style: none;
-  color: $gray;
+ul.dish-list {
+    padding-left: 10px;
+    li {
+      text-decoration: none;
+      list-style: none;
+      color: $gray;
+      position: relative;
+  }
 }
 
 ul.dish-list li a{
   color: $gray;
+}
+
+.dish-title {
+    width: 190px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dish-delete {
+    position: absolute;
+    right: 10px;
 }
 
 .modaldishes{
