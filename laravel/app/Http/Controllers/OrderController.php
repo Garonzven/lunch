@@ -39,7 +39,7 @@ class OrderController extends Controller
          $collections->push($find);
        }
      }
-     
+
      if($collections->isNotEmpty())
      {
        return response()->json(['data'=> $collections, 'message'=>'Order has been Update', 'code' => '200']);
@@ -98,6 +98,7 @@ class OrderController extends Controller
        $valores->id = $key->id;
        $valores->initial_date = $key->initial_date;
        $valores->closing_date = $key->closing_date;
+       $valores->limit_date = $key->limit_date;
      }
 
    $active = \DB::table('dishes')
@@ -138,6 +139,7 @@ class OrderController extends Controller
        $valores->id = $key->id;
        $valores->initial_date = $key->initial_date;
        $valores->closing_date = $key->closing_date;
+       $valores->limit_date = $key->limit_date;
      }
      //dd($valores->id);
 

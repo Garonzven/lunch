@@ -288,6 +288,7 @@ $('document').ready(function(){
     method: 'GET',
     dataType: 'JSON',
     success: function(data){
+      console.log(data);
       $.each(data.data, function (key, data) {
         $('.modales').append(createModal(data.id,data.name,data.email,data.phone,data.jobtitle,data.city,data.country,data.id_profile));
         $('#user-detail').append('<a href=\'#\'><tr id=\''+data.email+'\' data-toggle=\'modal\'  data-target=\'#modal_'+data.id+'\'> <td align=\'center\'>'+data.name+'</td><td align=\'center\'>'+data.email+'</td><td align=\'center\'>'+data.created_at+'</td> <td align=\'center\'>'+viewRole(data.id_profile)+'</td></tr></a>');
