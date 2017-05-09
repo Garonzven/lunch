@@ -95,7 +95,7 @@ $('#myform').validate({
           case '200':
             swal({
             text: data.message+'!',
-            imageUrl:"assets/Congratulations.png",
+            imageUrl:'assets/Congratulations.png',
             confirmButtonText: 'Ok'
             }).then(
               function(){
@@ -106,7 +106,7 @@ $('#myform').validate({
           case '400':
             swal({
             text: data.message+'!',
-            imageUrl:"assets/error.png",
+            imageUrl:'assets/error.png',
             confirmButtonText: 'Ok'
             }).then(
               function(){

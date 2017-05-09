@@ -166,7 +166,7 @@ function addOrder(date, id){
 }
   $('div .menu input').each(function(){
     if(!$(this).prop('disabled')){
-      console.log($(this).attr('id')+":"+$(this).attr('value'));
+      console.log($(this).attr('id')+':'+$(this).attr('value'));
     }
 
   });

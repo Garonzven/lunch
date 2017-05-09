@@ -63,7 +63,7 @@ function deleteFom(button){
           case '200':
             swal({
             text: data.message,
-            imageUrl:"assets/Congratulations.png",
+            imageUrl:'assets/Congratulations.png',
             confirmButtonText: 'Ok'
           }).then(
             function(){
@@ -75,7 +75,7 @@ function deleteFom(button){
           case '404':
           swal({
           text: data.message,
-          imageUrl:"assets/error.png",
+          imageUrl:'assets/error.png',
           confirmButtonText: 'Ok'
           }).then(
             function(){
@@ -152,7 +152,7 @@ function submitForm(button){
         case '200':
           swal({
           text: data.message,
-          imageUrl:"assets/Congratulations.png",
+          imageUrl:'assets/Congratulations.png',
           confirmButtonText: 'Ok'
           }).then(
             function(){
@@ -164,7 +164,7 @@ function submitForm(button){
         case '404':
         swal({
         text: data.message,
-        imageUrl:"assets/error.png",
+        imageUrl:'assets/error.png',
         confirmButtonText: 'Ok'
         }).then(
           function(){
@@ -347,7 +347,7 @@ $('document').ready(function(){
                 case '201':
                   swal({
                   text: data.message,
-                  imageUrl:"assets/Congratulations.png",
+                  imageUrl:'assets/Congratulations.png',
                   confirmButtonText: 'Ok'
                   }).then(
                     function(){

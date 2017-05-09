@@ -116,7 +116,7 @@ $('#resetForm').validate({
           case '200':
             swal({
             text: data.message,
-            imageUrl:"assets/check-mail.png",
+            imageUrl:'assets/check-mail.png',
             confirmButtonText: 'Ok'
           }).then(
             function(){
@@ -127,8 +127,8 @@ $('#resetForm').validate({
 
           case '404':
           swal({
-          text: "The mail entered does not exist",
-          imageUrl:"assets/error.png",
+          text: 'The mail entered does not exist',
+          imageUrl:'assets/error.png',
           confirmButtonText: 'Ok'
           }).then(
             function(){
