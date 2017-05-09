@@ -61,15 +61,18 @@ $('#myform').validate({
           case '200':
             swal({
             text: data.message+'!',
-            type: 'success',
+            imageUrl:"assets/Congratulations.png",
             confirmButtonText: 'Ok'
-          });
-          LoadHome();
+          }).then(
+            function(){
+              LoadHome();
+            }
+          );
           break;
           case '400':
             swal({
             text: data.message+'!',
-            type: 'success',
+            imageUrl:"assets/error.png",
             confirmButtonText: 'Ok'
             });
           break;

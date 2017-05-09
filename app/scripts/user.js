@@ -63,21 +63,25 @@ function deleteFom(button){
           case "200":
             swal({
             text: data.message,
-            type: 'success',
+            imageUrl:"assets/Congratulations.png",
             confirmButtonText: 'Ok'
           }).then(
             function(){
                setTimeout(function () { location.reload(true); }, 100);
             }
-          )
+          );
           break;
 
           case "404":
           swal({
           text: data.message,
-          type: 'error',
+          imageUrl:"assets/error.png",
           confirmButtonText: 'Ok'
-          });
+          }).then(
+            function(){
+               setTimeout(function () { location.reload(true); }, 100);
+            }
+          );
           break;
 
         }
@@ -148,22 +152,25 @@ function submitForm(button){
         case '200':
           swal({
           text: data.message,
-          type: 'success',
+          imageUrl:"assets/Congratulations.png",
           confirmButtonText: 'Ok'
           }).then(
             function(){
-            console.log("hola");
-            setTimeout(function () { location.reload(true); }, 500);
-          }
-        );
+               setTimeout(function () { location.reload(true); }, 100);
+            }
+          );
         break;
 
         case '404':
         swal({
         text: data.message,
-        type: 'error',
+        imageUrl:"assets/error.png",
         confirmButtonText: 'Ok'
-        });
+        }).then(
+          function(){
+             setTimeout(function () { location.reload(true); }, 100);
+          }
+        );
         break;
 
       }
@@ -339,17 +346,19 @@ $('document').ready(function(){
                 case '201':
                   swal({
                   text: data.message,
-                  type: 'success',
+                  imageUrl:"assets/Congratulations.png",
                   confirmButtonText: 'Ok'
-                }).then( function(){
-                  setTimeout(function () { location.reload(true); }, 10000);
-                });
+                  }).then(
+                    function(){
+                       setTimeout(function () { location.reload(true); }, 100);
+                    }
+                  );
                 break;
 
                 case '404':
                 swal({
                 text: data.message,
-                type: 'error',
+                imageUrl: 'assets/error.png',
                 confirmButtonText: 'Ok'
                 });
                 setTimeout(function () { location.reload(true); }, 5000);

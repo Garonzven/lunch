@@ -95,16 +95,24 @@ $('#myform').validate({
           case '200':
             swal({
             text: data.message+'!',
-            type: 'success',
+            imageUrl:"assets/Congratulations.png",
             confirmButtonText: 'Ok'
-            });
+            }).then(
+              function(){
+                 setTimeout(function () { location.reload(true); }, 100);
+              }
+            );
           break;
           case '400':
             swal({
             text: data.message+'!',
-            type: 'success',
+            imageUrl:"assets/error.png",
             confirmButtonText: 'Ok'
-            });
+            }).then(
+              function(){
+                 setTimeout(function () { location.reload(true); }, 100);
+              }
+            );
           break;
 
         }

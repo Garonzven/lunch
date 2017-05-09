@@ -119,17 +119,25 @@ $('#resetForm').validate({
           case '200':
             swal({
             text: data.message,
-            type: 'success',
+            imageUrl:"assets/check-mail.png",
             confirmButtonText: 'Ok'
-            });
+          }).then(
+            function(){
+               setTimeout(function () { location.reload(true); }, 100);
+            }
+          );
           break;
 
           case '404':
           swal({
-          text: data.message,
-          type: 'error',
+          text: "The mail entered does not exist",
+          imageUrl:"assets/error.png",
           confirmButtonText: 'Ok'
-          });
+          }).then(
+            function(){
+               setTimeout(function () { location.reload(true); }, 100);
+            }
+          );  
           break;
         }
       }
