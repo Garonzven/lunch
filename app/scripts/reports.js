@@ -85,7 +85,7 @@ $.ajax({
         print = "onClick=printAlert";
       }else{*/
       disable = 'disabled';
-      if (server.diff(limit)<0) {
+      if (server.diff(limit)>0) {
         disable = '';
       }
         print = 'href="'+constants().cycleReport +'/'+data.id+'?token=' + $.cookie('token')+'"';
