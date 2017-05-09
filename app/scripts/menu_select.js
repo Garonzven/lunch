@@ -36,30 +36,14 @@ $.ajax({
   type: 'GET',
   dataType: 'JSON',
   success: function(response) {
-    console.log(response);
-    // switch (response.code) {
-    //   case '200':
-    //     break;
-    //
-    //   case '404':
-    //     swal(
-    //       'Oups!',
-    //       response.message,
-    //       'error'
-    //     );
-    //     break;
-    // }
-    var date='';
-    if (response.data) {
-      console.log('ob');
-      $('.fecha').text(moment(response.data[0].limit_date).format('YYYY-MM-DD hh:mm:ss a'));
-      // Cycle
-      $.each(response.data,function(key,val){
-        console.log('flag',val);
-        // Dishes
-        $.each(val.dishes,function(k,data){
-          if(!data.deleted_at){
-            if(date != data.date_cycle){
+    switch (response.code) {
+      case '200':
+        var date='';
+        $('.fecha').text(moment(response.data.limit_date).format('YYYY-MM-DD hh:mm:ss a'));
+        // Dishes rendering
+        $.each(response.data.dishes, function(k, data) {
+          if(!data.deleted_at) {
+            if(date != data.date_cycle) {
 
               mySelection.push({
                 date_order: data.date_cycle,
@@ -68,77 +52,103 @@ $.ajax({
 
               day = formatDate(data.date_cycle);
               cid = formatId(data.date_cycle);
-              $('.ciclo').append('<li id="'+cid+'" class="ciclo-day" onClick=" addActive(this)"><a>'+formatDate(data.date_cycle)+'</a></li>');
-              $('.checkboxes').append('<div class="form-group menu_'+cid+'"><label><input type="checkbox" name="noThanks[]" class="no-thanks" data-date="' + data.date_cycle + '" onclick="addOrderCheckbox(\'' + data.date_cycle + '\', this)" checked="checked">  No, thanks.</label><br></div>');
+              $('.ciclo').append('<li id="'+cid+'" class="ciclo-day" data-date="'+ data.date_cycle+'" onClick=" addActive(this)"><a>'+formatDate(data.date_cycle)+'</a></li>');
+              $('.checkboxes').append('<div class="form-group menu_'+cid+'"><label><input id="'+moment(data.date_cycle).format('YYYY-MM-DD')+'" type="checkbox" data-date="' + data.date_cycle + '" data-id_dish="1" onclick="Select(this)" checked>  No, thanks.</label><br></div>');
             }
-            $('.menus').append('<div id="'+data.id_dish+'_'+formatId(data.date_cycle)+'" class="menu menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><p class="text-justify thumbnail-desc">'+data.title+' </p><p class="put-bottom"><button type="button" onClick="Select(this.id, \'' + data.date_cycle + '\', ' + data.id_dish + ')"  id="dish_'+data.id_dish+'"_"'+data.date_cyle+'" class="btn btn--menu btn--yellow pull-right" role="button">Select</button> </p><input type="hidden" id="date_order[]" value="'+data.date_cycle+'" disabled=""></input><input type="hidden" id="id_dish[]" value="'+data.id_dish+'" disabled=""></input><p class="title-menu">'+data.description+'</p></div></div></div>');
+            $('.menus').append('<div id="'+data.id_dish+'_'+formatId(data.date_cycle)+'" class="menu menu_'+cid+' col-sm-6 col-md-4"><div class="thumbnail thumbnail-menu"><div class="caption"><p class="text-justify thumbnail-desc">'+data.title+' </p><p class="put-bottom"><button type="button" onClick="Select(this)" class="btn btn--menu btn--yellow pull-right" role="button" data-date="'+data.date_cycle+'" data-id_dish="'+data.id_dish+'">Select</button> </p><input type="hidden" id="date_order[]" value="'+data.date_cycle+'" disabled=""><input type="hidden" id="id_dish[]" value="'+data.id_dish+'" disabled=""><p class="title-menu">'+data.description+'</p></div></div></div>');
             date = data.date_cycle;
           }
         });
-      });
+        $('.ciclo').children().first().addClass('current');
+        id_active = $('.ciclo').children().first().attr('id');
+        $('.menu_'+id_active).addClass('current');
+
+        $.ajax({
+          url: constants().orderListOrder + '?token=' + $.cookie('token'),
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            if (response.data) {
+              $.map(mySelection, function(o, i) {
+                o.date_order = response.data[i].date_cycle;
+                o.id_dish = response.data[i].id_dish;
+              });
+
+              $.each(mySelection, function(i, o) {
+                $('.current button, .menu button').each(function(_i, e) {
+                  if ($(e).data('id_dish') == o.id_dish) {
+                    $(e).trigger('click');
+                  }
+                });
+              });
+            }
+          }
+        });
+        break;
+
+      case '404':
+        swal(
+          'Oups!',
+          response.message,
+          'error'
+        );
+        break;
     }
-    $('.ciclo').children().first().addClass('current');
-    id_active = $('.ciclo').children().first().attr('id');
-    $('.menu_'+id_active).addClass('current');
   }
 });
 
 
 $('.navContainer__logo').addClass('navContainer__logo--center');
-function Select(id, date, id_dish){
-  $('#'+id).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
-  $('#'+id).attr('onclick','Unselect(this.id)');
-  var formid = $('#'+id).closest('div .menu').attr('id');
-  $('.current button').each(function(){
-      $(this).attr('disabled', true);
-  });
-  $('.checkboxes .current input').each(function(){
-      $(this).attr('disabled', true);
-  });
 
-  $('#'+id).attr('disabled',false);
-  $('#'+formid+' input').each(function(){
-      $(this).attr('disabled', false);
-  });
-  $('.ciclo .current').addClass('selected');
-
-  $.map(mySelection, function(o, i) {
-    if (o.date_order == date) {
-      o.id_dish = id_dish;
-    }
-  });
-}
-
-function Unselect(id){
-  $('#'+id).addClass('btn--yellow').removeClass('btn--red unselect').text('Select');
-  $('#'+id).attr('onclick','Select(this.id)');
-  var formid = $('#'+id).closest('div .menu').attr('id');
-  $('.current button').each(function(){
-      $(this).attr('disabled', false);
-  });
-
-  $('.checkboxes .current input').each(function(){
-      $(this).attr('disabled', false);
-  });
-
-  $('#'+formid+' input').each(function(){
-      $(this).attr('disabled', true);
-  });
-  $('.ciclo >li.selected').removeClass('selected');
-}
-
-function addOrderCheckbox(date, e) {
-  $.map(mySelection, function(o, i) {
-    if (o.date_order == date) {
-      if ($(this).attr('checked')) {
-        o.id_dish = 1;
+function Select(el) {
+  if ($(el).data('id_dish') != 1) {
+    console.log($(el).data('id_dish'));
+    $('.current button').removeClass('btn--red unselect').addClass('btn--yellow').text('Select');
+    $('.current button').attr('onclick', 'Select(this)');
+    $(el).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
+    $(el).attr('onclick', 'Unselect(this)');
+    $('.ciclo .current').addClass('selected');
+    $('#'+moment($(el).data('date')).format('YYYY-MM-DD')).removeAttr('checked');
+    $.map(mySelection, function(o) {
+      if (o.date_order == $(el).data('date')) {
+        o.id_dish = $(el).data('id_dish');
       }
-    }
-  });
+    });
+  } else {
+    $('.current button').removeClass('btn--red unselect').addClass('btn--yellow').text('Select');
+    $('.current button').attr('onclick', 'Select(this)');
+    $(el).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
+    $('.ciclo .current').removeClass('selected');
+    $.map(mySelection, function(o) {
+      if (o.date_order == $(el).data('date')) {
+        o.id_dish = $(el).data('id_dish');
+      }
+    });
+  }
 }
 
-function addOrder(date, id){
-  console.log(mySelection);
+function Unselect(el) {
+  if ($(el).data('id_dish') != 1) {
+    $('.current button').removeClass('btn--red unselect').addClass('btn--yellow').text('Select');
+    $('.current button').attr('onclick', 'Select(this)');
+    $(el).removeClass('btn--red unselect').addClass('btn--yellow').text('Select');
+    $('.ciclo .current').removeClass('selected');
+    console.log('#'+moment($(el).data('date')).format('YYYY-MM-DD'));
+    $('#'+moment($(el).data('date')).format('YYYY-MM-DD')).attr('checked', '');
+  }
+}
+
+// function addOrderCheckbox(date, e) {
+//   $.map(mySelection, function(o, i) {
+//     if (o.date_order == date) {
+//       if ($(this).attr('checked')) {
+//         o.id_dish = 1;
+//       }
+//     }
+//   });
+// }
+
+function addOrder(){
   $.ajax({
     url: constants().orderRegister + '?token=' + $.cookie('token'),
     method: 'post',
@@ -217,8 +227,12 @@ $('.mini_calendar').pignoseCalendar({
       PendingMenu:  '#ffcdd2'
     }
   },
-  schedules:[
-    {name:'PendingMenu',
-     date: '2017-05-09'}
-  ]
+  // schedules:[
+  //   {name:'PendingMenu',
+  //    date: '2017-05-09'}
+  // ]
 });
+
+$('.ciclo-day').on('click', function() {
+
+})
