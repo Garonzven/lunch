@@ -1,5 +1,20 @@
 $('.navContainer__logo').addClass('navContainer__logo--center');
 
+
+function viewRole(id){
+  switch (id) {
+    case 1:
+    return 'Administrator';
+    break;
+    case 2:
+    return 'User';
+    break;
+    case 3:
+    return 'Watcher';
+    break;
+  }
+}
+
 // Load profile
 $.ajax({
   url: constants().profile + '?token=' + $.cookie('token'),
@@ -14,18 +29,21 @@ $.ajax({
         $('#p-jobtitle').text(data.user.jobtitle);
         $('#p-city').text(data.user.city);
         $('#p-country').text(data.user.country);
-        $('#p-id_profile').text(data.user.id_profile);
+        $('#p-id_profile').text(viewRole(data.user.id_profile));
         $('.p-name').text(data.user.name);
-        console.log(data.user);
-        $.ajax({
-          url: 'menu_admin.html',
-          method: 'get',
-          dataType: 'text',
-          success: function(data) {
-            $('.sidebar-nav').html(data);
-            console.log('hola');
-          }
-        });
+        switch (data.user.id_profile) {
+          case 1:
+            $('.sidebar-nav').load('menu_admin.html');
+            break;
+
+          case 2:
+            $('.sidebar-nav').load('menu_user.html');
+            break;
+
+          case 3:
+            $('.sidebar-nav').load('menu_watcher.html');
+            break;
+        }
         break;
     }
   },
@@ -83,7 +101,7 @@ $('#myform').validate({
     console.log($('#passwordp').val());
 
     $.ajax({
-      url:'http://13.92.198.201/laravel/public/user/change?token='+$.cookie('token'),
+      url:'http://13.92.198.201/laravel/public/change?token='+$.cookie('token'),
       method: 'put',
       data:{
         password:$('#passwordp').val()
@@ -116,6 +134,17 @@ $('#myform').validate({
           break;
 
         }
+      },
+      error: function(response){
+        swal({
+        text: data.message+'!',
+        imageUrl:'assets/error.png',
+        confirmButtonText: 'Ok'
+        }).then(
+          function(){
+             setTimeout(function () { location.reload(true); }, 100);
+          }
+        );
       }
   });
 }

@@ -125,7 +125,7 @@ $('#calendar').fullCalendar({
           success: function(data) {
             swal({
               title: 'The period was deleted.',
-              type: 'success'
+              imageUrl: 'assets/Congratulations.png'
             }).then(function() {
               location.reload();
             });
@@ -281,6 +281,12 @@ $('#dish-update').on('click', function() {
           description: $('#dish-description').val()
         },
         success: function(data) {
+
+          swal({
+            text: 'Dish has been updated',
+            imageUrl:'assets/Congratulations.png',
+            confirmButtonText: 'Ok'
+          });
 
           $('.dish-list').empty();
 
@@ -442,6 +448,11 @@ $('body').on('click', 'a.dish-delete', function() {
     confirmButtonText: 'Yes',
     cancelButtonText: 'No'
   }).then(function () {
+    swal({
+      text: 'The dish was removed successfully!',
+      imageUrl:'assets/Congratulations.png',
+      confirmButtonText: 'Ok'
+    });
     $.each(currentCycle.dishes, function(i, o) {
       if (o.id == idDel && o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD')) {
         currentCycle.dishes.splice(i, 1);

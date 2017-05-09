@@ -16,6 +16,8 @@ function LoadHome(){
               break;
 
             case 3:
+              $(location).attr('href', 'menu_select.html');
+              break;
             break;
           }
           break;
@@ -49,7 +51,7 @@ $('#myform').validate({
   submitHandler: function(form) {
     //http://13.92.198.201/laravel/public/user/change?token="+$.cookie('token')
     $.ajax({
-      url:'http://13.92.198.201/laravel/public/user/change?token='+$.cookie('token'),
+      url:'http://13.92.198.201/laravel/public/change?token='+$.cookie('token'),
       method: 'put',
       data:{
         password:$('#password').val()

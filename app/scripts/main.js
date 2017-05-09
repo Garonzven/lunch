@@ -74,9 +74,12 @@ $(document).ready(function() {
             } else {
 
               swal({
-              text: data.message,
-              type: 'error',
-              confirmButtonText: 'Ok'
+                text: 'The email entered does not exist!',
+                imageUrl:'assets/error.png',
+                confirmButtonText: 'Ok'
+
+              }).then(function(){
+                $('#email').focus();
               });
 
             }
@@ -134,7 +137,7 @@ $('#resetForm').validate({
             function(){
                setTimeout(function () { location.reload(true); }, 100);
             }
-          );  
+          );
           break;
         }
       }

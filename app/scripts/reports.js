@@ -21,22 +21,23 @@ $.ajax({
     switch (data.code) {
       case '200':
         $('#fullname').text(data.user.name);
-        $.ajax({
-          url: 'menu_admin.html',
-          method: 'get',
-          dataType: 'text',
-          success: function(data) {
-            $('.sidebar-nav').html(data);
+        $('.full-name').text(data.user.name);
+        switch (data.user.id_profile) {
+          case 1:
+            $('.sidebar-nav').load('menu_admin.html');
+            break;
 
-          }
-        });
+          case 2:
+            $('.sidebar-nav').load('menu_user.html');
+            break;
+
+          case 3:
+            $('.sidebar-nav').load('menu_watcher.html');
+            break;
+        }
         break;
-    }
-  },
-  error: function(error) {
-    console.log(error);
-    switch (error.status) {
-      case 401:
+
+      case '400':
         $(location).attr('href', 'login.html');
         break;
     }
@@ -84,13 +85,13 @@ $.ajax({
       /*if(data.remaining){
         print = "onClick=printAlert";
       }else{*/
-      disable = 'disabled';
+      disable = 'disable-link';
       if (server.diff(limit)>0) {
         disable = '';
       }
         print = 'href="'+constants().cycleReport +'/'+data.id+'?token=' + $.cookie('token')+'"';
       //}
-      $('#report-detail').append('<tr><td align="center">'+formatday(data.initial_date)+'</td><td align="center">'+formatday(data.closing_date)+'</td><td align="center"><a class="btn btn--yellow print" '+print+' name="print" id="'+data.id+'" '+disable+'><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
+      $('#report-detail').append('<tr><td align="center">'+formatday(data.initial_date)+'</td><td align="center">'+formatday(data.closing_date)+'</td><td align="center"><a class="btn btn--yellow print '+disable+'"  '+print+' name="print" id="'+data.id+'" '+disable+'><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
     });
   $('#example').dataTable();
   }

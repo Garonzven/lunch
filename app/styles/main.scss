@@ -22,6 +22,28 @@ $primary-text: #212121 !default;
 $secondary-text: #757575 !default;
 $divider: #bdbdbd !default;
 
+table.dataTable thead .sorting:after {
+  opacity: 0.2;
+  content: "\2212";
+  /* sort */
+}
+table.dataTable thead .sorting_asc:after {
+  content: "\e113";
+  /* sort-by-attributes */
+}
+table.dataTable thead .sorting_desc:after {
+  content: "\e114";
+  /* sort-by-attributes-alt */
+}
+
+
+.disable-link {
+  pointer-events: none;
+  cursor:default;
+  background-color:lighten($accent, 20%) !important;
+}
+
+
 body {
     font-family: 'Roboto', sans-serif;
 }
