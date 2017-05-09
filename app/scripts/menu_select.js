@@ -8,7 +8,19 @@ $.ajax({
       case '200':
         $('#fullname').text(data.user.name);
         $('.full-name').text(data.user.name);
-        $('.sidebar-nav').load('menu_admin.html');
+        switch (data.user.id_profile) {
+          case 1:
+            $('.sidebar-nav').load('menu_admin.html');
+            break;
+
+          case 2:
+            $('.sidebar-nav').load('menu_user.html');
+            break;
+
+          case 3:
+            $('.sidebar-nav').load('menu_watcher.html');
+            break;
+        }
         break;
 
       case '400':
@@ -20,15 +32,30 @@ $.ajax({
 
 var mySelection = [];
 $.ajax({
-  url: constants().cycleFind + '?token='+$.cookie('token'),
-  type:'get',
-  dataType:'JSON',
-  success: function(response){
+  url: constants().orderActive + '?token='+$.cookie('token'),
+  type: 'GET',
+  dataType: 'JSON',
+  success: function(response) {
+    console.log(response);
+    // switch (response.code) {
+    //   case '200':
+    //     break;
+    //
+    //   case '404':
+    //     swal(
+    //       'Oups!',
+    //       response.message,
+    //       'error'
+    //     );
+    //     break;
+    // }
     var date='';
-    if (response.data.length > 0) {
-      $('.fecha').text(moment(response.data[0].limit_date).format('YYYY/MM/DD hh:mm:ss a'));
+    if (response.data) {
+      console.log('ob');
+      $('.fecha').text(moment(response.data[0].limit_date).format('YYYY-MM-DD hh:mm:ss a'));
       // Cycle
       $.each(response.data,function(key,val){
+        console.log('flag',val);
         // Dishes
         $.each(val.dishes,function(k,data){
           if(!data.deleted_at){
@@ -55,6 +82,8 @@ $.ajax({
     $('.menu_'+id_active).addClass('current');
   }
 });
+
+
 $('.navContainer__logo').addClass('navContainer__logo--center');
 function Select(id, date, id_dish){
   $('#'+id).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
@@ -135,12 +164,12 @@ function addOrder(date, id){
   //   }
   // });
 }
-  // $('div .menu input').each(function(){
-  //   if(!$(this).prop('disabled')){
-  //     console.log($(this).attr('id')+":"+$(this).attr('value'));
-  //   }
-  //
-  // });
+  $('div .menu input').each(function(){
+    if(!$(this).prop('disabled')){
+      console.log($(this).attr('id')+":"+$(this).attr('value'));
+    }
+
+  });
   // $.ajax({
   //   url: constants().orderRegister + '?token=' + $.cookie('token'),
   //   data:[

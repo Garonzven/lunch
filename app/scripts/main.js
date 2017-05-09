@@ -31,7 +31,7 @@ $(document).ready(function() {
 
       submitHandler: function(form){
         $.ajax({
-          url: 'http://13.92.198.201/laravel/public/login/signin',
+          url: constants().login,
           method: 'post',
           data: {
             email: $('#email').val(),
@@ -44,9 +44,8 @@ $(document).ready(function() {
               $.cookie('token', data.token, { expires: 7 });
               switch (data.user.id_profile) {
                 case 1:
-                  console.log(data.user);
                   if(data.user.change_pass){
-                      $(location).attr('href','reset_password.html');
+                      $(location).attr('href', 'reset_password.html');
                       $.cookie('id_profile',data.user.id_profile);
                     }else{
                        $(location).attr('href', 'welcome.html');
@@ -54,9 +53,8 @@ $(document).ready(function() {
                   break;
 
                 case 2:
-                  console.log(data.user);
                   if(data.user.change_pass){
-                      $(location).attr('href','reset_password.html');
+                      $(location).attr('href', 'reset_password.html');
                       $.cookie('id_profile',data.user.id_profile);
                     }else{
                        $(location).attr('href', 'menu_select.html');
@@ -64,9 +62,8 @@ $(document).ready(function() {
                 break;
 
                 case 3:
-                console.log(data.user);
                 if(data.user.change_pass){
-                    $(location).attr('href','reset_password.html');
+                    $(location).attr('href', 'reset_password.html');
                     $.cookie('id_profile',data.user.id_profile);
                   }else{
                      $(location).attr('href', 'menu_select.html');

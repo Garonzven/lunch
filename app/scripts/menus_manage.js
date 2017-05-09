@@ -177,6 +177,10 @@ function dateExists(obj) {
   return res;
 }
 
+function saveCycle() {
+
+}
+
 // Load cycles from server
 $.ajax({
   url: constants().cycleFind + '?token=' + $.cookie('token'),
@@ -332,7 +336,7 @@ $('#save-cycle').on('click', function() {
       if (currentCycle.end.diff(currentCycle.start, 'days')+1 > theDishes.length) {
         swal({
           html: '<span class="delete-dish">There are some days without dishes.<br>Are you sure you want to continue?</span>',
-          imageUrl:"assets/warning_1.png",
+          imageUrl:'assets/warning_1.png',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
@@ -367,6 +371,34 @@ $('#save-cycle').on('click', function() {
             }
           });
         }, function(){});
+      } else {
+        $.each(theDishes, function(i, o) {
+          $.each(currentCycle.dishes, function(_i, _o) {
+            if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
+              o.id_dishes.push(_o.id);
+            }
+          });
+        });
+
+        cycle = {
+          init: currentCycle.start.format('YYYY-MM-DD'),
+          close: currentCycle.end.format('YYYY-MM-DD'),
+          limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss a'),
+          data: theDishes,
+        }
+
+        $.ajax({
+          url: constants().cycleRegister + '?token=' + $.cookie('token'),
+          method: 'post',
+          data: cycle,
+          dataType: 'json',
+          success: function(data) {
+            swal(
+              'Saved!',
+              'The changes you made to your cycle has been saved successfully.',
+              'success');
+          }
+        });
       }
     } else {
       swal(
@@ -376,11 +408,11 @@ $('#save-cycle').on('click', function() {
       );
     }
   } else {
-    swal({
-      title: 'Error',
-      text: 'You have not set any period',
-      type: 'error'
-    });
+    swal(
+      'Error',
+      'You have not set any period',
+      'error'
+    );
   }
 });
 $('#dish-ok').on('click', function() {
@@ -403,7 +435,7 @@ $('body').on('click', 'a.dish-delete', function() {
   var idDel = $(this).data('id');
   swal({
     html: '<span class="delete-dish">You are about to remove a dish from the menu<br><br>Are you sure?</span>',
-    imageUrl:"assets/warning_1.png",
+    imageUrl:'assets/warning_1.png',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',

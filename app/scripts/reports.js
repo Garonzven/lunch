@@ -57,8 +57,8 @@ function printAlert(e){
   console.log(id);
   swal({
   title: 'Are you sure?',
-  text: "There are some lunchers who haven't choose their menus!",
-  imageUrl:"assets/warning_1.png",
+  text: 'There are some lunchers who haven\'t choose their menus!',
+  imageUrl:'assets/warning_1.png',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
@@ -74,7 +74,7 @@ $.ajax({
   dataType: 'JSON',
   success: function(data){
     console.log(data);
-    print="";
+    print='';
     var dateserver = GetDate();
     console.log(dateserver);
     var server =  moment(dateserver);

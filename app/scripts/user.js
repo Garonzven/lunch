@@ -41,7 +41,7 @@ function close(e){
 function deleteFom(button){
   swal({
     title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    text: 'You won\'t be able to revert this!',
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -60,7 +60,7 @@ function deleteFom(button){
       dataType: 'JSON',
       success: function(data){
         switch (data.code) {
-          case "200":
+          case '200':
             swal({
             text: data.message,
             imageUrl:"assets/Congratulations.png",
@@ -72,7 +72,7 @@ function deleteFom(button){
           );
           break;
 
-          case "404":
+          case '404':
           swal({
           text: data.message,
           imageUrl:"assets/error.png",
