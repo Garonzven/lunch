@@ -284,7 +284,7 @@ $('document').ready(function(){
    }
 
   $.ajax({
-    url: 'http://13.92.198.201/laravel/public/user/findlist?token='+$.cookie('token'),
+    url: constants().userFindList+'?token='+$.cookie('token'),
     method: 'GET',
     dataType: 'JSON',
     success: function(data){

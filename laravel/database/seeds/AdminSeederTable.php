@@ -12,7 +12,7 @@ class AdminSeederTable extends Seeder
      */
     public function run()
     {
-      $arrays = ['carlosolivero2','jeremyfys25','jeremyfys26'];
+      $arrays = ['yonathan.pineda','carlosolivero2','fgraterols11'];
       $count = 1;
     foreach($arrays as $key)
     {

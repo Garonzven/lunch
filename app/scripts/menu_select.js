@@ -110,11 +110,11 @@ $.ajax({
         break;
 
       case '404':
-        swal(
-          'Oups!',
-          response.message,
-          'error'
-        );
+      swal({
+      text: response.message,
+      imageUrl:'assets/error.png',
+      confirmButtonText: 'Ok'
+    });
         break;
     }
   }

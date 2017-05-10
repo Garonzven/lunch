@@ -35,7 +35,7 @@
          <br>
          <h3><b>So, here is your provisional password:</b></h3>
 
-         <div style="border: 1px solid #9e9e9e;width: 300px;margin-left:127px;">
+         <div style="border: 1px solid #9e9e9e;width: 300px;margin:0 auto;">
            <!--passwor aqui-->
            <h3><b>{{$password}}</b></h3>
          </div>

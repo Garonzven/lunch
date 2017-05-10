@@ -46,7 +46,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px;text-decoration:none;" href="http://13.92.198.201/login.html"><b>Check menu</b></a>
+    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px;text-decoration:none; margin:0 auto;" href="http://13.92.198.201/login.html"><b>Check menu</b></a>
          <h4>Click on the button to check new dishes.</h4>
        </div>
        <br>

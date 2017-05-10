@@ -107,7 +107,7 @@ $('#resetForm').validate({
   submitHandler: function(form) {
     //http://13.92.198.201/laravel/public/recovery
     $.ajax({
-      url:'http://13.92.198.201/laravel/public/recovery',
+      url: constants().recovery + '?token=' + $.cookie('token'),
       method: 'PUT',
       data:{
         email:$('#resetemail').val()

@@ -123,6 +123,7 @@ $('#calendar').fullCalendar({
           method: 'delete',
           dataType: 'json',
           success: function(data) {
+            console.log(data.message);
             swal({
               title: 'The period was deleted.',
               imageUrl: 'assets/Congratulations.png'
@@ -399,26 +400,29 @@ $('#save-cycle').on('click', function() {
           data: cycle,
           dataType: 'json',
           success: function(data) {
-            swal(
-              'Saved!',
-              'The changes you made to your cycle has been saved successfully.',
-              'success');
+            swal({
+              title: 'Saved',
+              text: 'The changes you made to your cycle has been saved successfully.',
+              imageUrl:'assets/Congratulations.png',
+              confirmButtonText: 'Ok'});
           }
         });
       }
     } else {
-      swal(
-        'Error',
-        'You have not set the limit time of the period.',
-        'error'
-      );
+      swal({
+        title: 'Error',
+        text: 'You have not set the limit time of the period.',
+        imageUrl:'assets/error.png',
+        confirmButtonText: 'Ok'
+      });
     }
   } else {
-    swal(
-      'Error',
-      'You have not set any period',
-      'error'
-    );
+    swal({
+    title: 'Error',
+    text: 'You have not set any period',
+    imageUrl:'assets/error.png',
+    confirmButtonText: 'Ok'
+    });
   }
 });
 $('#dish-ok').on('click', function() {

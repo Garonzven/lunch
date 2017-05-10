@@ -308,34 +308,40 @@ class CycleController extends Controller
 
     public function deleteCycle($id)
     {
-        $dates = Cycle_dish::where('id_cycle', $id)->distinct()->orderBy('date_cycle', 'ASC')->get();
-        //dd($dates);
+        if ($id!='undefined') {
+          $dates = Cycle_dish::where('id_cycle', $id)->distinct()->orderBy('date_cycle', 'ASC')->get();
+          //dd($dates);
 
-        foreach($dates as $key)
-        {
-            $orders = Order::where('date_order', '=', $key->date_cycle)->get();
-            $dishes = Cycle_dish::where('date_cycle', '=', $key->date_cycle)->get();
-            if(count($dishes)>0)
-            {
-              foreach($dishes as $val)
+          foreach($dates as $key)
+          {
+              $orders = Order::where('date_order', '=', $key->date_cycle)->get();
+              $dishes = Cycle_dish::where('date_cycle', '=', $key->date_cycle)->get();
+              if(count($dishes)>0)
               {
-                $val->delete();
-              }
+                foreach($dishes as $val)
+                {
+                  $val->delete();
+                }
 
-            }
-            if(count($orders)>0)
-            {
-              foreach($orders as $val)
-              {
-                $val->delete();
               }
-            }
+              if(count($orders)>0)
+              {
+                foreach($orders as $val)
+                {
+                  $val->delete();
+                }
+              }
+          }
+
+          $cycle = Cycle::find($id);
+          $cycle->delete();
+          return response()->json(['message' => 'Cycle has been deleted', 'code' => '200']);
+        }else{
+          return response()->json(['message' => 'The cycle has not been registered', 'code' => '404']);
         }
 
-        $cycle = Cycle::find($id);
-        $cycle->delete();
 
-        return response()->json(['message' => 'Cycle has been deleted', 'code' => '200']);
+
     }
 
 }

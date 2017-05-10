@@ -94,14 +94,15 @@ $('#myform').validate({
       minlength: 6
     },
     confirmpasswordp: {
-      equalTo: 'passwordp'
+      required:true,
+      equalTo: '#passwordp'
     }
   },
   submitHandler: function(form) {
     console.log($('#passwordp').val());
 
     $.ajax({
-      url:'http://13.92.198.201/laravel/public/change?token='+$.cookie('token'),
+      url: constants().change + '?token=' + $.cookie('token'),
       method: 'put',
       data:{
         password:$('#passwordp').val()

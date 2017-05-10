@@ -32,7 +32,7 @@
          <h3 style="color:#d32f2f;">{{$data->email}}</h3>
        </div>
        <h3 style="text-align: center;">And this your provisional password:</h3>
-         <div style="border: 1px solid #9e9e9e;width: 373px;margin-left:93px; text-align: center;">
+         <div style="border: 1px solid #9e9e9e;width: 373px;margin:0 auto; text-align: center;">
            <!--passwor aqui-->
            <h3><b>{{$password}}</b></h3>
          </div>
@@ -55,7 +55,7 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none; margin-left:148px;"  href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
+    border-radius: 4px;background-color:#d32f2f;width: 240px;color: #ffffff; border-radius:0px; height:30px; text-decoration: none; margin:0 auto;"  href="http://13.92.198.201/login.html"><b style="position: relative; top:5px; font-size: 17px;" >Check menu</b></a>
          <h4 style="text-align:center !important;">Click on the button to check new dishes.</h4>
 
        <br>
