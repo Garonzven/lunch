@@ -201,7 +201,7 @@ body {
   padding: 10px 50px;
   &:hover{
     background-color: $dark-primary !important;
-    border-bottom:12px solid $dark-primary !important;
+    // border-bottom:12px solid $dark-primary !important;
     cursor: pointer;
   }
 }
