@@ -31,6 +31,7 @@ $.ajax({
 });
 
 var mySelection = [];
+var mySelection2 = [];
 $.ajax({
   url: constants().orderActive + '?token='+$.cookie('token'),
   type: 'GET',
@@ -39,7 +40,7 @@ $.ajax({
     switch (response.code) {
       case '200':
         var date='';
-        $('.fecha').text(moment(response.data.limit_date).format('YYYY-MM-DD hh:mm:ss a'));
+        $('.fecha').text(moment(response.data.limit_date).format('YYYY-MM-DD [before] hh:mm:ss a'));
         // Dishes rendering
         $.each(response.data.dishes, function(k, data) {
           if(!data.deleted_at) {
@@ -69,22 +70,33 @@ $.ajax({
           method: 'get',
           dataType: 'json',
           success: function(response) {
+            console.log(response.data);
             if (response.data) {
-              $.map(mySelection, function(o, i) {
-                o.date_order = response.data[i].date_cycle;
-                o.id_dish = response.data[i].id_dish;
+              $.map(response.data, function(o, i) {
+                mySelection2.push({
+                  date_order: o.date_cycle,
+                  id_dish: function() {
+                    return o.id_dish == undefined ? 1 : o.id_dish;
+                  }()
+                });
               });
 
-              $.each(mySelection, function(i, o) {
+              mySelection = [];
+              $.each(mySelection2, function(i, o) {
+                mySelection.push({
+                  date_order: o.date_order,
+                  id_dish: o.id_dish
+                });
                 $('.menu button').each(function(_i, e) {
                   if ($(e).data('id_dish') == o.id_dish) {
                     $(e).removeClass('btn--yellow').addClass('btn--red unselect').text('Unselect');
                     $(e).attr('onclick', 'Unselect(this)');
                     $('#'+moment($(e).data('date')).format('YYYY-MM-DD')).removeAttr('checked');
+                    $('#'+moment($(e).data('date')).format('YYYY-MM-DD')).attr('onchange', 'Select(this)');
                   }
                 });
                 $('.checkboxes input').each(function(_i, e) {
-                  if ($(e).data('id_dish') == o.id_dish) {
+                  if (1 == o.id_dish && $(e).data('date') == o.date_order) {
                     $(e).attr('onchange', 'Unselect(this)');
                   }
                 });
@@ -107,7 +119,6 @@ $.ajax({
     }
   }
 });
-
 
 $('.navContainer__logo').addClass('navContainer__logo--center');
 
@@ -156,6 +167,35 @@ function Unselect(el) {
 }
 
 function addOrder() {
+  var warn = false;
+  $.map(mySelection, function(o) {
+    switch (o.id_dish) {
+      case 0:
+        o.id_dish = 1;
+
+      case 1:
+        warn = true;
+    }
+  });
+  if (warn) {
+    swal({
+      title: 'Oups!',
+      html: 'You have days without selection.<br>Are you sure you want to continue?',
+      imageUrl:'assets/warning_1.png',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then(function() {
+      saveOrder();
+    });
+  } else {
+    saveOrder();
+  }
+}
+
+function saveOrder() {
   $.ajax({
     url: constants().orderRegister + '?token=' + $.cookie('token'),
     method: 'post',
@@ -169,6 +209,8 @@ function addOrder() {
         text: data.message,
         type: 'success',
         confirmButtonText: 'Ok'
+      }).then(function() {
+        location.reload();
       });
     },
     error: function(error) {

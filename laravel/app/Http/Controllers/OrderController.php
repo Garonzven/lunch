@@ -88,7 +88,7 @@ class OrderController extends Controller
 
      if(count($cycle)==0)
      {
-       return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
+       return response()->json([ 'message' => 'There is no an active period yet.', 'code' => '404']);
      }
 
      $valores = new Cycle();
@@ -129,7 +129,7 @@ class OrderController extends Controller
 
      if(count($cycle)==0)
      {
-       return response()->json([ 'message' => 'Not exist cycle active', 'code' => '404']);
+       return response()->json([ 'message' => 'There is no an active period yet.', 'code' => '404']);
      }
 
      $valores = new Cycle();

@@ -74,7 +74,7 @@ $(document).ready(function() {
             } else {
 
               swal({
-                text: 'The email entered does not exist!',
+                text: data.message,
                 imageUrl:'assets/error.png',
                 confirmButtonText: 'Ok'
 
