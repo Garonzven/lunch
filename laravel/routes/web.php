@@ -22,6 +22,7 @@ Route::get('date', function(){
 });
 
 Route::put('recovery',['uses'=>'UserController@recoveryPassword'])->middleware('cors');
+Route::put('change',['uses'=>'UserController@changePassword'])->middleware('jwt.auth','cors');
 
 Route::group(['prefix'=>'login', 'middleware'=>'cors'],function(){
 	Route::post('signin','Auth\LoginController@authenticate');
