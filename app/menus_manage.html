@@ -21,7 +21,18 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/menu.css -->
     <link rel="stylesheet" href="styles/menu.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/jquery-ui.css -->
+    <link rel="stylesheet" href="styles/jquery-ui.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/jquery-ui-timepicker-addon.css -->
+    <link rel="stylesheet" href="styles/jquery-ui-timepicker-addon.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/vendor/modernizr.js -->
@@ -52,10 +63,10 @@
           </a>
         </div>
         <div class="collapse navbar-collapse avatar" id="avatar">
-          <ul class="nav navbar-nav navbar-right navbar-right--menu">
+          <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span id="fullname"></span>
+                  <span class="fullname"></span>
                   <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
                 </a>
                 <ul class="dropdown-menu">
@@ -124,6 +135,22 @@
       </div>
     </div>
 
+    <div class="modal fade date-selection" id="date-selection" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Select limit date</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="limit-time2" id="limit-time2" value="" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--green btn-limit-time">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -168,11 +195,19 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js scripts/menus_manage.js -->
+    <!-- build:js scripts/constants.js -->
     <script src="scripts/constants.js"></script>
-    <script src="scripts/menus_manage.js"></script>
-    <script src="scripts/logout.js"></script>
     <script src="scripts/menu.js"></script>
+    <script src="scripts/logout.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/jquery-ui.js -->
+    <script src="scripts/jquery-ui.js"></script>
+    <script src="scripts/jquery-ui-timepicker-addon.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/menus_manage.js -->
+    <script src="scripts/menus_manage.js"></script>
     <!-- endbuild -->
 
   </body>

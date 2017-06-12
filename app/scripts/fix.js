@@ -10,7 +10,7 @@ $.ajax({
         text: 'The time for choosing expired.',
         imageUrl:'assets/error.png',
         confirmButtonText: 'Ok'
-    });
+      });
     }
-  })
+  }
 });

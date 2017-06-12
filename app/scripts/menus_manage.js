@@ -6,15 +6,140 @@ $.ajax({
   success: function(data) {
     switch (data.code) {
       case '200':
-        $('#fullname').text(data.user.name);
-        $('.sidebar-nav').load('menu_admin.html');
-        break;
+      $('.fullname').text(data.user.name);
+      $('.sidebar-nav').load('menu_admin.html');
+      break;
     }
   },
   error: function(error) {
     switch (error.status) {
       case 400:
-        $(location).attr('href', 'login.html');
+      $(location).attr('href', 'login.html');
+      break;
+    }
+  }
+});
+
+var today,
+  allCycles = [],
+  cycleColor = '#d32f2f',
+  dishColor = '#ff9800',
+  closedCycle = '',
+  cycleId = 0;
+
+// Get server date
+$.ajax({
+  url: constants().dateServer,
+  method: 'get',
+  dataType: 'json',
+  async: false,
+  success: function(data) {
+    today = data.date;
+  }
+});
+
+// Load cycles from server
+$.ajax({
+  url: constants().cycleFind + '?token=' + $.cookie('token'),
+  method: 'get',
+  dataType: 'json',
+  success: function(data) {
+    switch (data.code) {
+      case '200':
+        var start,
+          end,
+          title;
+
+        allCycles = $.extend(true, [], data.data);
+        $.map(allCycles, function(o) {
+          start = moment(o.initial_date);
+          end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
+          title = 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD');
+          switch (o.active) {
+            case 0:
+            case 1:
+            case 2:
+              o.title = title;
+              o.start = start;
+              o.end = end;
+              o.type = o.active;
+              o.overlap = false;
+              o.editable = false;
+              break;
+          }
+        });
+        $('#calendar').fullCalendar('renderEvents', allCycles, true);
+
+    //     if (data.data.length > 0) {
+    //       var events=[], start, end;
+    //       $.each(data.data, function(i, o) {
+    //         start = moment(o.initial_date);
+    //         end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
+    //         title = 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD');
+    //         switch (o.active) {
+    //           case 0:
+    //             events.push({
+    //               title: title,
+    //               start: start,
+    //               end: end,
+    //               type: 4,
+    //               overlap: false,
+    //               editable: false
+    //             });
+    //             break;
+    //
+    //           case 1:
+    //             currentCycle = {
+    //               id: o.id,
+    //               title: title,
+    //               start: start,
+    //               end: end,
+    //               type: 1,
+    //               overlap: false,
+    //               editable: false,
+    //               backgroundColor: '#d32f2f',
+    //               borderColor: '#d32f2f',
+    //               dishes: function() {
+    //                 var dishArr = [];
+    //                 $.each(o.dishes, function(_i, _o) {
+    //                   if (!_o.deleted_at) {
+    //                     var dish = {
+    //                       id: _o.id_dish,
+    //                       title: _o.title,
+    //                       description: _o.description,
+    //                       start: moment(_o.date_cycle).add(1, 'seconds'),
+    //                       type: 9,
+    //                       overlap: false,
+    //                       editable: false,
+    //                       backgroundColor: '#ff9800',
+    //                       borderColor: '#ff9800',
+    //                     };
+    //                     dishArr.push(dish);
+    //                     events.push(dish);
+    //                   }
+    //                 });
+    //                 return dishArr;
+    //               }()
+    //             }
+    //             events.push(currentCycle);
+    //             $('#calendar').fullCalendar('renderEvents', events, true);
+    //             $('#limit-time').val(moment(o.limit_date).format('YYYY-MM-DDThh:mm'));
+    //             break;
+    //
+    //           case 2:
+    //             break;
+    //         }
+    //       });
+    //     }
+        break;
+
+      case '404':
+        swal({
+          title: 'Oops!',
+          text: data.message,
+          imageUrl: 'assets/warning_1.png',
+          confirmButtonText: 'Ok'
+        });
         break;
     }
   }
@@ -22,7 +147,6 @@ $.ajax({
 
 // Cycles
 var currentCycle = {};
-var today = moment();
 var theDishes;
 var dishDay;
 var dishForm = $('#dish-form');
@@ -38,73 +162,114 @@ $('#calendar').fullCalendar({
     center: 'title'
   },
   select: function(start, end) {
-    if (!hasCycle() && today.diff(start) < 0) {
-      $('#calendar').fullCalendar('renderEvent', {
-        title: 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.subtract(1, 'seconds').format('YYYY-MM-DD'),
-        start: start,
-        end: end,
-        type: 1,
-        overlap: false,
-        editable: false,
-        backgroundColor: '#d32f2f',
-        borderColor: '#d32f2f',
-      }, true);
+    end = end.subtract(1, 'seconds');
+    if (start.format('YYYY-MM-DD') != end.format('YYYY-MM-DD')) {
+      if (canCreateCycle(start, end)) {
+        renderCycle(start, end);
+      }
     }
+    // if (start.isSameOrAfter(moment(today), 'day')) {
+    //
+    // }
+    // if (!hasCycle() && today.diff(start) < 0) {
+    //   $('#calendar').fullCalendar('renderEvent', {
+    //     title: 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.subtract(1, 'seconds').format('YYYY-MM-DD'),
+    //     start: start,
+    //     end: end,
+    //     type: 1,
+    //     overlap: false,
+    //     editable: false,
+    //     backgroundColor: '#d32f2f',
+    //     borderColor: '#d32f2f',
+    //   }, true);
+    // }
   },
   dayClick: function(start) {
-    if (canCreate(start)) {
-      dishDay = start;
+    var cycleId, dayDishes;
+
+    if (canCreateCycle(start)) {
+      renderCycle(start);
+      // $('#calendar').fullCalendar('renderEvent', {
+      //   title: 'From ' + start.format('YYYY-MM-DD') + ' to ' + start.format('YYYY-MM-DD'),
+      //   start: start,
+      //   // end: start,
+      //   type: 1,
+      //   overlap: false,
+      //   editable: false,
+      //   backgroundColor: '#d32f2f',
+      //   borderColor: '#d32f2f',
+      // }, true);
+    } else {
+      cycleId = getCycleId(start);
       $('.dish-list').empty();
       $('#dish-add').show();
       $('#dish-update').hide();
       $('#dish-cancel-update').hide();
       $('#dish-title').val('');
       $('#dish-description').val('');
-      var dayDishes = [];
-      dayDishes = $.grep(currentCycle.dishes, function(o) {
+      dayDishes = [];
+      dayDishes = $.grep(allCycles[cycleId].dishes, function(o) {
         return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
       });
       $.each(dayDishes, function(i, o) {
         $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
       });
       $('#modalDish').modal('show');
-      $('#dish-add').off().on('click', function() {
-        dishForm.validate();
-        if (dishForm.valid()) {
-          var dish = {
-            title: $('#dish-title').val(),
-            description: $('#dish-description').val(),
-            start: start.add(1, 'seconds'),
-            type: 9,
-            overlap: false,
-            editable: false,
-            backgroundColor: '#ff9800',
-            borderColor: '#ff9800',
-          }
-          $.ajax({
-            url: constants().dishRegister + '?token=' + $.cookie('token'),
-            method: 'post',
-            data: {
-              title: dish.title,
-              description: dish.description,
-              id_provider: 1
-            },
-            success: function(data) {
-              dish.id = data.data.id;
-              $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
-              $('#calendar').fullCalendar('renderEvent', dish, true);
-              currentCycle.dishes.push(dish);
-              console.log('pushed');
-              $('#dish-title').val('').focus();
-              $('#dish-description').val('');
-            },
-            error: function(error) {
-              console.log(error);
-            }
-          });
-        }
-      });
     }
+
+    // if (canCreate(start)) {
+    //   dishDay = start;
+    //   $('.dish-list').empty();
+    //   $('#dish-add').show();
+    //   $('#dish-update').hide();
+    //   $('#dish-cancel-update').hide();
+    //   $('#dish-title').val('');
+    //   $('#dish-description').val('');
+    //   var dayDishes = [];
+    //   dayDishes = $.grep(currentCycle.dishes, function(o) {
+    //     return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
+    //   });
+    //   $.each(dayDishes, function(i, o) {
+    //     $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+    //   });
+    //   $('#modalDish').modal('show');
+    //   $('#dish-add').off().on('click', function() {
+    //     dishForm.validate();
+    //     if (dishForm.valid()) {
+    //       var dish = {
+    //         title: $('#dish-title').val(),
+    //         description: $('#dish-description').val(),
+    //         start: start.add(1, 'seconds'),
+    //         type: 9,
+    //         overlap: false,
+    //         editable: false,
+    //         backgroundColor: '#ff9800',
+    //         borderColor: '#ff9800',
+    //       }
+    //       $.ajax({
+    //         url: constants().dishRegister + '?token=' + $.cookie('token'),
+    //         method: 'post',
+    //         data: {
+    //           title: dish.title,
+    //           description: dish.description,
+    //           id_provider: 1
+    //         },
+    //         success: function(data) {
+    //           dish.id = data.data.id;
+    //           $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+    //           $('#calendar').fullCalendar('renderEvent', dish, true);
+    //           currentCycle.dishes.push(dish);
+    //           console.log('pushed');
+    //           $('#dish-title').val('').focus();
+    //           $('#dish-description').val('');
+    //         },
+    //         error: function(error) {
+    //           console.log(error);
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
   },
   eventClick: function(event) {
     console.log(event);
@@ -116,7 +281,7 @@ $('#calendar').fullCalendar({
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
       }).then(function () {
         $.ajax({
           url: constants().cycleDelete + '/' + event.id + '?token=' + $.cookie('token'),
@@ -150,7 +315,7 @@ dishForm.validate({
   }
 });
 
-// Functions
+// Depricated
 function hasCycle() {
   var exists = [];
   exists = $('#calendar').fullCalendar('clientEvents', function(e) {
@@ -163,10 +328,12 @@ function hasCycle() {
   return exists.length > 0;
 }
 
+// Depricated
 function canCreate(start) {
   return hasCycle() && moment(start.format('YYYY-MM-DD')).isBetween(currentCycle.start.format('YYYY-MM-DD'), currentCycle.end.format('YYYY-MM-DD'), null, '[]');
 }
 
+// Depricated
 function dateExists(obj) {
   var res=false;
   $.each(theDishes, function(i, o) {
@@ -178,86 +345,93 @@ function dateExists(obj) {
   return res;
 }
 
-function saveCycle() {
+function canCreateCycle(start, end) {
+  var _start = start.format('YYYY-MM-DD'),
+    _end = end ? end.format('YYYY-MM-DD') : start.format('YYYY-MM-DD'),
+    _today = moment(today).format('YYYY-MM-DD'),
+    res = true, _os, _oe;
 
+  if (_start < _today) {
+    swal({
+      title: 'Sorry!',
+      text: 'You can\'t create a cycle with this start date. (' + _start + ')',
+      imageUrl: 'assets/warning_1.png',
+      confirmButtonText: 'Ok'
+    });
+    return false;
+  }
+  $.each(allCycles, function(i, o) {
+    _os = o.start.format('YYYY-MM-DD');
+    _oe = o.end.format('YYYY-MM-DD');
+    if (moment(_start).isBetween(_os, _oe, null, '[]') ||
+      moment(_end).isBetween(_os, _oe, null, '[]') ||
+      (moment(_start).diff(_os, 'days') < 0 && moment(_end).diff(_oe, 'days') > 0)) {
+        res = false;
+        return res;
+    }
+  });
+  return res;
 }
 
-// Load cycles from server
-$.ajax({
-  url: constants().cycleFind + '?token=' + $.cookie('token'),
-  method: 'get',
-  dataType: 'json',
-  success: function(data) {
-    switch (data.code) {
-      case '200':
-        if (data.data.length > 0) {
-          var events=[], start, end;
-          $.each(data.data, function(i, o) {
-            start = moment(o.initial_date);
-            end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
-            title = 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD');
-            switch (o.active) {
-              case 0:
-                events.push({
-                  title: title,
-                  start: start,
-                  end: end,
-                  type: 4,
-                  overlap: false,
-                  editable: false
-                });
-                break;
-
-              case 1:
-                currentCycle = {
-                  id: o.id,
-                  title: title,
-                  start: start,
-                  end: end,
-                  type: 1,
-                  overlap: false,
-                  editable: false,
-                  backgroundColor: '#d32f2f',
-                  borderColor: '#d32f2f',
-                  dishes: function() {
-                    var dishArr = [];
-                    $.each(o.dishes, function(_i, _o) {
-                      if (!_o.deleted_at) {
-                        var dish = {
-                          id: _o.id_dish,
-                          title: _o.title,
-                          description: _o.description,
-                          start: moment(_o.date_cycle).add(1, 'seconds'),
-                          type: 9,
-                          overlap: false,
-                          editable: false,
-                          backgroundColor: '#ff9800',
-                          borderColor: '#ff9800',
-                        };
-                        dishArr.push(dish);
-                        events.push(dish);
-                      }
-                    });
-                    return dishArr;
-                  }()
-                }
-                events.push(currentCycle);
-                $('#calendar').fullCalendar('renderEvents', events, true);
-                $('#limit-time').val(moment(o.limit_date).format('YYYY-MM-DDThh:mm'));
-                break;
-
-              case 2:
-                break;
-            }
-          });
-        }
-        break;
-
-      case '404':
-        break;
-    }
+function renderCycle(start, end) {
+  var _end = end ? end : start;
+  var _cycle = {
+    title: 'From ' + start.format('YYYY-MM-DD') + ' to ' + _end.format('YYYY-MM-DD'),
+    start: start,
+    end: _end,
+    dishes: [],
+    type: 1,
+    overlap: false,
+    editable: false,
+    backgroundColor: cycleColor,
+    borderColor: cycleColor
   }
+  allCycles.push(_cycle);
+  currentCycleId = allCycles.length-1;
+  $('#date-selection').modal({
+    show: true,
+    // keyboard: false,
+    // backdrop: 'static'
+  });
+  $('#calendar').fullCalendar('renderEvent', _cycle, true);
+}
+
+function getCycleId(start) {
+  var _os, _oe, _id;
+
+  $.each(allCycles, function(i, o) {
+    _start = start.format('YYYY-MM-DD');
+    _os = o.start.format('YYYY-MM-DD');
+    _oe = o.end.format('YYYY-MM-DD');
+    if (moment(_start).isBetween(_os, _oe, null, '[]')) {
+      _id = i;
+      return false;
+    }
+  });
+  return _id;
+}
+
+$(".btn-limit-time").on("click", function() {
+  allCycles[currentCycleId].limit = moment($("#limit-time2").val()).format('YYYY-MM-DD hh:mm:00');
+  $("#limit-time2").val('');
+  $("#date-selection").modal('hide');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Events
 var dishUpdateId;
@@ -474,6 +648,12 @@ $('body').on('click', 'a.dish-delete', function() {
       $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
     });
   }, function() {});
+});
+
+$('#limit-time2').datetimepicker({
+	dateFormat: 'yy-mm-dd',
+  showSeconds: false,
+  // timeFormat: 'hh:mm'
 });
 
 // Defaults

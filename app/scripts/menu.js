@@ -6,9 +6,9 @@ $(document).ready(function () {
   var trigger = $('.hamburger'),
      isClosed = false;
 
-    trigger.click(function () {
-      hamburger_cross();
-    });
+  trigger.click(function () {
+    hamburger_cross();
+  });
 
   function hamburger_cross() {
     if (isClosed == true) {
@@ -21,5 +21,4 @@ $(document).ready(function () {
       isClosed = true;
     }
   }
-
 });

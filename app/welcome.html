@@ -21,6 +21,9 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/menu.css -->
     <link rel="stylesheet" href="styles/menu.css">
     <!-- endbuild -->
 
@@ -55,7 +58,7 @@
           <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span id="fullname"></span>
+                  <span class="fullname"></span>
                   <img class="img-circle img-circle--avatar" src="images/user-01.png" alt="avatar">
                 </a>
                 <ul class="dropdown-menu">
@@ -73,7 +76,7 @@
         <div class="jumbotron box welcomeBox col-md-8 col-md-offset-2 center">
             <div class="container">
                 <h2 class="loginBox__title--welcome">Welcome!</h2>
-                <span class="text-body--welcome"><b>Hi!</b>, We are glad you are here, so would you like to do?</span>
+                <span class="text-body--welcome"><b>Hi! <span class="firstname"></span></b>, We are glad you are here, so would you like to do?</span>
                 <img src="images/ilustracion-home.png" alt="welcome" class="imgBox">
                 <a href="menus_manage.html" class="btn btn--size btn--red btn--fs15 btn--large pull-right radius">Create Menu</a>
             </div>
@@ -127,11 +130,14 @@
     <!-- <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script> -->
     <!-- endbuild -->
 
-    <!-- build:js scripts/welcome.js -->
+    <!-- build:js scripts/constants.js -->
     <script src="scripts/constants.js"></script>
-    <script src="scripts/welcome.js"></script>
     <script src="scripts/menu.js"></script>
     <script src="scripts/logout.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/welcome.js -->
+    <script src="scripts/welcome.js"></script>
     <!-- endbuild -->
 
   </body>

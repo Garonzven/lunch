@@ -797,8 +797,8 @@ ul.dish-list li a{
   height: 40px;
 }
 
-#fullname {
-  margin-right: 10px;
+.fullname {
+  margin-right: 15px;
 }
 
 .navbar-default {
@@ -1005,3 +1005,17 @@ margin-bottom: 40px;
   position: relative;
   top: 10px;
 }
+
+.date-selection {
+  bottom: initial !important;
+  top: 50px !important;
+}
+// input::-webkit-outer-spin-button,
+// input::-moz-outer-spin-button,
+// input::-webkit-inner-spin-button,
+// input::-moz-inner-spin-button {
+//     /* display: none; <- Crashes Chrome on hover */
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+// }

@@ -1,4 +1,3 @@
-//'http://13.92.198.201/laravel/public/login/signout?token='+$.cookie('token'),
 $('.logout').on('click', function() {
   $.ajax({
     url: constants().logout + '?token='+$.cookie('token'),

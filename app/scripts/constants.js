@@ -19,7 +19,7 @@ function constants() {
 		orderRegister: 	server + 'order/register',
 		orderActive: 		server + 'order/active',
 		orderListOrder:	server + 'order/listorder',
-		dateserver: 		server + 'date',
+		dateServer: 		server + 'date',
 		change:         server + 'change',
 		recovery:       server + 'recovery'
   }
