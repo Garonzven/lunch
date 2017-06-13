@@ -88,9 +88,7 @@
           <div id="calendar"></div>
         </div>
         <div class="col-md-3">
-          <h2 class="input--date">Limit date</h2>
-          <input type="datetime-local" id="limit-time">
-          <button class="btn m-t-20 btn--green btn-right" style="display:block" id="save-cycle">Save</button>
+          <button class="btn btn--green btn-lg" style="position:fixed" id="save-cycle">Save data</button>
         </div>
       </div>
     </div>
@@ -145,10 +143,16 @@
             <input type="text" name="limit-time2" id="limit-time2" value="" />
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn--red pull-left">Delete</button>
             <button type="button" class="btn btn--green btn-limit-time">Ok</button>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="backdrop-save-cycles">
+      <img src="images/logo.png" alt="Logo">
+      <h2>Saving data...</h2>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -205,6 +209,8 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery-ui-timepicker-addon.js"></script>
     <!-- endbuild -->
+
+    <!-- build:js scripts/jquery-ui.js -->
 
     <!-- build:js scripts/menus_manage.js -->
     <script src="scripts/menus_manage.js"></script>

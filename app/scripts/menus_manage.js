@@ -14,8 +14,8 @@ $.ajax({
   error: function(error) {
     switch (error.status) {
       case 400:
-      $(location).attr('href', 'login.html');
-      break;
+        $(location).attr('href', 'login.html');
+        break;
     }
   }
 });
@@ -31,7 +31,9 @@ var today,
   dishForm = $('#dish-form'),
   dayDishes = [],
   dishUpdateId,
-  theDishes;
+  theDishes,
+  loaded = false,
+  travel = 0;
 
 // Get server date
 $.ajax({
@@ -61,20 +63,33 @@ $.ajax({
           start = moment(o.initial_date);
           end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
           title = 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD');
+          o.title = title;
+          o.start = start;
+          o.end = end;
+          o.type = o.active;
+          o.overlap = false;
+          o.editable = false;
+          o.backgroundColor = cycleColor;
+          o.borderColor = cycleColor;
+          o.limit = o.limit_date;
+          $.map(o.dishes, function(_o) {
+            _o.id = _o.id_dish;
+            _o.type = 9;
+            _o.start = moment(_o.date_cycle);
+            _o.backgroundColor = dishColor;
+            _o.borderColor = dishColor;
+          });
           switch (o.active) {
             case 0:
             case 1:
             case 2:
-              o.title = title;
-              o.start = start;
-              o.end = end;
-              o.type = o.active;
-              o.overlap = false;
-              o.editable = false;
               break;
           }
         });
         $('#calendar').fullCalendar('renderEvents', allCycles, true);
+        $.each(allCycles, function(i, o) {
+          $("#calendar").fullCalendar('renderEvents', o.dishes, true);
+        });
 
     //     if (data.data.length > 0) {
     //       var events=[], start, end;
@@ -168,6 +183,7 @@ $('#calendar').fullCalendar({
   select: function(start, end) {
     end = end.subtract(1, 'seconds');
     if (start.format('YYYY-MM-DD') != end.format('YYYY-MM-DD')) {
+      console.log('select');
       if (canCreateCycle(start, end)) {
         renderCycle(start, end);
       }
@@ -177,65 +193,66 @@ $('#calendar').fullCalendar({
     if (canCreateCycle(start)) {
       renderCycle(start);
     } else {
-      currentCycleId = getCycleId(start);
-      dishDay = start;
-      $('.dish-list').empty();
-      $('#dish-add').show();
-      $('#dish-update').hide();
-      $('#dish-cancel-update').hide();
-      $('#dish-title').val('');
-      $('#dish-description').val('');
-      dayDishes = [];
-      dayDishes = $.grep(allCycles[currentCycleId].dishes, function(o) {
-        return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
-      });
-      $.each(dayDishes, function(i, o) {
-        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
-      });
-      $('#modalDish').modal({
-        show: true,
-        // keyboard: false,
-        // backdrop: 'static'
-      });
-      $('#dish-add').off().on('click', function() {
-        dishForm.validate();
-        if (dishForm.valid()) {
-          var dish = {
-            title: $('#dish-title').val(),
-            description: $('#dish-description').val(),
-            start: start.add(1, 'seconds'),
-            type: 9,
-            overlap: false,
-            editable: false,
-            backgroundColor: dishColor,
-            borderColor: dishColor,
-          }
-          $.ajax({
-            url: constants().dishRegister + '?token=' + $.cookie('token'),
-            method: 'post',
-            data: {
-              title: dish.title,
-              description: dish.description,
-              id_provider: 1
-            },
-            success: function(data) {
-              dish.id = data.data.id;
-              $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
-              $('#calendar').fullCalendar('renderEvent', dish, true);
-              allCycles[currentCycleId].dishes.push(dish);
-              $('#dish-title').val('').focus();
-              $('#dish-description').val('');
-            },
-            error: function(error) {
-              console.log(error);
+      if (start.diff(moment(today), 'days') >= 0) {
+        currentCycleId = getCycleId(start);
+        dishDay = start;
+        $('.dish-list').empty();
+        $('#dish-add').show();
+        $('#dish-update').hide();
+        $('#dish-cancel-update').hide();
+        $('#dish-title').val('');
+        $('#dish-description').val('');
+        dayDishes = [];
+        dayDishes = $.grep(allCycles[currentCycleId].dishes, function(o) {
+          return o.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD');
+        });
+        $.each(dayDishes, function(i, o) {
+          $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+        });
+        $('#modalDish').modal({
+          show: true,
+          keyboard: false,
+          backdrop: 'static'
+        });
+        $('#dish-add').off().on('click', function() {
+          dishForm.validate();
+          if (dishForm.valid()) {
+            var dish = {
+              title: $('#dish-title').val(),
+              description: $('#dish-description').val(),
+              start: start.add(1, 'seconds'),
+              type: 9,
+              overlap: false,
+              editable: false,
+              backgroundColor: dishColor,
+              borderColor: dishColor,
             }
-          });
-        }
-      });
+            $.ajax({
+              url: constants().dishRegister + '?token=' + $.cookie('token'),
+              method: 'post',
+              data: {
+                title: dish.title,
+                description: dish.description,
+                id_provider: 1
+              },
+              success: function(data) {
+                dish.id = data.data.id;
+                $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+                $('#calendar').fullCalendar('renderEvent', dish, true);
+                allCycles[currentCycleId].dishes.push(dish);
+                $('#dish-title').val('').focus();
+                $('#dish-description').val('');
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+          }
+        });
+      }
     }
   },
   eventClick: function(event) {
-    console.log(event);
     if (event.type == 1) {
       swal({
         html: '<span class="delete-dish">You are about to delete the current period.<br>Are you sure?</span>',
@@ -289,7 +306,7 @@ function canCreateCycle(start, end) {
       title: 'Sorry!',
       text: 'You can\'t create a cycle with this start date. (' + _start + ')',
       imageUrl: 'assets/warning_1.png',
-      confirmButtonText: 'Ok'
+      confirmButtonText: 'Ok',
     });
     return false;
   }
@@ -476,6 +493,16 @@ $('.navContainer__logo').addClass('navContainer__logo--center');
 $('#dish-update').hide();
 $('#dish-cancel-update').hide();
 
+function dateExists(obj) {
+  var res=false;
+  $.each(theDishes, function(i, o) {
+    if (o.date_cycle == obj.start.format('YYYY-MM-DD')) {
+      res = true;
+      return false;
+    }
+  });
+  return res;
+}
 
 
 
@@ -511,18 +538,6 @@ function hasCycle() {
 function canCreate(start) {
   return hasCycle() && moment(start.format('YYYY-MM-DD')).isBetween(currentCycle.start.format('YYYY-MM-DD'), currentCycle.end.format('YYYY-MM-DD'), null, '[]');
 }
-
-// Depricated
-function dateExists(obj) {
-  var res=false;
-  $.each(theDishes, function(i, o) {
-    if (o.date_cycle == obj.start.format('YYYY-MM-DD')) {
-      res = true;
-      return false;
-    }
-  });
-  return res;
-}
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
 
@@ -549,9 +564,9 @@ function dateExists(obj) {
 // Events
 $('#save-cycle').on('click', function() {
   var _ok = true,
-    cycle = {};
+    cycle = {},
+    saveAll = false;
 
-  console.log(allCycles);
   $.each(allCycles, function(i, o) {
     if (!o.limit) {
       _ok = false;
@@ -577,7 +592,8 @@ $('#save-cycle').on('click', function() {
     }
   });
   if (_ok) {
-
+    travel = 0;
+    $(".backdrop-save-cycles").css('display', 'flex');
     $.each(allCycles, function(i, o) {
       theDishes = [];
       $.each(o.dishes, function(_i, _o) {
@@ -595,7 +611,6 @@ $('#save-cycle').on('click', function() {
           }
         });
       });
-      console.log(theDishes);
       cycle = {
         init: o.start.format('YYYY-MM-DD'),
         close: o.end.format('YYYY-MM-DD'),
@@ -608,14 +623,13 @@ $('#save-cycle').on('click', function() {
         data: cycle,
         dataType: 'json',
         success: function(data) {
-          swal(
-            'Saved!',
-            'The changes you made to your cycle has been saved successfully.',
-            'success');
+          console.log(++travel);
         }
       });
     });
-
+    // swal('Saved!',
+    //   'The changes you made to your cycles have been saved successfully.',
+    //   'success');
 
     // if (currentCycle.dishes) {
 
@@ -718,3 +732,17 @@ $('#save-cycle').on('click', function() {
     // }
   }
 });
+
+$(document).ajaxStop(function() {
+  if (travel == allCycles.length) {
+    $(".backdrop-save-cycles").hide('fast');
+    swal('Saved!',
+    'The changes you made to your cycles have been saved successfully.',
+    'success');
+  }
+});
+
+$(window).scroll(function() {
+  $(".backdrop-save-cycles").css('top', $(this).scrollTop()+'px');
+  console.log($(this).scrollTop());
+})

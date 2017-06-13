@@ -988,7 +988,7 @@ margin-bottom: 40px;
     right: 0;
     padding: 10px;
     background-color: transparent;
-    z-index: 1060;
+    z-index: 1060 !important;
 }
 .color-label{
   color:$dark-primary;
@@ -1010,12 +1010,22 @@ margin-bottom: 40px;
   bottom: initial !important;
   top: 50px !important;
 }
-// input::-webkit-outer-spin-button,
-// input::-moz-outer-spin-button,
-// input::-webkit-inner-spin-button,
-// input::-moz-inner-spin-button {
-//     /* display: none; <- Crashes Chrome on hover */
-//     -webkit-appearance: none;
-//     -moz-appearance: none;
-//     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-// }
+
+.backdrop-save-cycles {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  background: rgba(000, 000, 000, 0.85);
+  z-index: 2000;
+  img {
+    width: 200px;
+  }
+  h2 {
+    color: #fff;
+  }
+}
