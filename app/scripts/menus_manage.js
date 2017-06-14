@@ -33,7 +33,8 @@ var today,
   dishUpdateId,
   theDishes,
   loaded = false,
-  travel = 0;
+  travel = 0,
+  deleteCycleId;
 
 // Get server date
 $.ajax({
@@ -59,6 +60,7 @@ $.ajax({
           title;
 
         allCycles = $.extend(true, [], data.data);
+        console.log(allCycles);
         $.map(allCycles, function(o) {
           start = moment(o.initial_date);
           end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
@@ -166,7 +168,7 @@ $.ajax({
   }
 });
 
-// Cycles
+// Depricated
 var currentCycle = {};
 
 
@@ -254,30 +256,37 @@ $('#calendar').fullCalendar({
   },
   eventClick: function(event) {
     if (event.type == 1) {
-      swal({
-        html: '<span class="delete-dish">You are about to delete the current period.<br>Are you sure?</span>',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-      }).then(function () {
-        $.ajax({
-          url: constants().cycleDelete + '/' + event.id + '?token=' + $.cookie('token'),
-          method: 'delete',
-          dataType: 'json',
-          success: function(data) {
-            console.log(data.message);
-            swal({
-              title: 'The period was deleted.',
-              imageUrl: 'assets/Congratulations.png'
-            }).then(function() {
-              location.reload();
-            });
-          }
-        });
-      }, function(){});
+      currentCycleId = getCycleId(event.start);
+      deleteCycleId = event._id;
+      $("#delete-cycle").show();
+      $("#limit-time2").val(moment(allCycles[currentCycleId].limit).format('YYYY-MM-DD hh:mm'));
+      $("#date-selection").modal({
+        show: true
+      });
+      // swal({
+      //   html: '<span class="delete-dish">You are about to delete the current period.<br>Are you sure?</span>',
+      //   type: 'question',
+      //   showCancelButton: true,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Yes',
+      //   cancelButtonText: 'No',
+      // }).then(function () {
+      //   $.ajax({
+      //     url: constants().cycleDelete + '/' + event.id + '?token=' + $.cookie('token'),
+      //     method: 'delete',
+      //     dataType: 'json',
+      //     success: function(data) {
+      //       console.log(data.message);
+      //       swal({
+      //         title: 'The period was deleted.',
+      //         imageUrl: 'assets/Congratulations.png'
+      //       }).then(function() {
+      //         location.reload();
+      //       });
+      //     }
+      //   });
+      // }, function(){});
     }
   }
 });
@@ -338,6 +347,7 @@ function renderCycle(start, end) {
   }
   allCycles.push(_cycle);
   currentCycleId = allCycles.length-1;
+  $("#delete-cycle").hide();
   $('#date-selection').modal({
     show: true,
     // keyboard: false,
@@ -364,6 +374,7 @@ function getCycleId(start) {
 $(".btn-limit-time").on("click", function() {
   if ($("#limit-time2").val() != '') {
     allCycles[currentCycleId].limit = moment($("#limit-time2").val()).format('YYYY-MM-DD hh:mm:00');
+    allCycles[currentCycleId].limit_date = moment($("#limit-time2").val()).format('YYYY-MM-DD hh:mm:00');
     $("#limit-time2").val('');
     $("#date-selection").modal('hide');
   }
@@ -451,6 +462,33 @@ $('#dish-ok').on('click', function() {
   $('#calendar').fullCalendar('renderEvents', a, true);
 });
 
+$("#delete-cycle").on("click", function() {
+  swal({
+    html: '<span class="delete-dish">You are about to delete a cycle.<br>Are you sure?</span>',
+    type: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then(function () {
+    $.ajax({
+      url: constants().cycleDelete + '/' + deleteCycleId + '?token=' + $.cookie('token'),
+      method: 'delete',
+      dataType: 'json',
+      success: function(data) {
+        console.log(data.message);
+        swal({
+          title: 'The cycle was deleted.',
+          imageUrl: 'assets/Congratulations.png'
+        }).then(function() {
+          location.reload();
+        });
+      }
+    });
+  }, function(){});
+});
+
 $('body').on('click', 'a.dish-delete', function() {
   var idDel = $(this).data('id');
   swal({
@@ -504,68 +542,24 @@ function dateExists(obj) {
   return res;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// --------------------------------------------------------------------
-// --------------------------------------------------------------------
-// Depricated
-function hasCycle() {
-  var exists = [];
-  exists = $('#calendar').fullCalendar('clientEvents', function(e) {
-    return e.type == 1;
-  });
-  if (exists.length == 1 && !currentCycle.title) {
-    currentCycle = exists[0];
-    currentCycle.dishes = [];
+$(document).ajaxStop(function() {
+  if (travel == allCycles.length) {
+    $(".backdrop-save-cycles").hide('fast');
+    swal('Saved!',
+    'The changes you made to your cycles have been saved successfully.',
+    'success');
   }
-  return exists.length > 0;
-}
+});
 
-// Depricated
-function canCreate(start) {
-  return hasCycle() && moment(start.format('YYYY-MM-DD')).isBetween(currentCycle.start.format('YYYY-MM-DD'), currentCycle.end.format('YYYY-MM-DD'), null, '[]');
-}
-// --------------------------------------------------------------------
-// --------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(window).scroll(function() {
+  $(".backdrop-save-cycles").css('top', $(this).scrollTop()+'px');
+});
 
 // Events
 $('#save-cycle').on('click', function() {
   var _ok = true,
-    cycle = {},
-    saveAll = false;
+  cycle = {},
+  saveAll = false;
 
   $.each(allCycles, function(i, o) {
     if (!o.limit) {
@@ -633,19 +627,19 @@ $('#save-cycle').on('click', function() {
 
     // if (currentCycle.dishes) {
 
-      // if ($('#limit-time').val() != '') {
-      //   var cycle = {};
-      //   theDishes = [];
-      //   $.each(currentCycle.dishes, function(i, o) {
-      //     if (!dateExists(o)) {
-      //       theDishes.push({
-      //         date_cycle: o.start.format('YYYY-MM-DD'),
-      //         id_dishes: []
-      //       });
-      //     }
-      //   });
+    // if ($('#limit-time').val() != '') {
+    //   var cycle = {};
+    //   theDishes = [];
+    //   $.each(currentCycle.dishes, function(i, o) {
+    //     if (!dateExists(o)) {
+    //       theDishes.push({
+    //         date_cycle: o.start.format('YYYY-MM-DD'),
+    //         id_dishes: []
+    //       });
+    //     }
+    //   });
 
-        // Validate if cycle is complete
+    // Validate if cycle is complete
     //     if (currentCycle.end.diff(currentCycle.start, 'days')+1 > theDishes.length) {
     //       swal({
     //         html: '<span class="delete-dish">There are some days without dishes.<br>Are you sure you want to continue?</span>',
@@ -733,16 +727,44 @@ $('#save-cycle').on('click', function() {
   }
 });
 
-$(document).ajaxStop(function() {
-  if (travel == allCycles.length) {
-    $(".backdrop-save-cycles").hide('fast');
-    swal('Saved!',
-    'The changes you made to your cycles have been saved successfully.',
-    'success');
-  }
-});
 
-$(window).scroll(function() {
-  $(".backdrop-save-cycles").css('top', $(this).scrollTop()+'px');
-  console.log($(this).scrollTop());
-})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// Depricated
+function hasCycle() {
+  var exists = [];
+  exists = $('#calendar').fullCalendar('clientEvents', function(e) {
+    return e.type == 1;
+  });
+  if (exists.length == 1 && !currentCycle.title) {
+    currentCycle = exists[0];
+    currentCycle.dishes = [];
+  }
+  return exists.length > 0;
+}
+
+// Depricated
+function canCreate(start) {
+  return hasCycle() && moment(start.format('YYYY-MM-DD')).isBetween(currentCycle.start.format('YYYY-MM-DD'), currentCycle.end.format('YYYY-MM-DD'), null, '[]');
+}
+// --------------------------------------------------------------------
+// --------------------------------------------------------------------
