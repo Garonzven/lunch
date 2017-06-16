@@ -1,16 +1,17 @@
 $('.navContainer__logo').addClass('navContainer__logo--center');
-//var today;
+var today;
+$.ajax({
+  url:constants().dateServer,
+  method: 'GET',
+  async: false,
+  dataType: 'json',
+  success: function(data){
+    today = data.date;
+  }
+});
+
 function GetDate() {
-  $.ajax({
-    url:constants().dateserver,
-    method: 'GET',
-    async: false,
-    dataType: 'json',
-    success: function(data){
-        date = data.date;
-    }
-  });
-  return date;
+  return false;
 }
 // Load profile
 $.ajax({
@@ -44,6 +45,7 @@ $.ajax({
   }
 });
 
+// Depricated
 function formatday(date){
   var d = new Date(date);
   var n = d.getMonth()+'-'+d.getDate()+'-'+d.getFullYear();
@@ -64,9 +66,9 @@ function printAlert(e){
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
   confirmButtonText: 'Print'
-}).then(function () {
-  window.location.href = constants().cycleReport +'/'+id+'?token=' + $.cookie('token');
-})
+  }).then(function () {
+    window.location.href = constants().cycleReport +'/'+id+'?token=' + $.cookie('token');
+  })
 }
 
 $.ajax({
@@ -74,24 +76,23 @@ $.ajax({
   method: 'GET',
   dataType: 'JSON',
   success: function(data){
-    console.log(data);
-    print='';
-    var dateserver = GetDate();
-    console.log(dateserver);
-    var server =  moment(dateserver);
-    var limit =  moment(data.limit_date);
+    var print = '';
+    // var dateserver = GetDate();
+    // var server =  moment(dateserver);
+    // var limit =  moment(data.limit_date);
     var disable;
     $.each(data.data, function (key, data) {
       /*if(data.remaining){
         print = "onClick=printAlert";
       }else{*/
       disable = 'disable-link';
-      if (server.diff(limit)>0) {
+      console.log(data.initial_date, data.closing_date, data.limit_date, moment(today).diff(moment(data.limit_date), 'days'));
+      if (moment(today).diff(moment(data.limit_date)) > 0) {
         disable = '';
       }
         print = 'href="'+constants().cycleReport +'/'+data.id+'?token=' + $.cookie('token')+'"';
       //}
-      $('#report-detail').append('<tr><td align="center">'+formatday(data.initial_date)+'</td><td align="center">'+formatday(data.closing_date)+'</td><td align="center"><a class="btn btn--yellow print '+disable+'"  '+print+' name="print" id="'+data.id+'" '+disable+'><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
+      $('#report-detail').append('<tr><td align="center">'+moment(data.initial_date).format('YYYY-MM-DD')+'</td><td align="center">'+moment(data.closing_date).format('YYYY-MM-DD')+'</td><td align="center">'+moment(data.limit_date).format('YYYY-MM-DD')+'</td><td align="center"><a class="btn btn--yellow print '+disable+'"  '+print+' name="print" id="'+data.id+'"><i class="glyphicon glyphicon-download-alt"></i></a></td></tr>');
     });
   $('#example').dataTable();
   }

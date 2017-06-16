@@ -14,6 +14,7 @@ $.ajax({
   error: function(error) {
     switch (error.status) {
       case 400:
+      case 401:
         $(location).attr('href', 'login.html');
         break;
     }
@@ -25,7 +26,7 @@ var today,
   allCycles = [],
   cycleColor = '#d32f2f',
   dishColor = '#ff9800',
-  closedCycle = '',
+  closedColor = '#757575',
   currentCycleId,
   dishDay,
   dishForm = $('#dish-form'),
@@ -60,7 +61,6 @@ $.ajax({
           title;
 
         allCycles = $.extend(true, [], data.data);
-        console.log(allCycles);
         $.map(allCycles, function(o) {
           start = moment(o.initial_date);
           end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
@@ -71,15 +71,17 @@ $.ajax({
           o.type = o.active;
           o.overlap = false;
           o.editable = false;
-          o.backgroundColor = cycleColor;
-          o.borderColor = cycleColor;
+          o.backgroundColor = o.active == 0 ? closedColor : cycleColor;
+          o.borderColor = o.active == 0 ? closedColor : cycleColor;
           o.limit = o.limit_date;
           $.map(o.dishes, function(_o) {
             _o.id = _o.id_dish;
             _o.type = 9;
             _o.start = moment(_o.date_cycle);
-            _o.backgroundColor = dishColor;
-            _o.borderColor = dishColor;
+            _o.backgroundColor = o.active == 0 ? closedColor : dishColor;
+            _o.borderColor = o.active == 0 ? closedColor : dishColor;
+            _o.overlap = false;
+            _o.editable = false;
           });
           switch (o.active) {
             case 0:
@@ -88,72 +90,11 @@ $.ajax({
               break;
           }
         });
+        console.log(allCycles);
         $('#calendar').fullCalendar('renderEvents', allCycles, true);
         $.each(allCycles, function(i, o) {
-          $("#calendar").fullCalendar('renderEvents', o.dishes, true);
+          $('#calendar').fullCalendar('renderEvents', o.dishes, true);
         });
-
-    //     if (data.data.length > 0) {
-    //       var events=[], start, end;
-    //       $.each(data.data, function(i, o) {
-    //         start = moment(o.initial_date);
-    //         end = moment(o.closing_date).add(1, 'days').subtract(1, 'seconds');
-    //         title = 'Cycle from ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD');
-    //         switch (o.active) {
-    //           case 0:
-    //             events.push({
-    //               title: title,
-    //               start: start,
-    //               end: end,
-    //               type: 4,
-    //               overlap: false,
-    //               editable: false
-    //             });
-    //             break;
-    //
-    //           case 1:
-    //             currentCycle = {
-    //               id: o.id,
-    //               title: title,
-    //               start: start,
-    //               end: end,
-    //               type: 1,
-    //               overlap: false,
-    //               editable: false,
-    //               backgroundColor: '#d32f2f',
-    //               borderColor: '#d32f2f',
-    //               dishes: function() {
-    //                 var dishArr = [];
-    //                 $.each(o.dishes, function(_i, _o) {
-    //                   if (!_o.deleted_at) {
-    //                     var dish = {
-    //                       id: _o.id_dish,
-    //                       title: _o.title,
-    //                       description: _o.description,
-    //                       start: moment(_o.date_cycle).add(1, 'seconds'),
-    //                       type: 9,
-    //                       overlap: false,
-    //                       editable: false,
-    //                       backgroundColor: '#ff9800',
-    //                       borderColor: '#ff9800',
-    //                     };
-    //                     dishArr.push(dish);
-    //                     events.push(dish);
-    //                   }
-    //                 });
-    //                 return dishArr;
-    //               }()
-    //             }
-    //             events.push(currentCycle);
-    //             $('#calendar').fullCalendar('renderEvents', events, true);
-    //             $('#limit-time').val(moment(o.limit_date).format('YYYY-MM-DDThh:mm'));
-    //             break;
-    //
-    //           case 2:
-    //             break;
-    //         }
-    //       });
-    //     }
         break;
 
       case '404':
@@ -163,6 +104,14 @@ $.ajax({
           imageUrl: 'assets/warning_1.png',
           confirmButtonText: 'Ok'
         });
+        break;
+    }
+  },
+  error: function(error) {
+    console.log(error);
+    switch (error.status) {
+      case 400:
+        $(location).attr('href', 'login.html');
         break;
     }
   }
@@ -258,9 +207,9 @@ $('#calendar').fullCalendar({
     if (event.type == 1) {
       currentCycleId = getCycleId(event.start);
       deleteCycleId = event._id;
-      $("#delete-cycle").show();
-      $("#limit-time2").val(moment(allCycles[currentCycleId].limit).format('YYYY-MM-DD hh:mm'));
-      $("#date-selection").modal({
+      $('#delete-cycle').show();
+      $('#limit-time2').val(moment(allCycles[currentCycleId].limit).format('YYYY-MM-DD HH:mm:ss'));
+      $('#date-selection').modal({
         show: true
       });
       // swal({
@@ -347,7 +296,7 @@ function renderCycle(start, end) {
   }
   allCycles.push(_cycle);
   currentCycleId = allCycles.length-1;
-  $("#delete-cycle").hide();
+  $('#delete-cycle').hide();
   $('#date-selection').modal({
     show: true,
     // keyboard: false,
@@ -371,12 +320,13 @@ function getCycleId(start) {
   return _id;
 }
 
-$(".btn-limit-time").on("click", function() {
-  if ($("#limit-time2").val() != '') {
-    allCycles[currentCycleId].limit = moment($("#limit-time2").val()).format('YYYY-MM-DD hh:mm:00');
-    allCycles[currentCycleId].limit_date = moment($("#limit-time2").val()).format('YYYY-MM-DD hh:mm:00');
-    $("#limit-time2").val('');
-    $("#date-selection").modal('hide');
+$('.btn-limit-time').on('click', function() {
+  if ($('#limit-time2').val() != '') {
+    allCycles[currentCycleId].limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    allCycles[currentCycleId].limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    console.log(moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss'), allCycles[currentCycleId].limit, allCycles[currentCycleId].limit_date);
+    $('#limit-time2').val('');
+    $('#date-selection').modal('hide');
   }
 });
 
@@ -446,7 +396,7 @@ $('#modalDish').on('hidden.bs.modal', function(e) {
 });
 
 $('#date-selection').on('hidden.bs.modal', function(e) {
-  $(".btn-limit-time").trigger('click');
+  $('.btn-limit-time').trigger('click');
 });
 
 $('#dish-ok').on('click', function() {
@@ -462,7 +412,7 @@ $('#dish-ok').on('click', function() {
   $('#calendar').fullCalendar('renderEvents', a, true);
 });
 
-$("#delete-cycle").on("click", function() {
+$('#delete-cycle').on('click', function() {
   swal({
     html: '<span class="delete-dish">You are about to delete a cycle.<br>Are you sure?</span>',
     type: 'question',
@@ -523,7 +473,8 @@ $('body').on('click', 'a.dish-delete', function() {
 
 $('#limit-time2').datetimepicker({
   dateFormat: 'yy-mm-dd',
-  showSeconds: false,
+  timeFormat: 'HH:mm:ss'
+  // showSeconds: false,
 });
 
 // Defaults
@@ -544,15 +495,16 @@ function dateExists(obj) {
 
 $(document).ajaxStop(function() {
   if (travel == allCycles.length) {
-    $(".backdrop-save-cycles").hide('fast');
+    $('.backdrop-save-cycles').hide('fast');
     swal('Saved!',
     'The changes you made to your cycles have been saved successfully.',
     'success');
+    travel = 0;
   }
 });
 
 $(window).scroll(function() {
-  $(".backdrop-save-cycles").css('top', $(this).scrollTop()+'px');
+  $('.backdrop-save-cycles').css('top', $(this).scrollTop()+'px');
 });
 
 // Events
@@ -587,7 +539,7 @@ $('#save-cycle').on('click', function() {
   });
   if (_ok) {
     travel = 0;
-    $(".backdrop-save-cycles").css('display', 'flex');
+    $('.backdrop-save-cycles').css('display', 'flex');
     $.each(allCycles, function(i, o) {
       theDishes = [];
       $.each(o.dishes, function(_i, _o) {
@@ -617,7 +569,17 @@ $('#save-cycle').on('click', function() {
         data: cycle,
         dataType: 'json',
         success: function(data) {
-          console.log(++travel);
+          travel++;
+        },
+        error: function(error) {
+          console.log(error);
+          swal({
+            title: 'Oops!',
+            text: 'There was an internal error, please try again.',
+            imageUrl: 'assets/error.png',
+            confirmButtonText: 'Ok'
+          });
+          $('.backdrop-save-cycles').hide('fast');
         }
       });
     });
