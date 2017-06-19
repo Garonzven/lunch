@@ -1,3 +1,21 @@
+// Globals variables
+var today,
+  allCycles = [],
+  cycleColor = '#d32f2f',
+  dishColor = '#ff9800',
+  closedColor = '#757575',
+  currentCycleId,
+  dishDay,
+  dishForm = $('#dish-form'),
+  dayDishes = [],
+  dishUpdateId,
+  theDishes,
+  loaded = false,
+  travel = 0,
+  deleteCycleId,
+  changeLimit = false,
+  currentLimit;
+
 // Load profile
 $.ajax({
   url: constants().profile + '?token=' + $.cookie('token'),
@@ -20,22 +38,6 @@ $.ajax({
     }
   }
 });
-
-// Globals variables
-var today,
-  allCycles = [],
-  cycleColor = '#d32f2f',
-  dishColor = '#ff9800',
-  closedColor = '#757575',
-  currentCycleId,
-  dishDay,
-  dishForm = $('#dish-form'),
-  dayDishes = [],
-  dishUpdateId,
-  theDishes,
-  loaded = false,
-  travel = 0,
-  deleteCycleId;
 
 // Get server date
 $.ajax({
@@ -74,6 +76,13 @@ $.ajax({
           o.backgroundColor = o.active == 0 ? closedColor : cycleColor;
           o.borderColor = o.active == 0 ? closedColor : cycleColor;
           o.limit = o.limit_date;
+
+          // Flags
+          o.cycle_new = false;
+          o.cycle_dishes = false;
+          o.cycle_limit = false;
+          o.cycle_delete = false;
+
           $.map(o.dishes, function(_o) {
             _o.id = _o.id_dish;
             _o.type = 9;
@@ -82,13 +91,14 @@ $.ajax({
             _o.borderColor = o.active == 0 ? closedColor : dishColor;
             _o.overlap = false;
             _o.editable = false;
+            _o._parent = o.id;
           });
-          switch (o.active) {
-            case 0:
-            case 1:
-            case 2:
-              break;
-          }
+          // switch (o.active) {
+          //   case 0:
+          //   case 1:
+          //   case 2:
+          //     break;
+          // }
         });
         console.log(allCycles);
         $('#calendar').fullCalendar('renderEvents', allCycles, true);
@@ -116,10 +126,6 @@ $.ajax({
     }
   }
 });
-
-// Depricated
-var currentCycle = {};
-
 
 // Calendar
 $('#calendar').fullCalendar({
@@ -177,6 +183,9 @@ $('#calendar').fullCalendar({
               editable: false,
               backgroundColor: dishColor,
               borderColor: dishColor,
+              _parent: $('#calendar').fullCalendar('clientEvents', function(e) {
+                return e.type == 1 && e.id == currentCycleId;
+              })
             }
             $.ajax({
               url: constants().dishRegister + '?token=' + $.cookie('token'),
@@ -210,32 +219,9 @@ $('#calendar').fullCalendar({
       $('#delete-cycle').show();
       $('#limit-time2').val(moment(allCycles[currentCycleId].limit).format('YYYY-MM-DD HH:mm:ss'));
       $('#date-selection').modal({
-        show: true
+        show: true,
+        keyboard: true,
       });
-      // swal({
-      //   html: '<span class="delete-dish">You are about to delete the current period.<br>Are you sure?</span>',
-      //   type: 'question',
-      //   showCancelButton: true,
-      //   confirmButtonColor: '#3085d6',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Yes',
-      //   cancelButtonText: 'No',
-      // }).then(function () {
-      //   $.ajax({
-      //     url: constants().cycleDelete + '/' + event.id + '?token=' + $.cookie('token'),
-      //     method: 'delete',
-      //     dataType: 'json',
-      //     success: function(data) {
-      //       console.log(data.message);
-      //       swal({
-      //         title: 'The period was deleted.',
-      //         imageUrl: 'assets/Congratulations.png'
-      //       }).then(function() {
-      //         location.reload();
-      //       });
-      //     }
-      //   });
-      // }, function(){});
     }
   }
 });
@@ -292,17 +278,19 @@ function renderCycle(start, end) {
     overlap: false,
     editable: false,
     backgroundColor: cycleColor,
-    borderColor: cycleColor
+    borderColor: cycleColor,
+    cycle_new: true, // No cambiará de ningun modo si se asigna 'true' en este punto
   }
   allCycles.push(_cycle);
   currentCycleId = allCycles.length-1;
-  $('#delete-cycle').hide();
   $('#date-selection').modal({
     show: true,
-    // keyboard: false,
-    // backdrop: 'static'
+    keyboard: true
   });
   $('#calendar').fullCalendar('renderEvent', _cycle, true);
+  deleteCycleId = $('#calendar').fullCalendar('clientEvents', function(e) {
+    return e.type == 1 && e.start.format('YYYY-MM-DD') == start.format('YYYY-MM-DD')
+  })[0]._id;
 }
 
 function getCycleId(start) {
@@ -321,13 +309,28 @@ function getCycleId(start) {
 }
 
 $('.btn-limit-time').on('click', function() {
+  var curr = allCycles[currentCycleId];
+
   if ($('#limit-time2').val() != '') {
-    allCycles[currentCycleId].limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
-    allCycles[currentCycleId].limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
-    console.log(moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss'), allCycles[currentCycleId].limit, allCycles[currentCycleId].limit_date);
+    curr.limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    curr.limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    if (!curr.cycle_new && !curr.cycle_limit && changeLimit) {
+      curr.cycle_limit = true;
+      changeLimit = false;
+    }
+    console.log(allCycles[currentCycleId]);
     $('#limit-time2').val('');
     $('#date-selection').modal('hide');
   }
+});
+
+$("#limit-time2").on("change", function() {
+  if ($(this).val() != $(this).data('oldvalue')) {
+    changeLimit = true;
+  }
+});
+$("#limit-time2").on("focus", function() {
+  $(this).data('oldvalue', $(this).val());
 });
 
 $('body').on('click', 'a.dish-title', function() {
@@ -395,9 +398,9 @@ $('#modalDish').on('hidden.bs.modal', function(e) {
   $('#dish-ok').trigger('click');
 });
 
-$('#date-selection').on('hidden.bs.modal', function(e) {
-  $('.btn-limit-time').trigger('click');
-});
+// $('#date-selection').on('hidden.bs.modal', function(e) {
+//   $('.btn-limit-time').trigger('click');
+// });
 
 $('#dish-ok').on('click', function() {
   var del = $('#calendar').fullCalendar('clientEvents', function(e) {
@@ -422,21 +425,30 @@ $('#delete-cycle').on('click', function() {
     confirmButtonText: 'Yes',
     cancelButtonText: 'No',
   }).then(function () {
-    $.ajax({
-      url: constants().cycleDelete + '/' + deleteCycleId + '?token=' + $.cookie('token'),
-      method: 'delete',
-      dataType: 'json',
-      success: function(data) {
-        console.log(data.message);
-        swal({
-          title: 'The cycle was deleted.',
-          imageUrl: 'assets/Congratulations.png'
-        }).then(function() {
-          location.reload();
-        });
-      }
-    });
-  }, function(){});
+    if (isNaN(deleteCycleId) && deleteCycleId >= 0) {
+      $.ajax({
+        url: constants().cycleDelete + '/' + deleteCycleId + '?token=' + $.cookie('token'),
+        method: 'delete',
+        dataType: 'json',
+        success: function(data) {
+          console.log(data.message);
+          swal({
+            title: 'The cycle was deleted.',
+            imageUrl: 'assets/Congratulations.png'
+          }).then(function() {
+            location.reload();
+          });
+        }
+      });
+    } else {
+      $('#calendar').fullCalendar('removeEvents', function (e) {
+        return e._id == deleteCycleId && e._parent == deleteCycleId;
+      });
+      allCycles.splice(currentCycleId, 1);
+      $('#date-selection').modal('hide');
+      console.log(deleteCycleId);
+    }
+  });
 });
 
 $('body').on('click', 'a.dish-delete', function() {
@@ -474,7 +486,7 @@ $('body').on('click', 'a.dish-delete', function() {
 $('#limit-time2').datetimepicker({
   dateFormat: 'yy-mm-dd',
   timeFormat: 'HH:mm:ss'
-  // showSeconds: false,
+  // showSecond: false,
 });
 
 // Defaults
@@ -583,109 +595,6 @@ $('#save-cycle').on('click', function() {
         }
       });
     });
-    // swal('Saved!',
-    //   'The changes you made to your cycles have been saved successfully.',
-    //   'success');
-
-    // if (currentCycle.dishes) {
-
-    // if ($('#limit-time').val() != '') {
-    //   var cycle = {};
-    //   theDishes = [];
-    //   $.each(currentCycle.dishes, function(i, o) {
-    //     if (!dateExists(o)) {
-    //       theDishes.push({
-    //         date_cycle: o.start.format('YYYY-MM-DD'),
-    //         id_dishes: []
-    //       });
-    //     }
-    //   });
-
-    // Validate if cycle is complete
-    //     if (currentCycle.end.diff(currentCycle.start, 'days')+1 > theDishes.length) {
-    //       swal({
-    //         html: '<span class="delete-dish">There are some days without dishes.<br>Are you sure you want to continue?</span>',
-    //         imageUrl:'assets/warning_1.png',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes',
-    //         cancelButtonText: 'No'
-    //       }).then(function () {
-    //         $.each(theDishes, function(i, o) {
-    //           $.each(currentCycle.dishes, function(_i, _o) {
-    //             if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
-    //               o.id_dishes.push(_o.id);
-    //             }
-    //           });
-    //         });
-    //
-    //         cycle = {
-    //           init: currentCycle.start.format('YYYY-MM-DD'),
-    //           close: currentCycle.end.format('YYYY-MM-DD'),
-    //           limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss a'),
-    //           data: theDishes,
-    //         }
-    //
-    //         $.ajax({
-    //           url: constants().cycleRegister + '?token=' + $.cookie('token'),
-    //           method: 'post',
-    //           data: cycle,
-    //           dataType: 'json',
-    //           success: function(data) {
-    //             swal(
-    //               'Saved!',
-    //               'The changes you made to your cycle has been saved successfully.',
-    //               'success');
-    //           }
-    //         });
-    //       }, function(){});
-    //     } else {
-    //       $.each(theDishes, function(i, o) {
-    //         $.each(currentCycle.dishes, function(_i, _o) {
-    //           if (o.date_cycle == _o.start.format('YYYY-MM-DD')) {
-    //             o.id_dishes.push(_o.id);
-    //           }
-    //         });
-    //       });
-    //
-    //       cycle = {
-    //         init: currentCycle.start.format('YYYY-MM-DD'),
-    //         close: currentCycle.end.format('YYYY-MM-DD'),
-    //         limit: moment.utc($('#limit-time').val()).format('YYYY-MM-DD hh:mm:ss a'),
-    //         data: theDishes,
-    //       }
-    //
-    //       $.ajax({
-    //         url: constants().cycleRegister + '?token=' + $.cookie('token'),
-    //         method: 'post',
-    //         data: cycle,
-    //         dataType: 'json',
-    //         success: function(data) {
-    //           swal({
-    //             title: 'Saved',
-    //             text: 'The changes you made to your cycle has been saved successfully.',
-    //             imageUrl:'assets/Congratulations.png',
-    //             confirmButtonText: 'Ok'});
-    //         }
-    //       });
-    //     }
-    //   } else {
-    //     swal({
-    //       title: 'Error',
-    //       text: 'You have not set the limit time of the period.',
-    //       imageUrl:'assets/error.png',
-    //       confirmButtonText: 'Ok'
-    //     });
-    //   }
-    // } else {
-    //   swal({
-    //   title: 'Error',
-    //   text: 'You have not set any period',
-    //   imageUrl:'assets/error.png',
-    //   confirmButtonText: 'Ok'
-    //   });
-    // }
   }
 });
 
@@ -712,6 +621,8 @@ $('#save-cycle').on('click', function() {
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
 // Depricated
+var currentCycle = {};
+
 function hasCycle() {
   var exists = [];
   exists = $('#calendar').fullCalendar('clientEvents', function(e) {
