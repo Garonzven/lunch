@@ -1,4 +1,4 @@
-// Globals variables
+// Globals variables ***********************************************************
 var today,
   allCycles = [],
   cycleColor = '#d32f2f',
@@ -16,6 +16,9 @@ var today,
   changeLimit = false,
   currentLimit;
 
+
+
+// AJAX ***********************************************************
 // Load profile
 $.ajax({
   url: constants().profile + '?token=' + $.cookie('token'),
@@ -77,7 +80,7 @@ $.ajax({
           o.borderColor = o.active == 0 ? closedColor : cycleColor;
           o.limit = o.limit_date;
 
-          // Flags
+          // Flags for reports
           o.cycle_new = false;
           o.cycle_dishes = false;
           o.cycle_limit = false;
@@ -91,16 +94,8 @@ $.ajax({
             _o.borderColor = o.active == 0 ? closedColor : dishColor;
             _o.overlap = false;
             _o.editable = false;
-            _o._parent = o.id;
           });
-          // switch (o.active) {
-          //   case 0:
-          //   case 1:
-          //   case 2:
-          //     break;
-          // }
         });
-        console.log(allCycles);
         $('#calendar').fullCalendar('renderEvents', allCycles, true);
         $.each(allCycles, function(i, o) {
           $('#calendar').fullCalendar('renderEvents', o.dishes, true);
@@ -127,7 +122,9 @@ $.ajax({
   }
 });
 
-// Calendar
+
+
+// JQUERY METHODS ***********************************************************
 $('#calendar').fullCalendar({
   displayEventTime: false,
   eventLimit: true,
@@ -140,7 +137,6 @@ $('#calendar').fullCalendar({
   select: function(start, end) {
     end = end.subtract(1, 'seconds');
     if (start.format('YYYY-MM-DD') != end.format('YYYY-MM-DD')) {
-      console.log('select');
       if (canCreateCycle(start, end)) {
         renderCycle(start, end);
       }
@@ -168,7 +164,7 @@ $('#calendar').fullCalendar({
         });
         $('#modalDish').modal({
           show: true,
-          keyboard: false,
+          keyboard: true,
           backdrop: 'static'
         });
         $('#dish-add').off().on('click', function() {
@@ -183,9 +179,7 @@ $('#calendar').fullCalendar({
               editable: false,
               backgroundColor: dishColor,
               borderColor: dishColor,
-              _parent: $('#calendar').fullCalendar('clientEvents', function(e) {
-                return e.type == 1 && e.id == currentCycleId;
-              })
+              cycle_id: currentCycleId
             }
             $.ajax({
               url: constants().dishRegister + '?token=' + $.cookie('token'),
@@ -215,8 +209,7 @@ $('#calendar').fullCalendar({
   eventClick: function(event) {
     if (event.type == 1) {
       currentCycleId = getCycleId(event.start);
-      deleteCycleId = event._id;
-      $('#delete-cycle').show();
+      deleteCycleId = event.id ? event.id : event._id;
       $('#limit-time2').val(moment(allCycles[currentCycleId].limit).format('YYYY-MM-DD HH:mm:ss'));
       $('#date-selection').modal({
         show: true,
@@ -239,6 +232,15 @@ dishForm.validate({
   }
 });
 
+$('#limit-time2').datetimepicker({
+  dateFormat: 'yy-mm-dd',
+  timeFormat: 'HH:mm:ss'
+  // showSecond: false,
+});
+
+
+
+// Functions ***********************************************************
 function canCreateCycle(start, end) {
   var _start = start.format('YYYY-MM-DD'),
     _end = end ? end.format('YYYY-MM-DD') : start.format('YYYY-MM-DD'),
@@ -280,9 +282,13 @@ function renderCycle(start, end) {
     backgroundColor: cycleColor,
     borderColor: cycleColor,
     cycle_new: true, // No cambiará de ningun modo si se asigna 'true' en este punto
+    cycle_limit: false,
+    cycle_dishes: false,
+    cycle_delete: false
   }
   allCycles.push(_cycle);
   currentCycleId = allCycles.length-1;
+  $('#limit-time2').val('');
   $('#date-selection').modal({
     show: true,
     keyboard: true
@@ -308,28 +314,44 @@ function getCycleId(start) {
   return _id;
 }
 
+function dateExists(obj) {
+  var res=false;
+  $.each(theDishes, function(i, o) {
+    if (o.date_cycle == obj.start.format('YYYY-MM-DD')) {
+      res = true;
+      return false;
+    }
+  });
+  return res;
+}
+
+
+
+// Events ***********************************************************
 $('.btn-limit-time').on('click', function() {
   var curr = allCycles[currentCycleId];
 
   if ($('#limit-time2').val() != '') {
     curr.limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
     curr.limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
-    if (!curr.cycle_new && !curr.cycle_limit && changeLimit) {
+    if (!curr.cycle_new && !curr.cycle_limit && changeLimit && $('#limit-time2').val() != $('#limit-time2').data('oldvalue')) {
       curr.cycle_limit = true;
       changeLimit = false;
     }
-    console.log(allCycles[currentCycleId]);
+    console.log(allCycles);
     $('#limit-time2').val('');
     $('#date-selection').modal('hide');
   }
 });
 
-$("#limit-time2").on("change", function() {
+$('#limit-time2').on('change', function() {
+  $('.btn-limit-time').prop('disabled', '');
   if ($(this).val() != $(this).data('oldvalue')) {
     changeLimit = true;
   }
 });
-$("#limit-time2").on("focus", function() {
+
+$('#limit-time2').on('focus', function() {
   $(this).data('oldvalue', $(this).val());
 });
 
@@ -398,9 +420,9 @@ $('#modalDish').on('hidden.bs.modal', function(e) {
   $('#dish-ok').trigger('click');
 });
 
-// $('#date-selection').on('hidden.bs.modal', function(e) {
-//   $('.btn-limit-time').trigger('click');
-// });
+$('#date-selection').on('shown.bs.modal', function(e) {
+  $('.btn-limit-time').prop('disabled', 'disabled');
+});
 
 $('#dish-ok').on('click', function() {
   var del = $('#calendar').fullCalendar('clientEvents', function(e) {
@@ -425,7 +447,8 @@ $('#delete-cycle').on('click', function() {
     confirmButtonText: 'Yes',
     cancelButtonText: 'No',
   }).then(function () {
-    if (isNaN(deleteCycleId) && deleteCycleId >= 0) {
+    console.log(!isNaN(deleteCycleId));
+    if (!isNaN(deleteCycleId) && deleteCycleId >= 0) {
       $.ajax({
         url: constants().cycleDelete + '/' + deleteCycleId + '?token=' + $.cookie('token'),
         method: 'delete',
@@ -442,11 +465,10 @@ $('#delete-cycle').on('click', function() {
       });
     } else {
       $('#calendar').fullCalendar('removeEvents', function (e) {
-        return e._id == deleteCycleId && e._parent == deleteCycleId;
+        return e._id == deleteCycleId || e.cycle_id == currentCycleId;
       });
       allCycles.splice(currentCycleId, 1);
       $('#date-selection').modal('hide');
-      console.log(deleteCycleId);
     }
   });
 });
@@ -483,43 +505,6 @@ $('body').on('click', 'a.dish-delete', function() {
   }, function() {});
 });
 
-$('#limit-time2').datetimepicker({
-  dateFormat: 'yy-mm-dd',
-  timeFormat: 'HH:mm:ss'
-  // showSecond: false,
-});
-
-// Defaults
-$('.navContainer__logo').addClass('navContainer__logo--center');
-$('#dish-update').hide();
-$('#dish-cancel-update').hide();
-
-function dateExists(obj) {
-  var res=false;
-  $.each(theDishes, function(i, o) {
-    if (o.date_cycle == obj.start.format('YYYY-MM-DD')) {
-      res = true;
-      return false;
-    }
-  });
-  return res;
-}
-
-$(document).ajaxStop(function() {
-  if (travel == allCycles.length) {
-    $('.backdrop-save-cycles').hide('fast');
-    swal('Saved!',
-    'The changes you made to your cycles have been saved successfully.',
-    'success');
-    travel = 0;
-  }
-});
-
-$(window).scroll(function() {
-  $('.backdrop-save-cycles').css('top', $(this).scrollTop()+'px');
-});
-
-// Events
 $('#save-cycle').on('click', function() {
   var _ok = true,
   cycle = {},
@@ -598,9 +583,26 @@ $('#save-cycle').on('click', function() {
   }
 });
 
+$(document).ajaxStop(function() {
+  if (travel == allCycles.length) {
+    $('.backdrop-save-cycles').hide('fast');
+    swal('Saved!',
+    'The changes you made to your cycles have been saved successfully.',
+    'success');
+    travel = 0;
+  }
+});
+
+$(window).scroll(function() {
+  $('.backdrop-save-cycles').css('top', $(this).scrollTop()+'px');
+});
 
 
 
+// Defaults
+$('.navContainer__logo').addClass('navContainer__logo--center');
+$('#dish-update').hide();
+$('#dish-cancel-update').hide();
 
 
 
