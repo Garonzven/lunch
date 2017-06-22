@@ -51,6 +51,9 @@ body {
 .btn {
   border-radius: 0px !important;
 }
+.btn-save-data{
+  font-size: 30px;
+}
 
 .input--date{
   color: $gray;
@@ -1029,4 +1032,8 @@ margin-bottom: 40px;
   h2 {
     color: #fff;
   }
+}
+
+.fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0px;
 }

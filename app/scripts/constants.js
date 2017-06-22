@@ -12,6 +12,7 @@ function constants() {
 		cycleReport: 		server + 'reportCycle',
 		cycleList: 			server + 'cyclelist',
 		cycleDelete: 		server + 'cycle/delete',
+		cycleNotif:			server + 'cycle/notification',
 		userRegister: 	server + 'user/register',
 		userUpdate: 		server + 'user/update',
 		userDelete: 		server + 'user/delete',

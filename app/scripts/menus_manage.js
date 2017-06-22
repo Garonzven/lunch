@@ -1,5 +1,5 @@
 // Globals variables ***********************************************************
-var today,
+var today = 'today',
   allCycles = [],
   cycleColor = '#d32f2f',
   dishColor = '#ff9800',
@@ -14,7 +14,9 @@ var today,
   travel = 0,
   deleteCycleId,
   changeLimit = false,
-  currentLimit;
+  currentLimit,
+  dishStart = {},
+  notifCycles = [];
 
 
 
@@ -41,7 +43,6 @@ $.ajax({
     }
   }
 });
-
 // Get server date
 $.ajax({
   url: constants().dateServer,
@@ -52,7 +53,6 @@ $.ajax({
     today = data.date;
   }
 });
-
 // Load cycles from server
 $.ajax({
   url: constants().cycleFind + '?token=' + $.cookie('token'),
@@ -167,42 +167,7 @@ $('#calendar').fullCalendar({
           keyboard: true,
           backdrop: 'static'
         });
-        $('#dish-add').off().on('click', function() {
-          dishForm.validate();
-          if (dishForm.valid()) {
-            var dish = {
-              title: $('#dish-title').val(),
-              description: $('#dish-description').val(),
-              start: start.add(1, 'seconds'),
-              type: 9,
-              overlap: false,
-              editable: false,
-              backgroundColor: dishColor,
-              borderColor: dishColor,
-              cycle_id: currentCycleId
-            }
-            $.ajax({
-              url: constants().dishRegister + '?token=' + $.cookie('token'),
-              method: 'post',
-              data: {
-                title: dish.title,
-                description: dish.description,
-                id_provider: 1
-              },
-              success: function(data) {
-                dish.id = data.data.id;
-                $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
-                $('#calendar').fullCalendar('renderEvent', dish, true);
-                allCycles[currentCycleId].dishes.push(dish);
-                $('#dish-title').val('').focus();
-                $('#dish-description').val('');
-              },
-              error: function(error) {
-                console.log(error);
-              }
-            });
-          }
-        });
+        dishStart = start;
       }
     }
   },
@@ -272,9 +237,12 @@ function canCreateCycle(start, end) {
 function renderCycle(start, end) {
   var _end = end ? end : start;
   var _cycle = {
+    active: 1,
     title: 'From ' + start.format('YYYY-MM-DD') + ' to ' + _end.format('YYYY-MM-DD'),
     start: start,
+    initial_date: start.format('YYYY-MM-DD 00:00:00'),
     end: _end,
+    closing_date: _end.format('YYYY-MM-DD 00:00:00'),
     dishes: [],
     type: 1,
     overlap: false,
@@ -328,14 +296,55 @@ function dateExists(obj) {
 
 
 // Events ***********************************************************
+$('#dish-add').on('click', function() {
+  dishForm.validate();
+  if (dishForm.valid()) {
+    var dish = {
+      title: $('#dish-title').val(),
+      description: $('#dish-description').val(),
+      start: dishStart.add(1, 'seconds'),
+      type: 9,
+      overlap: false,
+      editable: false,
+      backgroundColor: dishColor,
+      borderColor: dishColor,
+      cycle_id: currentCycleId
+    }
+    $.ajax({
+      url: constants().dishRegister + '?token=' + $.cookie('token'),
+      method: 'post',
+      data: {
+        title: dish.title,
+        description: dish.description,
+        id_provider: 1
+      },
+      success: function(data) {
+        dish.id = data.data.id;
+        $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + dish.title + '" data-description="' + dish.description + '" data-id="' + dish.id + '">' + dish.title + '</a><a href="#" class="dish-delete" data-id="' + dish.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
+        $('#calendar').fullCalendar('renderEvent', dish, true);
+        allCycles[currentCycleId].dishes.push(dish);
+        $('#dish-title').val('').focus();
+        $('#dish-description').val('');
+        if (!allCycles[currentCycleId].cycle_new && !allCycles[currentCycleId].cycle_dishes) {
+          allCycles[currentCycleId].cycle_dishes = true;
+        }
+        console.log(allCycles);
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+});
+
 $('.btn-limit-time').on('click', function() {
   var curr = allCycles[currentCycleId];
 
   if ($('#limit-time2').val() != '') {
-    curr.limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
-    curr.limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
-    if (!curr.cycle_new && !curr.cycle_limit && changeLimit && $('#limit-time2').val() != $('#limit-time2').data('oldvalue')) {
-      curr.cycle_limit = true;
+    allCycles[currentCycleId].limit = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    allCycles[currentCycleId].limit_date = moment($('#limit-time2').val()).format('YYYY-MM-DD HH:mm:ss');
+    if (!allCycles[currentCycleId].cycle_new && !allCycles[currentCycleId].cycle_limit && changeLimit) {
+      allCycles[currentCycleId].cycle_limit = true;
       changeLimit = false;
     }
     console.log(allCycles);
@@ -376,11 +385,6 @@ $('#dish-update').on('click', function() {
         description: $('#dish-description').val()
       },
       success: function(data) {
-        swal({
-          text: 'Dish has been updated',
-          imageUrl:'assets/Congratulations.png',
-          confirmButtonText: 'Ok'
-        });
         $('.dish-list').empty();
         $.map(allCycles[currentCycleId].dishes, function(o) {
           if (o.id == dishUpdateId) {
@@ -394,11 +398,19 @@ $('#dish-update').on('click', function() {
         $.each(dayDishes, function(i, o) {
           $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
         });
+        if (!allCycles[currentCycleId].cycle_new && !allCycles[currentCycleId].cycle_dishes) {
+          allCycles[currentCycleId].cycle_dishes = true;
+        }
         $('#dish-update').hide();
         $('#dish-cancel-update').hide();
         $('#dish-add').show();
         $('#dish-title').val('').focus();
         $('#dish-description').val('');
+        swal({
+          text: 'Dish has been updated',
+          imageUrl:'assets/Congratulations.png',
+          confirmButtonText: 'Ok'
+        });
       }
     });
   }
@@ -484,11 +496,6 @@ $('body').on('click', 'a.dish-delete', function() {
     confirmButtonText: 'Yes',
     cancelButtonText: 'No'
   }).then(function () {
-    swal({
-      text: 'The dish was removed successfully!',
-      imageUrl:'assets/Congratulations.png',
-      confirmButtonText: 'Ok'
-    });
     $.each(allCycles[currentCycleId].dishes, function(i, o) {
       if (o.id == idDel && o.start.format('YYYY-MM-DD') == dishDay.format('YYYY-MM-DD')) {
         allCycles[currentCycleId].dishes.splice(i, 1);
@@ -502,6 +509,14 @@ $('body').on('click', 'a.dish-delete', function() {
     $.each(dayDishes, function(i, o) {
       $('.dish-list').append('<li><a href="#" class="dish-title" data-title="' + o.title + '" data-description="' + o.description + '" data-id="' + o.id + '">' + o.title + '</a><a href="#" class="dish-delete" data-id="' + o.id + '"><span class="glyphicon glyphicon-trash"></span></a></li>');
     });
+    swal({
+      text: 'The dish was removed successfully!',
+      imageUrl:'assets/Congratulations.png',
+      confirmButtonText: 'Ok'
+    });
+    if (!allCycles[currentCycleId].cycle_new && !allCycles[currentCycleId].cycle_dishes) {
+      allCycles[currentCycleId].cycle_dishes = true;
+    }
   }, function() {});
 });
 
@@ -535,9 +550,22 @@ $('#save-cycle').on('click', function() {
     }
   });
   if (_ok) {
-    travel = 0;
     $('.backdrop-save-cycles').css('display', 'flex');
+    travel = 0;
+    notifCycles = [];
+    console.log(allCycles);
     $.each(allCycles, function(i, o) {
+      if (o.active == 1) {
+        notifCycles.push({
+          active: o.active,
+          start: o.initial_date,
+          end: o.closing_date,
+          cycle_new: o.cycle_new,
+          cycle_delete: o.cycle_delete,
+          cycle_dishes: o.cycle_dishes,
+          cycle_limit: o.cycle_limit,
+        });
+      }
       theDishes = [];
       $.each(o.dishes, function(_i, _o) {
         if (!dateExists(_o)) {
@@ -565,6 +593,7 @@ $('#save-cycle').on('click', function() {
         method: 'post',
         data: cycle,
         dataType: 'json',
+        async: false,
         success: function(data) {
           travel++;
         },
@@ -580,16 +609,37 @@ $('#save-cycle').on('click', function() {
         }
       });
     });
+
+    // -------------------------------------------------------------
+    // Ajax para enviar la notificacion unica por correo
+    console.log(notifCycles);
+    $.ajax({
+      url: constants().cycleNotif + '?token=' + $.cookie('token'),
+      method: 'post',
+      data: {allCycles: notifCycles},
+      dataType: 'json',
+      success: function(data) {
+        console.log('s',data);
+      },
+      error: function(error) {
+        console.log('g',error);
+      }
+    });
+    // -------------------------------------------------------------
   }
 });
 
 $(document).ajaxStop(function() {
   if (travel == allCycles.length) {
     $('.backdrop-save-cycles').hide('fast');
-    swal('Saved!',
-    'The changes you made to your cycles have been saved successfully.',
-    'success');
-    travel = 0;
+    swal({
+      title: 'Saved!',
+      text: 'The changes you made to your cycles have been saved successfully.',
+      imageUrl: 'assets/Congratulations.png',
+      confirmButtonText: 'Ok'
+    }).then(function() {
+      location.reload();
+    });
   }
 });
 
